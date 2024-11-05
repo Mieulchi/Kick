@@ -1,40 +1,41 @@
-import { useNavigate } from "react-router-dom";
-import "./Home.css";
-import pic1 from "../Images/Pizza.jpg";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BsSearch } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
+import styles from '../Css/Home.module.css';
+import pic1 from '../Images/Pizza.jpg';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BsSearch } from 'react-icons/bs';
 
 function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="L">
-      <div className="upBar">
+    <div className={styles.l}>
+      <div className={styles.upBar}>
         <h2>JMC</h2>
       </div>
-      <div className="body">
-        <img src={pic1} class="bgImg" />
-        <h1 className="CP">
+
+      <div className={styles.body}>
+        <img src={pic1} className={styles.bgImg} />
+        <h1 className={styles.cp}>
           다양한 음식을
           <br />
           비교하여 선정하세요.
         </h1>
-        <div className="SearchBar">
+        <div className={styles.searchBar}>
           메뉴, 식당 이름을 입력해주세요
           <button
             onClick={() => {
-              navigate("/Map");
+              navigate('/Map');
             }}
           >
-            <BsSearch className="SearchIcon" />
+            <BsSearch className={styles.searchIcon} />
           </button>
         </div>
       </div>
-      <div className="bottomBar">
+      <div className={styles.bottomBar}>
         <button
-          className="GoRullete"
+          className={styles.goRoullete}
           onClick={() => {
-            navigate("/roullete");
+            navigate('/roullete');
           }}
         >
           메뉴 선택이 어려우신가요?

@@ -18,7 +18,7 @@
   font-weight: bold;
 }
 
-.L {
+.l {
   margin: 0 auto;
   background-color: white;
   width: 100vw;
@@ -40,14 +40,14 @@
   object-fit: cover;
   filter: brightness(50%);
 }
-.CP {
+.cp {
   position: absolute;
   top: 40%;
   left: 10%;
   font-size: 50px;
   color: white;
 }
-.SearchBar {
+.searchBar {
   position: absolute;
   top: 65%;
   left: 8%;
@@ -55,20 +55,20 @@
   border-radius: 40px;
   padding: 5px 10px 5px 30px;
 }
-.SearchBar button {
+.searchBar button {
   margin-left: 25em;
   border: none;
   border-radius: 40px;
   padding: 10px 10px;
   background-color: #9a9ea3;
 }
-.SearchIcon {
+.searchIcon {
   width: 30px;
   height: 30px;
   color: #64fa92;
 }
 
-.GoRullete {
+.goRoullete {
   position: absolute;
   top: 68%;
   left: 68%;
@@ -81,7 +81,7 @@
   cursor: pointer;
 }
 
-.GoRullete:hover {
+.goRullete:hover {
   background-color: #55a872;
   color: white;
   transition: 0.5s;
