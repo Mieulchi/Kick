@@ -61,7 +61,7 @@ function Home() {
       <button
         className={styles.goRoullete}
         onClick={() => {
-          navigate("/roullete");
+          navigate("/Roulette");
         }}
       >
         룰렛 돌리기
