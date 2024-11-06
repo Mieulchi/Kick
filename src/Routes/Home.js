@@ -35,7 +35,7 @@ function Home() {
         <button
           className={styles.goRoullete}
           onClick={() => {
-            navigate('/roullete');
+            navigate('/roulette');
           }}
         >
           메뉴 선택이 어려우신가요?
