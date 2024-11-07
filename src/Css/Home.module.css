@@ -1,19 +1,32 @@
-/* Home.css */
+/* Home.module.css */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 .upBar {
   width: 100%;
   height: 4.5rem;
-  background-color: #6b8e23;
+  color: white;
   display: flex;
   align-items: center;
+  position: fixed; /* Change 'position' from 'fixed-top' to 'fixed' */
+  top: 0;
+  z-index: 10; /* Ensures the bar is on top of the background */
+  background-color: transparent; /* Initially transparent */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transition */
+}
+
+#hd:hover {
+  background-color: white;
+  color: #6b8e23;
+}
+#hd:hover .upBar h2 {
+  color: #6b8e23; /* Text color changes to green */
 }
 .upBar h2 {
-  padding-left: 5rem;
-  color: white;
+  padding-left: 1rem;
   font-size: 32px;
   font-weight: bold;
 }
@@ -27,18 +40,13 @@
   flex-direction: column;
   align-items: center;
 }
-
 .body {
+  height: 0;
+  padding-top: 42%;
+  background-size: cover;
   position: relative;
   width: 100%;
-  height: 89%;
-}
-
-.bgImg {
-  width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(50%);
 }
 .cp {
   position: absolute;
@@ -46,17 +54,30 @@
   left: 10%;
   font-size: 50px;
   color: white;
+  font-weight: bold;
 }
 .searchBar {
   position: absolute;
-  top: 65%;
+  top: 60%;
   left: 8%;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 40px;
   padding: 5px 10px 5px 30px;
+  display: flex;
+}
+.searchInput {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent; /* Makes the background transparent */
+  width: 33rem;
+  color: #333; /* Text color */
+  border-radius: 40px;
+}
+.searchInput::placeholder {
+  font-size: 18px;
 }
 .searchBar button {
-  margin-left: 25em;
   border: none;
   border-radius: 40px;
   padding: 10px 10px;
@@ -70,19 +91,18 @@
 
 .goRoullete {
   position: absolute;
-  top: 68%;
-  left: 68%;
-  background-color: white;
-  font-size: 18px;
+  top: 69%;
+  left: 40%;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
   font-weight: bold;
-  padding: 15px 20px 15px 20px;
+  padding: 12px 17px;
   border: none;
   border-radius: 40px;
   cursor: pointer;
+  transition: 0.5s;
 }
-
-.goRullete:hover {
+.goRoullete:hover {
   background-color: #55a872;
   color: white;
-  transition: 0.5s;
 }
