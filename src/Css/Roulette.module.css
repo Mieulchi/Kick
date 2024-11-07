@@ -1,44 +1,48 @@
+.container {
+    display: flex;
+    justify-content: space-between; /* 룰렛과 버튼 간 간격을 최적화 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-top: 30px;
+  }
+
 .roulette_outer {
     position: relative;
     overflow: hidden;
-    width:700px;
-    height:700px;
-    font-size:30px;
-
-    margin-left:20px;
-    margin-right:auto;
-    margin-top:70px;
-
-    background:#E7EFF3;
+    width: 700px;
+    height: 700px;
+    font-size: 30px;
+    margin-left: 20px;
+    margin-right: auto;
+    margin-top: 70px;
+    background: #E7EFF3;
 }
 
 .roulette {
-    position:absolute;
-    top:5%;
-    left:5%;
-    right:5%;
-    bottom:5%;
-
-    border:2px solid black;
-
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    border: 2px solid black;
     border-radius: 50%;
-    transition: transform 5s ease-out;
+    transition: transform 8s ease-out;
 }
 
 .roulette_pin {
-    position:absolute;
-    top:5%;
-    left:50%;
-    width:0;
-    height:0;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    width: 0;
+    height: 0;
     margin-left: -4px;
     border-style: solid;
-    border-width:30px 5px 0 5px;
+    border-width: 30px 5px 0 5px;
     border-color: #ff0000 transparent transparent transparent;
 }
+
 .roulette_outerbtn {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 92px;
@@ -67,35 +71,30 @@
 }
 
 .roulette_btn:hover {
-    background: #0056b3;
-    transform: scale(1.05);
+    background: red;
+    transform: scale(1.08);
     transition: transform 0.2s ease;
 }
 
+.roulette_btn:active {
+    transform: scale(0.65);
+    transition: transform 0.1s ease;
+}
+
 .item {
-    position:absolute;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom:0;
-
-    padding-top:10%;
-    text-align:center;
+    bottom: 0;
+    padding-top: 5%;
+    text-align: center;
     display: flex;
-    justify-content:center;
-}
+    justify-content: center;
 
-.item:nth-child(1){
-    transform:rotate(0deg);
-}
-.item:nth-child(2){
-    transform:rotate(90deg);
-}
-.item:nth-child(3){
-    transform:rotate(180deg);
-}
-.item:nth-child(4){
-    transform:rotate(270deg);
+    font-size: 13px;
+    font-weight: bold;
+    color: rgb(222, 115, 9);
 }
 
 .line {
@@ -103,29 +102,55 @@
     top: 0%;
     bottom: 50%;
     left: 50%;
-    width:2px;
-    
-    background:black;
-    
-    transform-origin: bottom;;
+    width: 2px;
+    background: black;
+    transform-origin: bottom;
 }
 
-.line:nth-child(1){
-    transform:rotate(45deg);
-}
-.line:nth-child(2){
-    transform:rotate(135deg);
-}
-.line:nth-child(3){
-    transform:rotate(225deg);
-}
-.line:nth-child(4){
-    transform:rotate(315deg);
-}
 .selectedItem {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 24px;
+    background: #E8DEF8;
+    padding: 30px;
+    border-radius: 35px;
+    position:absolute;
+    right: 300px;
+    bottom: 450px;
+    font-size: 30px;
     font-weight: bold;
     color: #333;
+}
+
+.category_button {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    right: 300px; /* 화면 오른쪽에 여백을 추가 */
+    top: 30%;
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+    z-index: 10;
+}
+
+.category_button button {
+    padding: 10px 20px;
+    background-color: #9cafbf;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.category_button button:hover {
+    background-color: #ddd;
+}
+
+.category_button button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.nav_Btn {
+    top: 130px;
+    display: flex;
+    position:absolute;
+    font-size: 20px;
 }
