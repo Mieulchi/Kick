@@ -1,9 +1,9 @@
-import styles from './App.module.css';
-import { Router, Routes, Route } from 'react-router-dom';
-import Home from './Routes/Home';
-import Map from './Routes/Map';
-import Roullete from './Routes/Roulette';
-import Review from './Routes/Review';
+import styles from "./App.module.css";
+import { Router, Routes, Route } from "react-router-dom";
+import Home from "./Routes/Home";
+import Map from "./Routes/Map";
+import Roullete from "./Routes/Roulette";
+import Review from "./Routes/Review";
 
 function App() {
   return (
