@@ -31,18 +31,12 @@
   font-weight: bold;
 }
 
-.l {
-  margin: 0 auto;
-  background-color: white;
+.content {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .body {
   height: 0;
-  padding-top: 42%;
   background-size: cover;
   position: relative;
   width: 100%;
@@ -64,6 +58,7 @@
   border-radius: 40px;
   padding: 5px 10px 5px 30px;
   display: flex;
+  max-width: 90%;
 }
 .searchInput {
   border: none;
@@ -91,8 +86,8 @@
 
 .goRoullete {
   position: absolute;
-  top: 69%;
-  left: 40%;
+  top: 69.5%;
+  left: 40.5%;
   background-color: rgba(255, 255, 255, 0.8);
   font-size: 15px;
   font-weight: bold;

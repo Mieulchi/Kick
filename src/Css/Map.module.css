@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+.upBar {
+  width: 100%;
+  height: 4.5rem;
+  color: black;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contents {
+  display: flex;
+  width: 100%;
+  min-height: 100vh; /* 화면 전체 높이를 차지하도록 수정 */
+  padding-top: 100px;
+  padding-left: 2rem; /* 기본 좌우 여백 */
+  padding-right: 2rem;
+  background-color: cyan;
+}
+
+/* 큰 화면일 경우 여백을 더 줌 */
+@media (min-width: 1200px) {
+  .contents {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* 중간 화면일 경우 여백을 줄임 */
+@media (max-width: 768px) {
+  .contents {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* 작은 화면일 경우 여백 최소화 */
+@media (max-width: 480px) {
+  .contents {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.mapBox {
+  width: 100%;
+  max-width: 55%;
+}
+
+.map {
+  height: 550px;
+}
