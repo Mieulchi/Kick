@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import styles from "../Css/Home.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BsSearch } from "react-icons/bs";
-import chicken from "../Images/chicken.jpg";
-import noodle from "../Images/noodle.jpg";
-import pizza from "../Images/pizza.jpg";
-import soup from "../Images/soup.jpg";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import styles from '../Css/Home.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BsSearch } from 'react-icons/bs';
+import chicken from '../Images/chicken.jpg';
+import noodle from '../Images/noodle.jpg';
+import pizza from '../Images/pizza.jpg';
+import soup from '../Images/soup.jpg';
 
 function Home() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ function Home() {
           />
           <button
             onClick={() => {
-              navigate("/Map");
+              navigate('/Map');
             }}
           >
             <BsSearch className={styles.searchIcon} />
@@ -61,7 +61,7 @@ function Home() {
       <button
         className={styles.goRoullete}
         onClick={() => {
-          navigate("/Roulette");
+          navigate('/Roulette');
         }}
       >
         룰렛 돌리기
