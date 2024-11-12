@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../Css/Map.module.css";
 
 function Map() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState(''); // 사용자 입력 위치
+  const [location, setLocation] = useState(""); // 사용자 입력 위치
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null); // 현재 마커를 저장하는 상태
 
   useEffect(() => {
     const loadKakaoMapScript = () => {
-      if (!document.getElementById('kakao-map-script')) {
-        const script = document.createElement('script');
-        script.id = 'kakao-map-script';
+      if (!document.getElementById("kakao-map-script")) {
+        const script = document.createElement("script");
+        script.id = "kakao-map-script";
         script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_KEY}&autoload=false&libraries=services`;
         script.async = true;
         script.onload = () => {
@@ -27,7 +28,7 @@ function Map() {
 
     const initializeMap = () => {
       const { kakao } = window;
-      const container = document.getElementById('map'); // 지도를 표시할 div의 id 설정
+      const container = document.getElementById("map"); // 지도를 표시할 div의 id 설정
       const options = {
         center: new kakao.maps.LatLng(37.5665, 126.978), // 초기 중심 좌표 (서울시청)
         level: 3, // 지도 확대 레벨
@@ -89,33 +90,33 @@ function Map() {
     map.setCenter(coords);
   };
 
-
-
   return (
-    <div style={{ width: '100%', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center' }}>지도 화면</h2>
-      <div id="map" style={{ width: '100%', height: '400px', marginBottom: '20px' }}></div>
+    <div>
+      <div className={styles.upBar}>
+        <h2 style={{ textAlign: "center" }}>지도 화면</h2>
+      </div>
 
-      <input
-        type="text"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
-        style={{ padding: '10px', width: '80%', marginBottom: '10px' }}
-      />
-      <button
-        onClick={handleSearchLocation}
-        style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
-      >
-        위치 검색
-      </button>
-
-      <button
-        onClick={() => navigate('/review')}
-        style={{ display: 'block', margin: '20px auto', padding: '10px 20px', fontSize: '16px' }}
-      >
-        리뷰 화면으로
-      </button>
+      <div className={styles.contents}>
+        <section className={styles.mapBox}>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
+              className={styles.searchLocation}
+            />
+            <button onClick={handleSearchLocation} className={styles.searchBT}>
+              위치 검색
+            </button>
+          </div>
+          <div id="map" className={styles.map} />
+        </section>
+        <section className={styles.resultBox}>
+          설정 위치: 선정 메뉴:
+          <button onClick={() => navigate("/review")}>리뷰 화면으로</button>
+        </section>
+      </div>
     </div>
   );
 }
