@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate here
 import styles from "../Css/Home.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BsSearch } from "react-icons/bs";
+
+
 import chicken from "../Images/chicken.jpg";
 import noodle from "../Images/noodle.jpg";
 import pizza from "../Images/pizza.jpg";
