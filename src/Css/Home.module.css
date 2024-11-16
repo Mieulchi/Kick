@@ -4,9 +4,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+body,
+html {
+  overflow-x: hidden; /* 수평 스크롤바 숨기기 */
+  height: 100%;
+}
+html {
+  scroll-behavior: smooth;
+  letter-spacing: -0.025rem;
+}
 
 .upBar {
   width: 100%;
+  padding-left: 30px;
   height: 4.5rem;
   color: white;
   display: flex;
@@ -15,20 +25,32 @@
   top: 0;
   z-index: 10; /* Ensures the bar is on top of the background */
   background-color: transparent; /* Initially transparent */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transition */
+  transition: background-color 0.3s ease, color 0.1s ease; /* Smooth color transition */
 }
 
 #hd:hover {
-  background-color: white;
-  color: #6b8e23;
+  color: black;
+  background-color: #f8f8ff;
 }
-#hd:hover .upBar h2 {
-  color: #6b8e23; /* Text color changes to green */
+.upBar img {
+  margin-left: 4rem;
+  width: 10rem;
+  cursor: pointer;
 }
-.upBar h2 {
-  padding-left: 1rem;
-  font-size: 32px;
+.upBar:hover img {
+  content: url("../Logo/lightLogo.png");
+  opacity: 1;
+}
+.upBar h3 {
+  font-size: 20px;
   font-weight: bold;
+  margin-left: 2.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+h3 :hover {
+  text-decoration: underline;
+  text-decoration-color: black;
 }
 
 .content {
@@ -44,7 +66,7 @@
 }
 .cp {
   position: absolute;
-  top: 40%;
+  top: 34%;
   left: 10%;
   font-size: 50px;
   color: white;
@@ -52,7 +74,7 @@
 }
 .searchBar {
   position: absolute;
-  top: 60%;
+  top: 57%;
   left: 8%;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 40px;
@@ -83,11 +105,18 @@
   height: 30px;
   color: #64fa92;
 }
-
+.searchBar button:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+  background-color: #9a9ea3;
+  .searchIcon {
+    color: #64fa92;
+  }
+}
 .goRoullete {
   position: absolute;
-  top: 69.5%;
-  left: 40.5%;
+  top: 68%;
+  left: 40.6%;
   background-color: rgba(255, 255, 255, 0.8);
   font-size: 15px;
   font-weight: bold;
@@ -95,9 +124,100 @@
   border: none;
   border-radius: 40px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.3s;
+  word-spacing: -0.15rem;
 }
 .goRoullete:hover {
   background-color: #55a872;
   color: white;
+}
+
+.aboutUs {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+    url("../Images/foodBG.jpg");
+}
+.secondBody {
+  position: relative; /* 화면에서 고정된 위치로 설정 */
+  top: 50%; /* 화면 세로 중앙에 위치 */
+  left: 50%; /* 화면 가로 중앙에 위치 */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* 중앙을 정확히 맞추기 위해 컨텐츠를 이동 */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  .upBar {
+    height: 3.5rem; /* 중간 화면에서 높이 줄임 */
+    padding-left: 20px; /* 왼쪽 여백 줄임 */
+  }
+  .cp {
+    font-size: 35px; /* 중간 화면에서 글자 크기 줄임 */
+  }
+  .searchBar {
+    max-width: 80%; /* 중간 화면에서 searchBar 너비 줄임 */
+  }
+  .searchInput {
+    width: 25rem; /* 중간 화면에서 입력 필드 너비 줄임 */
+  }
+  .goRoullete {
+    top: 72%; /* 중간 화면에서 top 위치 조정 */
+  }
+}
+
+@media (max-width: 600px) {
+  .upBar {
+    height: 3.2rem; /* 작은 화면에서 높이 더 줄임 */
+    padding-left: 15px; /* 왼쪽 여백 더 줄임 */
+    justify-content: space-between;
+  }
+  .upBar img {
+    width: 7rem;
+    margin-left: 2rem;
+  }
+  .upBar h3 {
+    font-size: 15px;
+    margin-right: 2.5rem;
+  }
+  .cp {
+    font-size: 36px; /* 작은 화면에서 글자 크기 더 줄임 */
+  }
+  .searchBar {
+    max-width: 90%; /* 작은 화면에서 searchBar 너비 줄임 */
+    padding: 5px 10px 5px 20px; /* 내부 여백 조정 */
+    top: 55%;
+  }
+  .searchInput {
+    width: 22rem; /* 작은 화면에서 입력 필드 너비 더 줄임 */
+  }
+  .goRoullete {
+    top: 66%; /* 작은 화면에서 top 위치 조정 */
+    left: 70%;
+  }
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2f4f4f;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2f4f4f;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8fbc8f;
 }
