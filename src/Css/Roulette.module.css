@@ -10,13 +10,13 @@
   overflow: hidden;
   width: 100%;
   max-width: 800px;
-  min-height: 500px; /* 최소 높이 지정 */
+  min-height: 500px;
   aspect-ratio: 1;
   font-size: 30px;
   border-radius: 50%;
+  border: 2px solid black;
   background: #e7eff3;
 }
-
 .roulette {
   position: absolute;
   top: 5%;
@@ -25,7 +25,7 @@
   bottom: 5%;
   border: 2px solid black;
   border-radius: 50%;
-  transition: transform 5s ease-out;
+  transition: transform 7s ease-out;
 }
 
 .roulette_pin {
@@ -56,7 +56,6 @@
   justify-content: center;
   z-index: 10;
 }
-
 .roulette_btn {
   width: 85%;
   height: 85%;
@@ -71,11 +70,14 @@
   align-items: center;
   flex-direction: column;
 }
-
 .roulette_btn:hover {
   background: #0056b3;
   transform: scale(1.05);
   transition: transform 0.2s ease;
+}
+.roulette_btn:active {
+  transform: scale(0.65);
+  transition: transform 0.1s ease;
 }
 
 .item {
@@ -88,6 +90,7 @@
   text-align: center;
   display: flex;
   font-size: 10px;
+  font-weight: bold;
   justify-content: center;
 }
 
@@ -116,8 +119,91 @@
   margin-top: 20px;
 }
 
-.category_button {
+.category_btn {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.category_btn button {
+  background-color: #e5e9ee;
+  border-radius: 6px;
+  border: none;
+  padding: 5px 10px;
+}
+
+.mode_change {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.mode_change input {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.mode_change input:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+.mode_change button {
+  padding: 5px 10px;
+  background-color: #0f9e57;
+  color: #fff;
+  border: none;
+  border-Radius: 4px;
+  cursor: pointer;
+}
+.mode_change button:hover {
+  background-color: #108143;
+  transform: scale(1.05);
+}
+
+.customItems_list{
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.customItems_list li {
+  margin: 10px 0;
+  list-style-type: none;
+}
+.customItems_list li:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+.customItems_list input {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.customItems_list button {
+  margin-Left: 10px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-Radius: 4px;
+  cursor: pointer;
+}
+.customItems_list button:hover {
+  background-color: #c82333;
+}
+
+.mode_btn {
+  position: absolute;
+  top: 40px;
+  left: 62%;
+  background-color: #fff;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
