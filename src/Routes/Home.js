@@ -27,7 +27,7 @@ function Home() {
   }, []); // 빈 배열을 두 번째 인자로 넣어 한 번만 실행되게 설정
 
   return (
-    <div className={styles.l}>
+    <div className={styles.content}>
       <nav className={styles.upBar} id={styles.hd}>
         <h2>JMC</h2>
       </nav>
@@ -37,6 +37,7 @@ function Home() {
         id={styles.bg}
         style={{ backgroundImage: `url(${currentImage})` }} // 랜덤 이미지 적용
       >
+        <div className="contentContainer"></div>
         <h1 className={styles.cp}>
           다양한 음식을
           <br />
