@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../Css/Roulette.module.css";
 import { foods } from "../Data/foods";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import darkLogo from "../Logo/darkLogo.png";
 
 function Roulette() {
@@ -16,7 +15,7 @@ function Roulette() {
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("모두");
-  
+
   useEffect(() => {
     filterByCategory("모두");
   }, []);
@@ -36,12 +35,12 @@ function Roulette() {
     const shuffled = shuffleArray(array);
     return shuffled.slice(0, num);
   };
-  
+
   const toggleCustomMode = () => {
     setIsCustomMode(!isCustomMode);
     setIsSpinning(false);
     setSelectedItem(null);
-  
+
     if (!isCustomMode) {
       const initialItems = getRandomItems(foods, 5);
       setCustomItems(initialItems);
@@ -80,10 +79,12 @@ function Roulette() {
     if (e.key === "Enter") {
       addCustomItem();
     }
-  }; 
-  
+  };
+
   const handleItemDelete = (index) => {
-    const updatedItems = customItems.filter((_, itemIndex) => itemIndex !== index);
+    const updatedItems = customItems.filter(
+      (_, itemIndex) => itemIndex !== index
+    );
     setCustomItems(updatedItems);
   };
 
@@ -126,7 +127,11 @@ function Roulette() {
                   className={styles.item}
                   key={index}
                   style={{
-                    transform: `rotate(${(360 / (isCustomMode ? customItems.length : items.length)) * index}deg)`,
+                    transform: `rotate(${
+                      (360 /
+                        (isCustomMode ? customItems.length : items.length)) *
+                      index
+                    }deg)`,
                   }}
                 >
                   <span className={styles.itemName}>{item.name}</span>
@@ -138,8 +143,12 @@ function Roulette() {
                   key={index}
                   style={{
                     transform: `rotate(${
-                      (360 / (isCustomMode ? customItems.length : items.length)) * index +
-                      360 / (isCustomMode ? customItems.length : items.length) / 2
+                      (360 /
+                        (isCustomMode ? customItems.length : items.length)) *
+                        index +
+                      360 /
+                        (isCustomMode ? customItems.length : items.length) /
+                        2
                     }deg)`,
                   }}
                 />
@@ -152,35 +161,50 @@ function Roulette() {
           {!isCustomMode && (
             <div className={styles.category_btn}>
               <button
-                className={`btn btn-primary ${selectedCategory === "모두" ? "active" : "btn-light"}`}
-                onClick={() => handleCategoryClick("모두")}>
+                className={`btn btn-primary ${
+                  selectedCategory === "모두" ? "active" : "btn-light"
+                }`}
+                onClick={() => handleCategoryClick("모두")}
+              >
                 모두
               </button>
-              <button 
-                className={`btn btn-primary ${selectedCategory === "한식" ? "active" : "btn-light"}`} 
-                onClick={() => handleCategoryClick("한식")}>
+              <button
+                className={`btn btn-primary ${
+                  selectedCategory === "한식" ? "active" : "btn-light"
+                }`}
+                onClick={() => handleCategoryClick("한식")}
+              >
                 한식
               </button>
-              <button 
-                className={`btn btn-primary ${selectedCategory === "양식" ? "active" : "btn-light"}`} 
-                onClick={() => handleCategoryClick("양식")}>
+              <button
+                className={`btn btn-primary ${
+                  selectedCategory === "양식" ? "active" : "btn-light"
+                }`}
+                onClick={() => handleCategoryClick("양식")}
+              >
                 양식
               </button>
-              <button 
-                className={`btn btn-primary ${selectedCategory === "중식" ? "active" : "btn-light"}`} 
-                onClick={() => handleCategoryClick("중식")}>
+              <button
+                className={`btn btn-primary ${
+                  selectedCategory === "중식" ? "active" : "btn-light"
+                }`}
+                onClick={() => handleCategoryClick("중식")}
+              >
                 중식
               </button>
-              <button 
-                className={`btn btn-primary ${selectedCategory === "일식" ? "active" : "btn-light"}`} 
-                onClick={() => handleCategoryClick("일식")}>
+              <button
+                className={`btn btn-primary ${
+                  selectedCategory === "일식" ? "active" : "btn-light"
+                }`}
+                onClick={() => handleCategoryClick("일식")}
+              >
                 일식
               </button>
             </div>
           )}
 
           {isCustomMode && (
-            <div className={styles.mode_change}>
+            <div className={styles.customItems_Input}>
               <input
                 type="text"
                 value={newItem}
@@ -188,55 +212,62 @@ function Roulette() {
                 onKeyDown={handleKeyDown}
                 placeholder="메뉴를 입력하세요"
               />
-              <button onClick={addCustomItem}>
-                추가
-              </button>
+              <button onClick={addCustomItem}>추가</button>
             </div>
           )}
 
           {isCustomMode && customItems.length > 0 && (
             <div className={styles.customItems_list}>
-              <h4>커스텀 메뉴</h4>
-                {customItems.map((item, index) => (
-                  <li key={index}>
-                    <input
-                      type="text"
-                      value={item.name}
-                      onChange={(e) => handleItemChange(index, e.target.value)}
-                    />
-                    <button
-                      onClick={() => handleItemDelete(index)}
-                    >
-                      삭제
-                    </button>
-                  </li>
-                ))}
+              <h4>Menu</h4>
+              {customItems.map((item, index) => (
+                <li key={index}>
+                  <input
+                    type="text"
+                    value={item.name}
+                    onChange={(e) => handleItemChange(index, e.target.value)}
+                  />
+                  <button onClick={() => handleItemDelete(index)}>삭제</button>
+                </li>
+              ))}
             </div>
           )}
-
-          <button className={styles.mode_btn} onClick={toggleCustomMode}>
-            <p>{isCustomMode ? "Custom" : "Normal"}</p>
-            {isCustomMode ? (
-              <FaToggleOn style={{ fontSize: "30px"}} />
-            ) : (
-              <FaToggleOff style={{ fontSize: "30px"}} />
-            )}
-          </button>
-
-          <div className={styles.selectView}>
-            <h3>오늘 점심은</h3>
-            {selectedItem && (
-              <div className={styles.selectedItem}>{selectedItem.name} !!!</div>
-            )}
+          <div className={styles.customSwitch}>
+            <p>Custom</p>
+            <label className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                className={styles.toggleCheckbox}
+                checked={isCustomMode}
+                onChange={toggleCustomMode}
+              />
+              <span className={styles.toggleSlider}></span>
+            </label>
           </div>
 
-          <button className="btn btn-primary mt-3" onClick={() => navigate("/map")}>
+          <div
+            className={
+              isCustomMode ? styles.CustomSelectMenu : styles.selectMenu
+            }
+          >
+            <h3>오늘 점심은</h3>
+            <div>
+              {selectedItem && (
+                <div className={styles.selectedItem}>{selectedItem.name}</div>
+              )}
+            </div>
+          </div>
+          <button
+            className={
+              isCustomMode ? styles.goToReview_custom : styles.goToReview
+            }
+            onClick={() => navigate("/map")}
+          >
             음식점 찾기
           </button>
         </section>
       </div>
     </div>
-   );
+  );
 }
 
 export default Roulette;
