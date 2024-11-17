@@ -131,7 +131,23 @@ h3 :hover {
   background-color: #55a872;
   color: white;
 }
-
+.aiConsultBtn {
+  position: absolute;
+  top: 75%; /* '룰렛 돌리기' 버튼보다 아래로 배치 */
+  left: 40.6%;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 12px 17px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.aiConsultBtn:hover {
+  background-color: #55a872;
+  color: white;
+}
 .aboutUs {
   height: 100vh;
   width: 100%;
