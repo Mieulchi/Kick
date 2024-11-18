@@ -1,23 +1,29 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { Map } from '@vis.gl/react-google-maps';
+import MyMarkers from './MyMarkers';
+import { useEffect, useState, useRef } from 'react';
+import GoogleSearch from './GoogleSearch';
 
-export default function MyGoogleMap() {
-	const containerStyle = {
-		width: '100%',
-		height: '400px',
-	};
-
-	const center = {
-		lat: 37.5665, // 서울의 위도
-		lng: 126.978, // 서울의 경도
-	};
-	console.log('API Key:', process.env.REACT_APP_GOOGLE_MAP_KEY); // API 키 확인용 로그
+export default function MyGoogleMap(props) {
+	const [location, setLocation] = useState({
+		lat: -33.860664,
+		lng: 151.208138,
+	});
 
 	return (
-		<LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}>
-			<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-				{/* Marker 예제 */}
-				<Marker position={center} />
-			</GoogleMap>
-		</LoadScript>
+		<>
+			<Map
+				defaultZoom={13}
+				defaultCenter={{ lat: -33.860664, lng: 151.208138 }}
+				zoom={16}
+				center={{ lat: location.lat, lng: location.lng }}
+				mapId={`${process.env.MY_MAP_ID}`}
+			>
+				<MyMarkers></MyMarkers>
+			</Map>
+			<GoogleSearch
+				location={props.location}
+				setLocation={setLocation}
+			></GoogleSearch>
+		</>
 	);
 }

@@ -1,17 +1,23 @@
 .review {
   width: 80%;
+  height: 100vh;
   margin: 0 auto;
   border: 1px solid red;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 내부 요소들을 가운데 정렬 */
+  align-items: center;
+  /* 내부 요소들을 가운데 정렬 */
 }
 
-.review > * {
-  width: 100%; /* 자식 요소가 부모 너비에 맞게 채워짐 */
-  margin: 10px 10px; /* 상하 10px, 좌우 자동으로 가운데 정렬 */
-  box-sizing: border-box; /* 패딩과 테두리가 전체 너비에 포함되도록 설정 */
-  text-align: center; /* 텍스트 가운데 정렬 */
+.review>* {
+  width: 100%;
+  /* 자식 요소가 부모 너비에 맞게 채워짐 */
+  margin: 10px 10px;
+  /* 상하 10px, 좌우 자동으로 가운데 정렬 */
+  box-sizing: border-box;
+  /* 패딩과 테두리가 전체 너비에 포함되도록 설정 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
 }
 
 .mapdiv {

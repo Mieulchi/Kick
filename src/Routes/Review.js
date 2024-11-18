@@ -14,6 +14,7 @@ function Review() {
 	}, [location]);
 
 	useEffect(() => {
+		console.log(state);
 		setLocation(state.location);
 	}, []);
 
@@ -22,7 +23,7 @@ function Review() {
 			<h2>리뷰 화면임</h2>
 			<div className={styles.review_container}>
 				<div className={styles.mapdiv}>
-					<MyGoogleMap></MyGoogleMap>
+					<MyGoogleMap location={location}></MyGoogleMap>
 				</div>
 				<div className={styles.reviewdiv} style={{ border: '1px solid blue' }}>
 					리뷰 목록임
@@ -30,6 +31,7 @@ function Review() {
 			</div>
 
 			<button
+				style={{ marginTop: '100px' }}
 				onClick={() => {
 					navigate('/');
 				}}
