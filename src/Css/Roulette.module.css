@@ -15,16 +15,18 @@
 .container {
   display: flex;
   padding: 20px;
-  flex-direction: column;
   align-items: center;
+  margin: 2.5rem 5rem 4rem 8rem;
+  gap: 12rem;
 }
 
 .roulette_outer {
   position: relative;
   overflow: hidden;
+  margin-top: 20px;
   width: 100%;
   max-width: 800px;
-  min-height: 500px;
+  min-height: 550px;
   aspect-ratio: 1;
   font-size: 30px;
   border-radius: 50%;
@@ -104,7 +106,7 @@
   text-align: center;
   display: flex;
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 500;
   justify-content: center;
 }
 
@@ -118,21 +120,11 @@
   transform-origin: bottom;
 }
 
-.selectedItem {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-}
-
 .selectView {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
   color: white;
-  
 }
 
 .category_btn {
@@ -143,45 +135,67 @@
   margin-bottom: 20px;
 }
 .category_btn button {
-  background-color: #e5e9ee;
+  background-color: lightgrey;
   border-radius: 6px;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 17px;
+  color: black;
+  font-size: 18px;
 }
 
-.mode_change {
+.customItems_Input {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
-.mode_change input {
+.customItems_Input input {
   padding: 5px 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.mode_change input:hover {
+.customItems_Input input:hover {
   background-color: #fff;
   transform: scale(1.05);
 }
-.mode_change button {
+.customItems_Input button {
   padding: 5px 10px;
   background-color: #0f9e57;
   color: #fff;
   border: none;
-  border-Radius: 4px;
+  border-radius: 4px;
   cursor: pointer;
 }
-.mode_change button:hover {
+.customItems_Input button:hover {
   background-color: #108143;
-  
 }
-
-.customItems_list{
-  position: absolute;
-  top: 10%;
-  left: 70%;
+.customSideBar {
+  position: fixed;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.327), rgba(0, 0, 0, 0.3)),
+    url("../Images/blackbord.jpg");
+  background-size: cover;
+  border: solid 4px #8b6331;
+  padding: 40px 0 20px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  border-radius: 20px;
+  height: 80vh;
+  width: 400px;
+  transform: translate(760px, -290px);
+  cursor: pointer;
+  overflow: auto;
+  transition: 0.5s;
+}
+.customSideBar:hover {
+  transform: translate(440px, -290px);
+}
+.customItems_list {
+  /* position: absolute;
+  top: 30%;
+  left: 80%; */
   max-width: 300px;
   display: flex;
   flex-direction: column;
@@ -191,7 +205,7 @@
   list-style-type: none;
 }
 .customItems_list li:hover {
-  background-color: #fff;
+  background-color: transparent;
   transform: scale(1.05);
 }
 .customItems_list input {
@@ -201,25 +215,129 @@
   border-radius: 4px;
 }
 .customItems_list button {
-  margin-Left: 10px;
+  margin-left: 10px;
   padding: 5px 10px;
   background-color: #dc3545;
   color: #fff;
   border: none;
-  border-Radius: 4px;
+  border-radius: 4px;
   cursor: pointer;
 }
 .customItems_list button:hover {
   background-color: #c82333;
 }
-
-.mode_btn {
-  position: absolute;
-  top: 40px;
-  left: 62%;
-  background-color: #fff;
-  border: none;
-  font-size: 16px;
+.selectedItem {
+  font-size: 36px;
   font-weight: bold;
+  padding-top: 10px;
+}
+.CustomSelectMenu {
+  position: absolute;
+  left: 45%;
+  top: 30%;
+  background-image: url("../Images/menu.png");
+  background-size: cover;
+  height: 300px;
+  width: 400px;
+}
+.selectMenu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-image: url("../Images/menu.png");
+  background-size: cover;
+  height: 300px;
+  width: 400px;
+}
+.CustomSelectMenu .menu {
+  padding-top: 7rem;
+  padding-left: 3rem;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.selectMenu .menu {
+  padding-top: 2rem;
+  padding-left: 9rem;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.goToReview,
+.goToReview_custom {
+  position: absolute;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 40px;
+  background-color: white;
+  color: green;
+  font-size: 20px;
+  font-weight: bold;
+}
+.goToReview,
+.goToReview_custom:hover {
+}
+.goToReview {
+  top: 76%;
+  left: 73%;
+}
+.goToReview_custom {
+  top: 68%;
+  left: 60%;
+}
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 47.7px;
+  height: 23.33px;
+}
+
+.toggleSlider {
+  position: absolute;
   cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggleSlider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggleCheckbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleCheckbox:checked + .toggleSlider {
+  background-color: green;
+}
+
+.toggleCheckbox:checked + .toggleSlider:before {
+  transform: translateX(26px);
+}
+.customSwitch {
+  position: absolute;
+  left: 24%;
+  top: 11%;
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0;
 }

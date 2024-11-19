@@ -4,16 +4,16 @@ import styles from "../Css/Home.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BsSearch } from "react-icons/bs";
 
-
 import chicken from "../Images/chicken.jpg";
+import meet from "../Images/meet.jpg";
 import noodle from "../Images/noodle.jpg";
-import pizza from "../Images/pizza.jpg";
+import pizza from "../Images/Pizza.jpg";
 import soup from "../Images/soup.jpg";
 import darkLogo from "../Logo/darkLogo.png";
 
 function Home() {
   const navigate = useNavigate(); // Initialize navigate using useNavigate
-  const images = [chicken, noodle, pizza, soup]; // 이미지 배열
+  const images = [chicken, noodle, pizza, soup, meet]; // 이미지 배열
   const [currentImage, setCurrentImage] = useState(null);
 
   // 'About Us' 섹션을 위한 ref
@@ -88,6 +88,14 @@ function Home() {
         >
           룰렛 돌리기
         </button>
+        <button
+        className = {styles.aiConsultBtn}
+        onClick = {() =>{
+          navigate("/AiConsult");
+        }}
+      >
+        ai 상담하기
+      </button>
       </section>
 
       {/* 'About Us' 섹션, ref를 통해 스크롤 대상 지정 */}
@@ -95,7 +103,7 @@ function Home() {
         <div className={styles.secondBody}>
           <h2>About Us</h2>
           <p>점메추는 저희가 고심해서 만들어낸 어쩌고 입니다.</p>
-          <h3>점 to the 메 to the 추</h3>
+          <h3>박승현 바보</h3>
         </div>
       </section>
     </div>
