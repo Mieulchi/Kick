@@ -10,6 +10,7 @@ import noodle from "../Images/noodle.jpg";
 import pizza from "../Images/pizza.jpg";
 import soup from "../Images/soup.jpg";
 import darkLogo from "../Logo/darkLogo.png";
+import AiConsult from "./AiConsult";
 
 function Home() {
   const navigate = useNavigate(); // Initialize navigate using useNavigate
@@ -69,7 +70,7 @@ function Home() {
         <div className={styles.searchBar}>
           <input
             type="text"
-            placeholder="메뉴, 식당 이름을 입력해주세요"
+            placeholder="메뉴 이름을 입력해주세요"
             className={styles.searchInput}
           />
           <button
@@ -88,14 +89,8 @@ function Home() {
         >
           룰렛 돌리기
         </button>
-        <button
-          className={styles.aiConsultBtn}
-          onClick={() => {
-            navigate("/AiConsult");
-          }}
-        >
-          ai 상담하기
-        </button>
+        <button className={styles.aiConsultBtn}>ai 상담하기</button>
+        <AiConsult />
       </section>
 
       {/* 'About Us' 섹션, ref를 통해 스크롤 대상 지정 */}
