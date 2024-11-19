@@ -156,7 +156,18 @@ function Roulette() {
             </div>
           </div>
         </section>
-
+        <div className={styles.customSwitch}>
+          <p>Custom</p>
+          <label className={styles.toggleSwitch}>
+            <input
+              type="checkbox"
+              className={styles.toggleCheckbox}
+              checked={isCustomMode}
+              onChange={toggleCustomMode}
+            />
+            <span className={styles.toggleSlider}></span>
+          </label>
+        </div>
         <section className={styles.selectView}>
           {!isCustomMode && (
             <div className={styles.category_btn}>
@@ -204,66 +215,63 @@ function Roulette() {
           )}
 
           {isCustomMode && (
-            <div className={styles.customItems_Input}>
-              <input
-                type="text"
-                value={newItem}
-                onChange={(e) => setNewItem(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="메뉴를 입력하세요"
-              />
-              <button onClick={addCustomItem}>추가</button>
+            <div className={styles.customSideBar}>
+              <div className={styles.customItems_Input}>
+                <input
+                  type="text"
+                  value={newItem}
+                  onChange={(e) => setNewItem(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="메뉴를 입력하세요"
+                />
+                <button onClick={addCustomItem}>추가</button>
+              </div>
+              <div className={styles.customItems_list}>
+                <h4>
+                  <strong>Menu</strong>
+                </h4>
+                {customItems.map((item, index) => (
+                  <li key={index}>
+                    <input
+                      type="text"
+                      value={item.name}
+                      onChange={(e) => handleItemChange(index, e.target.value)}
+                    />
+                    <button onClick={() => handleItemDelete(index)}>
+                      삭제
+                    </button>
+                  </li>
+                ))}
+              </div>
             </div>
           )}
-
-          {isCustomMode && customItems.length > 0 && (
-            <div className={styles.customItems_list}>
-              <h4>Menu</h4>
-              {customItems.map((item, index) => (
-                <li key={index}>
-                  <input
-                    type="text"
-                    value={item.name}
-                    onChange={(e) => handleItemChange(index, e.target.value)}
-                  />
-                  <button onClick={() => handleItemDelete(index)}>삭제</button>
-                </li>
-              ))}
-            </div>
-          )}
-          <div className={styles.customSwitch}>
-            <p>Custom</p>
-            <label className={styles.toggleSwitch}>
-              <input
-                type="checkbox"
-                className={styles.toggleCheckbox}
-                checked={isCustomMode}
-                onChange={toggleCustomMode}
-              />
-              <span className={styles.toggleSlider}></span>
-            </label>
-          </div>
 
           <div
             className={
               isCustomMode ? styles.CustomSelectMenu : styles.selectMenu
             }
           >
-            <h3>오늘 점심은</h3>
-            <div>
-              {selectedItem && (
-                <div className={styles.selectedItem}>{selectedItem.name}</div>
-              )}
+            <div className={styles.menu}>
+              <h3>
+                <b>점심 메뉴는?</b>
+              </h3>
+              <div>
+                {selectedItem && (
+                  <div className={styles.selectedItem}>{selectedItem.name}</div>
+                )}
+              </div>
             </div>
           </div>
-          <button
-            className={
-              isCustomMode ? styles.goToReview_custom : styles.goToReview
-            }
-            onClick={() => navigate("/map")}
-          >
-            음식점 찾기
-          </button>
+          {selectedItem && (
+            <button
+              className={
+                isCustomMode ? styles.goToReview_custom : styles.goToReview
+              }
+              onClick={() => navigate("/map")}
+            >
+              음식점 찾기
+            </button>
+          )}
         </section>
       </div>
     </div>
