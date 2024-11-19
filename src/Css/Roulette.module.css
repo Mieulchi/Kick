@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
-    url("../Images/foodBG.jpg");
+    url('../Images/foodBG.jpg');
   background-size: cover;
 }
 .upBar img {
@@ -173,7 +173,7 @@
 .customSideBar {
   position: fixed;
   background-image: linear-gradient(rgba(0, 0, 0, 0.327), rgba(0, 0, 0, 0.3)),
-    url("../Images/blackbord.jpg");
+    url('../Images/blackbord.jpg');
   background-size: cover;
   border: solid 4px #8b6331;
   padding: 40px 0 20px 50px;
@@ -235,7 +235,7 @@
   position: absolute;
   left: 45%;
   top: 30%;
-  background-image: url("../Images/menu.png");
+  background-image: url('../Images/menu.png');
   background-size: cover;
   height: 300px;
   width: 400px;
@@ -244,7 +244,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-image: url("../Images/menu.png");
+  background-image: url('../Images/menu.png');
   background-size: cover;
   height: 300px;
   width: 400px;
@@ -308,7 +308,7 @@
 
 .toggleSlider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 15px;
   width: 15px;
   left: 4px;
