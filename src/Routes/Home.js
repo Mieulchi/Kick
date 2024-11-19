@@ -7,7 +7,7 @@ import { BsSearch } from "react-icons/bs";
 import chicken from "../Images/chicken.jpg";
 import meet from "../Images/meet.jpg";
 import noodle from "../Images/noodle.jpg";
-import pizza from "../Images/Pizza.jpg";
+import pizza from "../Images/pizza.jpg";
 import soup from "../Images/soup.jpg";
 import darkLogo from "../Logo/darkLogo.png";
 
@@ -89,13 +89,13 @@ function Home() {
           룰렛 돌리기
         </button>
         <button
-        className = {styles.aiConsultBtn}
-        onClick = {() =>{
-          navigate("/AiConsult");
-        }}
-      >
-        ai 상담하기
-      </button>
+          className={styles.aiConsultBtn}
+          onClick={() => {
+            navigate("/AiConsult");
+          }}
+        >
+          ai 상담하기
+        </button>
       </section>
 
       {/* 'About Us' 섹션, ref를 통해 스크롤 대상 지정 */}
