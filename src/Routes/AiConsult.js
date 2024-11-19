@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Message from "./Message";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { fetchChatResponse } from "../api";
+import styles from "../Css/Home.module.css";
 
 // 이미지 파일 import
 import userAvatar from "../Images/user-avatar.png";
 import botAvatar from "../Images/bot-avatar.png";
 
 const AiConsult = () => {
-    
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -23,25 +23,22 @@ const AiConsult = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     setInput(""); // 입력 필드 초기화
-    
+
     // ChatGPT API 호출
     const botResponse = await fetchChatResponse(input);
     console.log("Received bot response:", botResponse);
-    
+
     const botMessage = {
       sender: "bot",
       text: botResponse,
       avatar: botAvatar, // 상담원 이미지
     };
-    
+
     setMessages((prev) => [...prev, botMessage]);
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-        <h1 style={{ textAlign: "center", marginBottom: "20px", color: "#007BFF" }}>
-        JMC 상담원
-      </h1>
+    <div className={styles.chatBot}>
       <div
         style={{
           height: "400px",
