@@ -6,22 +6,25 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 export default function MyGoogleMap(props) {
   async function nearbySearch() {
+    console.log(location);
     //@ts-ignore
     const { Place, SearchNearbyRankPreference } =
-      await new window.google.maps.importLibrary('places');
+      await window.google.maps.importLibrary('places');
 
     // Restrict within the map viewport.
-    let center = new window.google.maps.LatLng(52.369358, 4.889258);
+    let lat = location.lat;
+    let lng = location.lng;
+
     const request = {
       // required parameters
-      fields: ['displayName', 'location', 'businessStatus'],
+      fields: ['displayName', 'location', 'businessStatus', 'rating'],
       locationRestriction: {
-        center: center,
+        center: { lat: lat, lng: lng },
         radius: 500,
       },
       // optional parameters
       includedPrimaryTypes: ['restaurant'],
-      maxResultCount: 5,
+      maxResultCount: 10,
       rankPreference: SearchNearbyRankPreference.POPULARITY,
       language: 'kr',
       region: 'kr',
@@ -32,10 +35,20 @@ export default function MyGoogleMap(props) {
 
     if (places.length) {
       console.log(places);
+      props.setPlaces(places);
 
-      const { LatLngBounds } = await new window.google.maps.importLibrary(
-        'core'
-      );
+      places.forEach(async (place) => {
+        const tmpplace = new Place({
+          id: place.id,
+          requestedLanguage: 'kr', // optional
+        });
+        await tmpplace.fetchFields({
+          fields: ['displayName', 'formattedAddress', 'rating'],
+        });
+        console.log(`${tmpplace.Eg.displayName} : ${tmpplace.Eg.rating}`);
+      });
+
+      const { LatLngBounds } = await window.google.maps.importLibrary('core');
       const bounds = new LatLngBounds();
     } else {
       console.log('No results');
@@ -70,13 +83,6 @@ export default function MyGoogleMap(props) {
 
   return (
     <>
-      <button
-        onClick={() => {
-          nearbySearch();
-        }}
-      >
-        zz
-      </button>
       <Map
         defaultZoom={15}
         defaultCenter={location}
@@ -90,6 +96,14 @@ export default function MyGoogleMap(props) {
         <MyMarkers />
       </Map>
       <GoogleSearch location={props.location} setLocation={setLocation} />
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          nearbySearch();
+        }}
+      >
+        식당검색
+      </button>
     </>
   );
 }
