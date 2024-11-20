@@ -184,13 +184,13 @@
   border-radius: 20px;
   height: 80vh;
   width: 400px;
-  transform: translate(760px, -290px);
+  transform: translate(calc(100vw - 49vw), calc(100vh - 140vh));
   cursor: pointer;
   overflow: auto;
   transition: 0.5s;
 }
 .customSideBar:hover {
-  transform: translate(440px, -290px);
+  transform: translate(calc(100vw - 76vw), calc(100vh - 140vh));
 }
 .customItems_list {
   /* position: absolute;
