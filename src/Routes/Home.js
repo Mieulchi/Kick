@@ -93,12 +93,38 @@ function Home() {
         <AiConsult />
       </section>
 
-      {/* 'About Us' 섹션, ref를 통해 스크롤 대상 지정 */}
       <section ref={aboutUsRef} className={styles.aboutUs}>
         <div className={styles.secondBody}>
-          <h2>About Us</h2>
-          <p>점메추는 저희가 고심해서 만들어낸 어쩌고 입니다.</p>
-          <h3>박승현 바보</h3>
+          <h1>About Us</h1>
+          <p className={styles.explainLOGO}>
+            NOMAD는 "<b>N</b>earby <b>O</b>ptions <b>M</b>ap <b>A</b>nd <b>D</b>
+            iscoveries"의 약자로,
+          </p>
+          <p>
+            여러분이 어디에 있든 가장 맛있는 선택을 쉽고 재미있게 찾을 수 있도록
+            도와드립니다.
+          </p>
+          <div className={styles.infoBoxes}>
+            <div className={styles.infoBox}>
+              <h2>룰렛으로 시작하는 미식 모험</h2>
+              <p>
+                설레는 기다림 끝에 여러분의 입맛에 맞는 메뉴를 추천받아보세요!
+              </p>
+            </div>
+            <div className={styles.infoBox}>
+              <h2>AI로 완성되는 맞춤형 추천</h2>
+              <p>
+                취향, 기분, 심지어 날씨까지 반영된 맞춤형 추천으로 새로운 경험을
+                선사합니다.
+              </p>
+            </div>
+            <div className={styles.infoBox}>
+              <h2>지도 위에서 펼쳐지는 맛의 여정</h2>
+              <p>
+                선택한 메뉴와 가장 가까운 맛집을 찾아 탐험의 즐거움을 더하세요.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
