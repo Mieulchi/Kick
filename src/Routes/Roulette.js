@@ -114,9 +114,11 @@ function Roulette() {
           <div className={styles.roulette_outer}>
             <div className={styles.roulette_pin}></div>
             <div className={styles.roulette_outerbtn}>
-              <button className={styles.roulette_btn}
-              onClick={handleSpin}
-              disabled={isSpinning}>
+              <button
+                className={styles.roulette_btn}
+                onClick={handleSpin}
+                disabled={isSpinning}
+              >
                 Spin!
               </button>
             </div>
@@ -183,6 +185,7 @@ function Roulette() {
                       : styles.inactive
                   }`}
                   onClick={() => handleCategoryClick(category)}
+                  disabled={isSpinning}
                 >
                   {category}
                 </button>
@@ -201,7 +204,9 @@ function Roulette() {
                   disabled={isSpinning}
                   placeholder="메뉴를 입력하세요"
                 />
-                <button onClick={addCustomItem} disabled={isSpinning} >추가</button>
+                <button onClick={addCustomItem} disabled={isSpinning}>
+                  추가
+                </button>
               </div>
               <div className={styles.customItems_list}>
                 <h4>
@@ -215,7 +220,10 @@ function Roulette() {
                       onChange={(e) => handleItemChange(index, e.target.value)}
                       disabled={isSpinning}
                     />
-                    <button onClick={() => handleItemDelete(index)} disabled={isSpinning}>
+                    <button
+                      onClick={() => handleItemDelete(index)}
+                      disabled={isSpinning}
+                    >
                       삭제
                     </button>
                   </li>

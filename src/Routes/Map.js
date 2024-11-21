@@ -1,16 +1,17 @@
 // Map.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import KakaoMap from '../components/KakaoMap'; // KakaoMap 컴포넌트 import
-import logo from '../Logo/Logo.png';
-import styles from '../Css/Map.module.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import KakaoMap from "../components/KakaoMap"; // KakaoMap 컴포넌트 import
+import logo from "../Logo/Logo.png";
+import styles from "../Css/Map.module.css";
 
 function Map() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState('');
-  const [tmp, setTmp] = useState();
+  const [location, setLocation] = useState(""); // 선택된 위치
+  const [tmp, setTmp] = useState(""); // 입력 중인 위치
+
   const handleSearchLocation = () => {
-    setLocation(tmp);
+    setLocation(tmp); // location에 tmp 값 반영
   };
 
   return (
@@ -18,7 +19,7 @@ function Map() {
       <nav className={styles.upBar}>
         <img
           onClick={() => {
-            navigate('/');
+            navigate("/");
           }}
           src={logo}
         />
@@ -43,15 +44,20 @@ function Map() {
           </div>
         </div>
         <div className={styles.resultBox}>
-          <div>설정 위치:</div>
-          <div>선정 메뉴:</div>
+          <div className={styles.menuLook}>
+            메뉴를 검색할
+            <br />
+            위치를 설정해주세요.
+          </div>
+          <div className={styles.locationLook}>현재 위치: {location}</div>
+
           <button
-            className="btn btn-primary mt-3"
+            className={styles.goToReview}
             onClick={() => {
-              navigate('/review', { state: { location: location } });
+              navigate("/review", { state: { location: location } });
             }}
           >
-            리뷰 화면으로
+            검색하기
           </button>
         </div>
       </div>
