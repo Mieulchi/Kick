@@ -77,8 +77,11 @@ function Home() {
           />
           <button
             onClick={() => {
-              navigate("/Map", { state: { selectedItem: { name: selectedItem } } }); // Use navigate here to go to '/Map'
+              navigate("/Map", {
+                state: { selectedItem: { name: selectedItem } },
+              });
             }}
+            disabled={!selectedItem || selectedItem.trim() === ""} // 입력값이 없으면 버튼 비활성화
           >
             <BsSearch className={styles.searchIcon} />
           </button>

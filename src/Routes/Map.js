@@ -11,14 +11,14 @@ function Map() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [locationSearch, setLocationSearch] = useState("");
   const [tmp, setTmp] = useState("");
-  
+
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
       setSelectedItem(item.name || item);
     }
   }, [location.state]);
-  
+
   const handleSearchLocation = () => {
     setLocationSearch(tmp);
   };
@@ -61,18 +61,18 @@ function Map() {
           </div>
           <div className={styles.locationLook}>현재 위치: {locationSearch}</div>
 
-          <div className={styles.selectedItem}>
-            {selectedItem ? (
-              <div>선정 메뉴: {selectedItem}</div>
-            ) : (
-              <div>선정된 메뉴가 없습니다.</div>
-            )}
-          </div>
+          {selectedItem ? (
+            <div className={styles.selectedItem}>선정 메뉴: {selectedItem}</div>
+          ) : (
+            <div className={styles.selectedItem}>선정된 메뉴가 없습니다.</div>
+          )}
 
           <button
             className={styles.goToReview}
             onClick={() => {
-              navigate("/review", { state: { location: locationSearch, selectedItem: selectedItem } });
+              navigate("/review", {
+                state: { location: locationSearch, selectedItem: selectedItem },
+              });
             }}
           >
             검색하기
