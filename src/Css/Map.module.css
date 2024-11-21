@@ -65,6 +65,10 @@
   cursor: pointer;
   margin-left: -1px;
 }
+button:disabled {
+  background-color: #ccc; /* 비활성화 시 버튼 색상 변경 */
+  cursor: not-allowed; /* 비활성화 시 커서 스타일 변경 */
+}
 
 .searchBT:hover {
   background-color: #567d1d;
