@@ -31,15 +31,15 @@
 .searchBar {
   display: flex;
   align-items: center;
-  width: 80%;
+  width: 80.15%;
   margin-bottom: -0.03rem;
 }
 
 .searchBar input {
-  flex: 1; /* Takes up remaining space */
-  border-radius: 10px 0 0 10px; /* Rounded corners on the left */
-  padding: 0.5rem;
-  margin: 0; /* Remove any default margin */
+  flex: 1;
+  border-radius: 10px 0 0 0;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  margin: 0;
 }
 
 /* Map Box and Map Styling */
@@ -50,19 +50,19 @@
 .map {
   height: 450px;
   width: 80%;
-  border-radius: 5px;
+  margin-left: 0.09rem;
+  border-radius: 0 0 10px 10px;
 }
 
-/* Bootstrap Button Styling */
 .searchBT {
-  padding: 0.55rem;
+  padding: 0.55rem 0.75rem 0.55rem 0.55rem;
   color: white;
   background-color: #6b8e23;
   border: none;
-  border-radius: 0 10px 10px 0; /* Rounded corners on the right */
+  border-radius: 0 10px 0 0;
   transition: background-color 0.3s ease;
-  cursor: pointer; /* Optional: Add a pointer cursor */
-  margin-left: -1px; /* Removes the gap between the input and button */
+  cursor: pointer;
+  margin-left: -1px;
 }
 
 .searchBT:hover {

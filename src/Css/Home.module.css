@@ -155,21 +155,64 @@ h3 :hover {
   background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
     url("../Images/foodBG.jpg");
 }
+
 .secondBody {
-  position: relative; /* 화면에서 고정된 위치로 설정 */
-  top: 50%; /* 화면 세로 중앙에 위치 */
-  left: 50%; /* 화면 가로 중앙에 위치 */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* 중앙을 정확히 맞추기 위해 컨텐츠를 이동 */
   color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
+  top: 28%;
 }
+
+.secondBody h1 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.secondBody p {
+  font-size: 18px;
+  margin-bottom: 0;
+  letter-spacing: -0.025rem;
+}
+
+.explainLOGO b {
+  color: #73eeb2;
+}
+
+.infoBoxes {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.infoBox {
+  background-color: #1a1a1a;
+  border: 2px solid #73eeb2;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.infoBox h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #73eeb2;
+}
+
+.infoBox p {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.4;
+}
+
 .chatBot {
   position: absolute;
+
   left: 70%;
   top: 20%;
   width: 400px;

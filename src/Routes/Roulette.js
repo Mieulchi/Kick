@@ -174,51 +174,19 @@ function Roulette() {
         <section className={styles.selectView}>
           {!isCustomMode && (
             <div className={styles.category_btn}>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "모두" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("모두")}
-                disabled={isSpinning}
-              >
-                모두
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "한식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("한식")}
-                disabled={isSpinning}
-              >
-                한식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "양식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("양식")}
-                disabled={isSpinning}
-              >
-                양식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "중식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("중식")}
-                disabled={isSpinning}
-              >
-                중식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "일식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("일식")}
-                disabled={isSpinning}
-              >
-                일식
-              </button>
+              {["모두", "한식", "양식", "중식", "일식"].map((category) => (
+                <button
+                  key={category}
+                  className={`${styles.categoryButton} ${
+                    selectedCategory === category
+                      ? styles.active
+                      : styles.inactive
+                  }`}
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           )}
 
@@ -262,9 +230,7 @@ function Roulette() {
             }
           >
             <div className={styles.menu}>
-              <h3>
-                <b>점심 메뉴는?</b>
-              </h3>
+              <h3>점심 메뉴는?</h3>
               <div>
                 {selectedItem && (
                   <div className={styles.selectedItem}>{selectedItem.name}</div>
