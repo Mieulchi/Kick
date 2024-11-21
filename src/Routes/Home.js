@@ -16,6 +16,7 @@ function Home() {
   const navigate = useNavigate(); // Initialize navigate using useNavigate
   const images = [chicken, noodle, pizza, soup, meet]; // 이미지 배열
   const [currentImage, setCurrentImage] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // 'About Us' 섹션을 위한 ref
   const aboutUsRef = useRef(null);
@@ -42,7 +43,6 @@ function Home() {
     }
   };
 
-  // 'JMC' 클릭 시 홈 화면으로 네비게이트
   const refreshPage = () => {
     window.location.reload(); // 페이지 새로고침
   };
@@ -72,10 +72,12 @@ function Home() {
             type="text"
             placeholder="메뉴 이름을 입력해주세요"
             className={styles.searchInput}
+            value={selectedItem}
+            onChange={(e) => setSelectedItem(e.target.value)}
           />
           <button
             onClick={() => {
-              navigate("/Map"); // Use navigate here to go to '/Map'
+              navigate("/Map", { state: { selectedItem: { name: selectedItem } } }); // Use navigate here to go to '/Map'
             }}
           >
             <BsSearch className={styles.searchIcon} />

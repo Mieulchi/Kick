@@ -1,3 +1,4 @@
+//Roulette.js
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import styles from "../Css/Roulette.module.css";
@@ -67,6 +68,10 @@ function Roulette() {
 
       setIsSpinning(false);
     }, 7000);
+  };
+
+  const handleGoToMap = () => {
+    navigate("/Map", { state: { selectedItem: selectedItem } });
   };
 
   const handleItemChange = (index, newName) => {
@@ -251,7 +256,7 @@ function Roulette() {
               className={
                 isCustomMode ? styles.goToReview_custom : styles.goToReview
               }
-              onClick={() => navigate("/map")}
+              onClick={handleGoToMap}
               disabled={isSpinning}
             >
               음식점 찾기
