@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@100..900&display=swap");
+@font-face {
+  font-family: "HakgyoansimBunpilR";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBunpilR.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 .body {
   width: 100vw;
   height: 100vh;
@@ -141,7 +149,7 @@
 
 .categoryButton {
   background-color: white;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 6px;
   border: none;
   padding: 12px 19px;
@@ -247,9 +255,9 @@
   background-color: #c82333;
 }
 .selectedItem {
-  font-size: 36px;
-  font-weight: bold;
-  padding-top: 10px;
+  font-size: 48px;
+  font-family: "HakgyoansimBunpilR";
+  font-weight: 500;
 }
 .CustomSelectMenu {
   position: absolute;
@@ -270,7 +278,7 @@
   margin-right: 30px;
 }
 .CustomSelectMenu .menu {
-  padding-top: 7rem;
+  padding-top: 6.5rem;
   padding-left: 3rem;
   color: black;
   display: flex;
@@ -278,7 +286,7 @@
   align-items: center;
 }
 .selectMenu .menu {
-  padding-top: 2rem;
+  padding-top: 1rem;
   padding-left: 9rem;
   color: black;
   display: flex;
@@ -286,7 +294,9 @@
   align-items: center;
 }
 .menu h3 {
-  font-weight: bold;
+  font-family: "HakgyoansimBunpilR";
+  font-weight: 500;
+  font-size: 36px;
 }
 .goToReview,
 .goToReview_custom {

@@ -1,14 +1,19 @@
 /* Home.module.css */
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "NanumSquare", sans-serif;
 }
 body,
 html {
   overflow-x: hidden; /* 수평 스크롤바 숨기기 */
   height: 100%;
 }
+
 html {
   scroll-behavior: smooth;
   letter-spacing: -0.025rem;
@@ -45,7 +50,7 @@ html {
   font-size: 20px;
   font-weight: bold;
   margin-left: 2.5rem;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   cursor: pointer;
 }
 h3 :hover {
@@ -66,11 +71,12 @@ h3 :hover {
 }
 .cp {
   position: absolute;
-  top: 34%;
-  left: 10%;
-  font-size: 50px;
+  top: 33%;
+  left: 9%;
+  font-size: 60px;
   color: white;
-  font-weight: bold;
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 500;
 }
 .searchBar {
   position: absolute;

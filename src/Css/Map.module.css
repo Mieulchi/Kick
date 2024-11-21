@@ -1,8 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@100..900&display=swap");
+
 /* Reset and box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .body {
@@ -22,9 +25,7 @@
 /* Main Content Area */
 .contents {
   display: flex;
-  padding-top: 5rem; /* Allows space for the fixed navigation bar */
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-top: 5rem;
 }
 
 /* Search Bar Styling */
@@ -71,6 +72,40 @@
 .resultBox {
   display: flex;
   flex-direction: column;
+  color: white;
+}
+.menuLook {
+  position: absolute;
+  top: 20%;
+  left: 65%;
+  font-size: 45px;
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 500;
+}
+.locationLook {
+  font-family: "Do Hyeon", sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 65%;
+  font-size: 40px;
+}
+.goToReview {
+  position: absolute;
+  top: 77%;
+  left: 65%;
+  background-color: rgba(255, 255, 255, 0.99);
+  font-size: 26px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+  word-spacing: -0.15rem;
+}
+.goToReview:hover {
+  background-color: #55a872;
   color: white;
 }
 /* Responsive Padding Adjustments */
