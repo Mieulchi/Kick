@@ -1,17 +1,26 @@
 // Map.js
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import KakaoMap from "../components/KakaoMap"; // KakaoMap 컴포넌트 import
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import KakaoMap from "../components/KakaoMap";
 import logo from "../Logo/Logo.png";
 import styles from "../Css/Map.module.css";
 
 function Map() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState(""); // 선택된 위치
-  const [tmp, setTmp] = useState(""); // 입력 중인 위치
-
+  const location = useLocation();
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [locationSearch, setLocationSearch] = useState("");
+  const [tmp, setTmp] = useState("");
+  
+  useEffect(() => {
+    if (location.state && location.state.selectedItem) {
+      const item = location.state.selectedItem;
+      setSelectedItem(item.name || item);
+    }
+  }, [location.state]);
+  
   const handleSearchLocation = () => {
-    setLocation(tmp); // location에 tmp 값 반영
+    setLocationSearch(tmp);
   };
 
   return (
@@ -40,21 +49,30 @@ function Map() {
             </button>
           </div>
           <div id="map" className={styles.map}>
-            <KakaoMap location={location}></KakaoMap>
+            <KakaoMap location={locationSearch} />
           </div>
         </div>
+
         <div className={styles.resultBox}>
           <div className={styles.menuLook}>
             메뉴를 검색할
             <br />
             위치를 설정해주세요.
           </div>
-          <div className={styles.locationLook}>현재 위치: {location}</div>
+          <div className={styles.locationLook}>현재 위치: {locationSearch}</div>
+
+          <div className={styles.selectedItem}>
+            {selectedItem ? (
+              <div>선정 메뉴: {selectedItem}</div>
+            ) : (
+              <div>선정된 메뉴가 없습니다.</div>
+            )}
+          </div>
 
           <button
             className={styles.goToReview}
             onClick={() => {
-              navigate("/review", { state: { location: location } });
+              navigate("/review", { state: { location: locationSearch, selectedItem: selectedItem } });
             }}
           >
             검색하기
