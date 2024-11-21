@@ -114,7 +114,9 @@ function Roulette() {
           <div className={styles.roulette_outer}>
             <div className={styles.roulette_pin}></div>
             <div className={styles.roulette_outerbtn}>
-              <button className={styles.roulette_btn} onClick={handleSpin}>
+              <button className={styles.roulette_btn}
+              onClick={handleSpin}
+              disabled={isSpinning}>
                 Spin!
               </button>
             </div>
@@ -164,6 +166,7 @@ function Roulette() {
               className={styles.toggleCheckbox}
               checked={isCustomMode}
               onChange={toggleCustomMode}
+              disabled={isSpinning}
             />
             <span className={styles.toggleSlider}></span>
           </label>
@@ -176,6 +179,7 @@ function Roulette() {
                   selectedCategory === "모두" ? "active" : "btn-light"
                 }`}
                 onClick={() => handleCategoryClick("모두")}
+                disabled={isSpinning}
               >
                 모두
               </button>
@@ -184,6 +188,7 @@ function Roulette() {
                   selectedCategory === "한식" ? "active" : "btn-light"
                 }`}
                 onClick={() => handleCategoryClick("한식")}
+                disabled={isSpinning}
               >
                 한식
               </button>
@@ -192,6 +197,7 @@ function Roulette() {
                   selectedCategory === "양식" ? "active" : "btn-light"
                 }`}
                 onClick={() => handleCategoryClick("양식")}
+                disabled={isSpinning}
               >
                 양식
               </button>
@@ -200,6 +206,7 @@ function Roulette() {
                   selectedCategory === "중식" ? "active" : "btn-light"
                 }`}
                 onClick={() => handleCategoryClick("중식")}
+                disabled={isSpinning}
               >
                 중식
               </button>
@@ -208,6 +215,7 @@ function Roulette() {
                   selectedCategory === "일식" ? "active" : "btn-light"
                 }`}
                 onClick={() => handleCategoryClick("일식")}
+                disabled={isSpinning}
               >
                 일식
               </button>
@@ -222,9 +230,10 @@ function Roulette() {
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  disabled={isSpinning}
                   placeholder="메뉴를 입력하세요"
                 />
-                <button onClick={addCustomItem}>추가</button>
+                <button onClick={addCustomItem} disabled={isSpinning} >추가</button>
               </div>
               <div className={styles.customItems_list}>
                 <h4>
@@ -236,8 +245,9 @@ function Roulette() {
                       type="text"
                       value={item.name}
                       onChange={(e) => handleItemChange(index, e.target.value)}
+                      disabled={isSpinning}
                     />
-                    <button onClick={() => handleItemDelete(index)}>
+                    <button onClick={() => handleItemDelete(index)} disabled={isSpinning}>
                       삭제
                     </button>
                   </li>
@@ -268,6 +278,7 @@ function Roulette() {
                 isCustomMode ? styles.goToReview_custom : styles.goToReview
               }
               onClick={() => navigate("/map")}
+              disabled={isSpinning}
             >
               음식점 찾기
             </button>
