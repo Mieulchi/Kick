@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from '../Css/Review.module.css';
 import MyGoogleMap from '../components/MyGoogleMap';
 import MyNaverMap from '../components/MyNaverMap';
+import MyKakaoMap from '../components/MyKakaoMap';
 
 function Review() {
 	const navigate = useNavigate();
@@ -63,7 +64,11 @@ function Review() {
 							setPlaces={setPlaces}
 						></MyNaverMap>
 					) : (
-						<KakaoMap></KakaoMap>
+						<MyKakaoMap
+							location={location}
+							keyword={keyword}
+							setPlaces={setPlaces}
+						></MyKakaoMap>
 					)}
 				</div>
 				<div className={styles.reviewdiv} style={{ border: '1px solid blue' }}>

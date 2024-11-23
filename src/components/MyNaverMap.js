@@ -21,7 +21,6 @@ export default function MyNaverMap(props) {
 				},
 				headers: headers,
 			});
-			console.log(response);
 
 			const places = response.data.items.map((item) => {
 				return { displayName: item.title, rating: '' };
@@ -76,11 +75,12 @@ export default function MyNaverMap(props) {
 
 	useEffect(() => {
 		setLocation(props.location);
-		searchLocation();
 	}, []);
 
 	useEffect(() => {
-		searchLocation();
+		if (location) {
+			searchLocation();
+		}
 	}, [location]);
 
 	return (
@@ -90,10 +90,10 @@ export default function MyNaverMap(props) {
 				<input
 					type="text"
 					placeholder="Search Places..."
+					defaultValue={props.location}
 					onKeyDown={(event) => {
 						if (event.key === 'Enter') {
 							setLocation(event.target.value);
-							event.target.value = ''; // 입력 필드 초기화
 						}
 					}}
 				/>

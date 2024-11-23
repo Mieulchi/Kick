@@ -11,7 +11,6 @@ export default function MyGoogleMap(props) {
 	const mapRef = useRef(null);
 
 	async function textSearch() {
-		console.log(place);
 		const { Place, SearchNearbyRankPreference } =
 			await window.google.maps.importLibrary('places');
 		const txtRequest = {
@@ -84,7 +83,6 @@ export default function MyGoogleMap(props) {
 
 	// props.location(문자열)을 좌표로 변환하여 초기화
 	useEffect(() => {
-		console.log(props.location);
 		setPlace(props.location);
 		if (props.location) {
 			geocodeByAddress(props.location)
