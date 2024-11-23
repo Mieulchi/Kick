@@ -1,36 +1,103 @@
-import { useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function MyNaverMap(props) {
-	async function naverSearch() {
-		await window.naver.maps.Service.geocode(
-			{
-				query: '불정로 6',
+	const [coords, setCoords] = useState([]);
+	const [location, setLocation] = useState();
+
+	async function searchLocation() {
+		try {
+			const headers = {
+				'X-Naver-Client-Id': process.env.REACT_APP_NAVER_CLIENT_ID,
+				'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_CLIENT_SECRET,
+			};
+
+			const baseUrl = 'v1/search/local.json';
+
+			const response = await axios.get(baseUrl, {
+				params: {
+					query: `${location} ${props.keyword}`, // 검색어
+					display: 10, // 결과 수
+				},
+				headers: headers,
+			});
+			console.log(response);
+
+			const places = response.data.items.map((item) => {
+				return { displayName: item.title, rating: '' };
+			});
+			props.setPlaces(places);
+
+			const convertedLocations = response.data.items.map((item) => {
+				const formattedX = `${String(item.mapx).slice(0, 3)}.${String(
+					item.mapx
+				).slice(3)}`;
+				const formattedY = `${String(item.mapy).slice(0, 2)}.${String(
+					item.mapy
+				).slice(2)}`;
+				return { lat: formattedY, lng: formattedX };
+			});
+
+			setCoords(convertedLocations);
+		} catch (error) {
+			console.error(
+				'Error during API request:',
+				error.response || error.message
+			);
+		}
+	}
+
+	function initMap() {
+		let map = new window.naver.maps.Map('map', {
+			center: new window.naver.maps.LatLng(
+				parseFloat(coords[0].lat),
+				parseFloat(coords[0].lng)
+			), //지도의 초기 중심 좌표
+			zoom: 14, //지도의 초기 줌 레벨
+			minZoom: 7, //지도의 최소 줌 레벨
+			zoomControl: true, //줌 컨트롤의 표시 여부
+			zoomControlOptions: {
+				position: window.naver.maps.Position.TOP_RIGHT,
 			},
-			function (status, response) {
-				if (status !== window.naver.maps.Service.Status.OK) {
-					return alert('Something wrong!');
-				}
-
-				let result = response.v2, // 검색 결과의 컨테이너
-					items = result.addresses; // 검색 결과의 배열
-
-				// do Something
-				console.log(result);
-			}
-		);
+		});
+		coords.map((each) => {
+			let marker = new window.naver.maps.Marker({
+				position: new window.naver.maps.LatLng(each),
+				map: map,
+			});
+		});
 	}
 
 	useEffect(() => {
-		const mapDiv = document.getElementById('map');
-		const map = new window.naver.maps.Map(mapDiv);
-		console.log(props.location);
+		if (coords.length > 0) {
+			initMap();
+		}
+	}, [coords]);
 
-		naverSearch();
+	useEffect(() => {
+		setLocation(props.location);
+		searchLocation();
 	}, []);
 
+	useEffect(() => {
+		searchLocation();
+	}, [location]);
+
 	return (
-		<div>
-			<div id="map" style={{ width: '400px', height: '400px' }} />
+		<div style={{ margin: '0 auto' }}>
+			<div id="map" style={{ width: '100%', height: '500px' }} />
+			<div>
+				<input
+					type="text"
+					placeholder="Search Places..."
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							setLocation(event.target.value);
+							event.target.value = ''; // 입력 필드 초기화
+						}
+					}}
+				/>
+			</div>
 		</div>
 	);
 }

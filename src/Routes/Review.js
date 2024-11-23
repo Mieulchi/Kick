@@ -9,16 +9,13 @@ function Review() {
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const [location, setLocation] = useState();
+	const [keyword, setKeyword] = useState();
 	const [places, setPlaces] = useState();
 	const [map, setMap] = useState('google');
 
 	useEffect(() => {
-		console.log(location);
-	}, [location]);
-
-	useEffect(() => {
-		console.log(state);
 		setLocation(state.location);
+		setKeyword(state.selectedItem);
 	}, []);
 
 	return (
@@ -55,23 +52,26 @@ function Review() {
 					{map == 'google' ? (
 						<MyGoogleMap
 							location={location}
+							keyword={keyword}
 							places={places}
 							setPlaces={setPlaces}
 						></MyGoogleMap>
 					) : map == 'naver' ? (
-						<MyNaverMap location={location}></MyNaverMap>
+						<MyNaverMap
+							location={location}
+							keyword={keyword}
+							setPlaces={setPlaces}
+						></MyNaverMap>
 					) : (
 						<KakaoMap></KakaoMap>
 					)}
 				</div>
 				<div className={styles.reviewdiv} style={{ border: '1px solid blue' }}>
-					리뷰 목록임
 					{places ? (
 						places.map((place) => {
-							console.log(place);
 							return (
 								<div>
-									{place.Eg.displayName} : {place.Eg.rating}
+									{place.displayName} {place.rating ? `: ${place.rating}` : ''}
 								</div>
 							);
 						})

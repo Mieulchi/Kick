@@ -29,6 +29,8 @@ export default function GoogleSearch(props) {
 
 	// 검색 선택 처리
 	const handleSelect = (selectedAddress) => {
+		props.setPlace(selectedAddress);
+
 		setAddress(selectedAddress); // 검색창 값 설정
 		geocodeByAddress(selectedAddress)
 			.then((results) => getLatLng(results[0]))
@@ -45,7 +47,7 @@ export default function GoogleSearch(props) {
 			onChange={handleChange}
 			onSelect={handleSelect}
 		>
-			{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+			{({ getInputProps }) => (
 				<div>
 					<input
 						{...getInputProps({
@@ -53,27 +55,6 @@ export default function GoogleSearch(props) {
 							className: 'location-search-input',
 						})}
 					/>
-					<div className="autocomplete-dropdown-container">
-						{loading && <div>Loading...</div>}
-						{suggestions.map((suggestion) => {
-							const className = suggestion.active
-								? 'suggestion-item--active'
-								: 'suggestion-item';
-							const style = suggestion.active
-								? { backgroundColor: '#fafafa', cursor: 'pointer' }
-								: { backgroundColor: '#ffffff', cursor: 'pointer' };
-							return (
-								<div
-									{...getSuggestionItemProps(suggestion, {
-										className,
-										style,
-									})}
-								>
-									<span>{suggestion.description}</span>
-								</div>
-							);
-						})}
-					</div>
 				</div>
 			)}
 		</PlacesAutocomplete>
