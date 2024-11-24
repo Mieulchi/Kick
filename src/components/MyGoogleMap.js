@@ -26,7 +26,6 @@ export default function MyGoogleMap(props) {
 
 		const { places } = await Place.searchByText(txtRequest);
 
-		console.log(places);
 		if (places.length) {
 			const filteredPlaces = places.map((place) => {
 				return { displayName: place.Eg.displayName, rating: place.Eg.rating };
@@ -36,7 +35,6 @@ export default function MyGoogleMap(props) {
 					location: { lat: place.Eg.location.lat, lng: place.Eg.location.lng },
 				};
 			});
-			console.log(filteredPlaces);
 			props.setPlaces(filteredPlaces);
 			setCoords(filteredCoords);
 		}
@@ -66,7 +64,6 @@ export default function MyGoogleMap(props) {
 		};
 
 		const { places } = await Place.searchNearby(nearbyRequest);
-		console.log(places);
 		if (places.length) {
 			const filteredPlaces = places.map((place) => {
 				return { displayName: place.Eg.displayName, rating: place.Eg.rating };
