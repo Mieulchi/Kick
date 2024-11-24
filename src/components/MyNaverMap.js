@@ -73,7 +73,6 @@ export default function MyNaverMap(props) {
 	}
 
 	function initMap() {
-		console.log(center);
 		let map = new window.naver.maps.Map('map', {
 			center: new window.naver.maps.LatLng(
 				parseFloat(center.lat),
