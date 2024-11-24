@@ -4,6 +4,32 @@ import { useEffect, useState } from 'react';
 export default function MyNaverMap(props) {
 	const [coords, setCoords] = useState([]);
 	const [location, setLocation] = useState();
+	const [center, setCenter] = useState();
+
+	async function getCenter() {
+		const headers = {
+			'X-Naver-Client-Id': process.env.REACT_APP_NAVER_CLIENT_ID,
+			'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_CLIENT_SECRET,
+		};
+
+		const baseUrl = 'v1/search/local.json';
+
+		let center = await axios.get(baseUrl, {
+			params: {
+				query: `${location}`, // 검색어
+				display: 1, // 결과 수
+			},
+			headers: headers,
+		});
+		center = center.data.items[0];
+		const formattedX = `${String(center.mapx).slice(0, 3)}.${String(
+			center.mapx
+		).slice(3)}`;
+		const formattedY = `${String(center.mapy).slice(0, 2)}.${String(
+			center.mapy
+		).slice(2)}`;
+		setCenter({ lat: formattedY, lng: formattedX });
+	}
 
 	async function searchLocation() {
 		try {
@@ -47,10 +73,11 @@ export default function MyNaverMap(props) {
 	}
 
 	function initMap() {
+		console.log(center);
 		let map = new window.naver.maps.Map('map', {
 			center: new window.naver.maps.LatLng(
-				parseFloat(coords[0].lat),
-				parseFloat(coords[0].lng)
+				parseFloat(center.lat),
+				parseFloat(center.lng)
 			), //지도의 초기 중심 좌표
 			zoom: 14, //지도의 초기 줌 레벨
 			minZoom: 7, //지도의 최소 줌 레벨
@@ -60,7 +87,7 @@ export default function MyNaverMap(props) {
 			},
 		});
 		coords.map((each) => {
-			let marker = new window.naver.maps.Marker({
+			new window.naver.maps.Marker({
 				position: new window.naver.maps.LatLng(each),
 				map: map,
 			});
@@ -68,10 +95,10 @@ export default function MyNaverMap(props) {
 	}
 
 	useEffect(() => {
-		if (coords.length > 0) {
+		if (center) {
 			initMap();
 		}
-	}, [coords]);
+	}, [center]);
 
 	useEffect(() => {
 		setLocation(props.location);
@@ -79,6 +106,7 @@ export default function MyNaverMap(props) {
 
 	useEffect(() => {
 		if (location) {
+			getCenter();
 			searchLocation();
 		}
 	}, [location]);

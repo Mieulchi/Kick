@@ -74,11 +74,14 @@ function Review() {
 				<div className={styles.reviewdiv} style={{ border: '1px solid blue' }}>
 					{places ? (
 						places.map((place) => {
-							return (
-								<div>
-									{place.displayName} {place.rating ? `: ${place.rating}` : ''}
-								</div>
-							);
+							if (place.displayName != 'Undefined') {
+								return (
+									<div>
+										{place.displayName}{' '}
+										{place.rating ? `: ${place.rating}` : ''}
+									</div>
+								);
+							}
 						})
 					) : (
 						<></>
