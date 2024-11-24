@@ -1,15 +1,39 @@
+.body {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+    url("../Images/foodBG.jpg");
+  background-size: cover;
+}
 .review {
   width: 80%;
   height: 100vh;
+  padding-top: 50px;
   margin: 0 auto;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* 내부 요소들을 가운데 정렬 */
 }
-
-.review>* {
+.upBar img {
+  margin-left: 5.9rem;
+  padding-top: 1.2rem;
+  width: 10rem;
+  cursor: pointer;
+}
+.review Button {
+  color: white;
+  background-color: green;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 40px;
+}
+.selectMap {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.review > * {
   width: 100%;
   /* 자식 요소가 부모 너비에 맞게 채워짐 */
   margin: 10px 10px;
@@ -27,6 +51,9 @@
 
 .reviewdiv {
   width: 50%;
+  background-color: white;
+  border-radius: 0 30px 30px 0;
+  align-content: center;
 }
 
 .review_container {
