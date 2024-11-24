@@ -1,4 +1,4 @@
-import { Map } from '@vis.gl/react-google-maps';
+import { Map, useMap } from '@vis.gl/react-google-maps';
 import MyGoogleMarkers from './MyGoogleMarkers';
 import { useState, useRef, useEffect } from 'react';
 import GoogleSearch from './GoogleSearch';
@@ -8,13 +8,13 @@ export default function MyGoogleMap(props) {
 	const [place, setPlace] = useState();
 	const [location, setLocation] = useState({ lat: 0, lng: 0 });
 	const [coords, setCoords] = useState('');
-	const mapRef = useRef(null);
+	const mapRef = useMap();
 
 	async function textSearch() {
-		const { Place, SearchNearbyRankPreference } =
-			await window.google.maps.importLibrary('places');
+		const { Place } = await window.google.maps.importLibrary('places');
+
 		const txtRequest = {
-			textQuery: `${place} ${props.keyword}`,
+			textQuery: `${place} ${props.keyword} `,
 			fields: ['displayName', 'location', 'businessStatus', 'rating'],
 			includedType: 'restaurant',
 			isOpenNow: true,
@@ -35,7 +35,6 @@ export default function MyGoogleMap(props) {
 					location: { lat: place.Eg.location.lat, lng: place.Eg.location.lng },
 				};
 			});
-
 			props.setPlaces(filteredPlaces);
 			setCoords(filteredCoords);
 		}
@@ -65,7 +64,6 @@ export default function MyGoogleMap(props) {
 		};
 
 		const { places } = await Place.searchNearby(nearbyRequest);
-
 		if (places.length) {
 			const filteredPlaces = places.map((place) => {
 				return { displayName: place.Eg.displayName, rating: place.Eg.rating };
@@ -99,13 +97,9 @@ export default function MyGoogleMap(props) {
 	}, []);
 
 	useEffect(() => {
-		if (mapRef.current && location.lat && location.lng) {
-			// Google Maps API의 setCenter 호출
-			mapRef.current.setCenter(location);
+		if (mapRef && location.lat && location.lng) {
+			mapRef.setCenter(location); // 지도 중심 설정
 		}
-	}, [location]);
-
-	useEffect(() => {
 		if (location.lat !== 0 && location.lng !== 0) {
 			textSearch(); // location이 설정되면 검색 실행
 		}
@@ -114,12 +108,9 @@ export default function MyGoogleMap(props) {
 	return (
 		<>
 			<Map
-				defaultZoom={15}
-				center={location} // location이 변경되면 지도 중심 업데이트
+				defaultZoom={13} // 초기 줌 레벨
+				defaultCenter={location}
 				mapId={`${process.env.MY_MAP_ID}`}
-				onLoad={(map) => {
-					mapRef.current = map;
-				}}
 			>
 				<MyGoogleMarkers coords={coords} />
 			</Map>
