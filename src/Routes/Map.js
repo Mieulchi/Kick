@@ -22,6 +22,11 @@ function Map() {
   const handleSearchLocation = () => {
     setLocationSearch(tmp);
   };
+  const handleKeyDown = (e) =>{
+    if(e.key === "Enter"){
+      handleSearchLocation()
+    }
+  }
 
   return (
     <div className={styles.body}>
@@ -41,6 +46,7 @@ function Map() {
               type="text"
               value={tmp}
               onChange={(e) => setTmp(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
               className={styles.searchLocation}
             />
