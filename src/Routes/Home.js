@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate here
-import styles from "../Css/Home.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BsSearch } from "react-icons/bs";
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate here
+import styles from '../Css/Home.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BsSearch } from 'react-icons/bs';
 
 import chicken from "../Images/chicken.jpg";
 import meet from "../Images/meet.jpg";
@@ -18,42 +18,43 @@ function Home() {
   const [currentImage, setCurrentImage] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  // 'About Us' 섹션을 위한 ref
-  const aboutUsRef = useRef(null);
+	// 'About Us' 섹션을 위한 ref
+	const aboutUsRef = useRef(null);
 
-  // 모든 이미지를 미리 로드하여 캐시
-  useEffect(() => {
-    // 이미지 미리 로드
-    images.forEach((image) => {
-      const img = new Image();
-      img.src = image;
-    });
+	// 모든 이미지를 미리 로드하여 캐시
+	useEffect(() => {
+		// 이미지 미리 로드
+		images.forEach((image) => {
+			const img = new Image();
+			img.src = image;
+		});
 
-    // 랜덤 이미지 선택
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    setCurrentImage(randomImage);
-  }, []); // 빈 배열을 두 번째 인자로 넣어 한 번만 실행되게 설정
+		// 랜덤 이미지 선택
+		const randomImage = images[Math.floor(Math.random() * images.length)];
+		setCurrentImage(randomImage);
+	}, []); // 빈 배열을 두 번째 인자로 넣어 한 번만 실행되게 설정
 
-  // 'About Us' 클릭 시 해당 섹션으로 스크롤
-  const scrollToAboutUs = () => {
-    if (aboutUsRef.current) {
-      aboutUsRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  };
+	// 'About Us' 클릭 시 해당 섹션으로 스크롤
+	const scrollToAboutUs = () => {
+		if (aboutUsRef.current) {
+			aboutUsRef.current.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	};
 
-  const refreshPage = () => {
-    window.location.reload(); // 페이지 새로고침
-  };
+	// 'JMC' 클릭 시 홈 화면으로 네비게이트
+	const refreshPage = () => {
+		window.location.reload(); // 페이지 새로고침
+	};
 
-  return (
-    <div className={styles.content}>
-      <nav className={styles.upBar} id={styles.hd}>
-        <img src={darkLogo} onClick={refreshPage} />
-        {/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
-        <h3 onClick={scrollToAboutUs}>about us</h3>
-      </nav>
+	return (
+		<div className={styles.content}>
+			<nav className={styles.upBar} id={styles.hd}>
+				<img src={darkLogo} onClick={refreshPage} />
+				{/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
+				<h3 onClick={scrollToAboutUs}>about us</h3>
+			</nav>
 
       <section
         className={styles.body}
