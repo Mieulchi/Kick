@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Message from "./Message";
-import { useNavigate } from "react-router-dom";
 import { fetchChatResponse } from "../api";
 import styles from "../Css/Home.module.css";
 
@@ -11,35 +10,50 @@ import botAvatar from "../Images/bot-avatar.png";
 const AiConsult = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const chatContainerRef = useRef(null); // 채팅 컨테이너를 참조하는 useRef
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
 
   const handleSend = async () => {
     if (input.trim() === "") return;
-    console.log("Sending user message to API:", input);
+
     const userMessage = {
       sender: "user",
       text: input,
-      avatar: userAvatar, // 사용자 이미지
+      avatar: userAvatar,
     };
     setMessages((prev) => [...prev, userMessage]);
-
     setInput(""); // 입력 필드 초기화
 
     // ChatGPT API 호출
     const botResponse = await fetchChatResponse(input);
-    console.log("Received bot response:", botResponse);
 
     const botMessage = {
       sender: "bot",
       text: botResponse,
-      avatar: botAvatar, // 상담원 이미지
+      avatar: botAvatar,
     };
-
     setMessages((prev) => [...prev, botMessage]);
   };
 
   return (
     <div className={styles.chatBot}>
       <div
+        ref={chatContainerRef} // 채팅 컨테이너에 ref 연결
         style={{
           height: "400px",
           overflowY: "scroll",
@@ -64,6 +78,7 @@ const AiConsult = () => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           style={{
             flex: 1,
             padding: "10px",
