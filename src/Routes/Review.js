@@ -11,8 +11,10 @@ import darkLogo from '../Logo/darkLogo.png';
 function Review() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  //문자열, 검색 지역
   const [location, setLocation] = useState();
   const [keyword, setKeyword] = useState();
+  //식당 이름들
   const [places, setPlaces] = useState();
   const [map, setMap] = useState('google');
 
@@ -79,18 +81,21 @@ function Review() {
                 keyword={keyword}
                 places={places}
                 setPlaces={setPlaces}
+                setLocation={setLocation}
               ></MyGoogleMap>
             ) : map === 'naver' ? (
               <MyNaverMap
                 location={location}
                 keyword={keyword}
                 setPlaces={setPlaces}
+                setLocation={setLocation}
               ></MyNaverMap>
             ) : (
               <MyKakaoMap
                 location={location}
                 keyword={keyword}
                 setPlaces={setPlaces}
+                setLocation={setLocation}
               ></MyKakaoMap>
             )}
           </div>
