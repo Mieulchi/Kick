@@ -1,26 +1,26 @@
-import { Map, useMap } from "@vis.gl/react-google-maps";
-import MyGoogleMarkers from "./MyGoogleMarkers";
-import { useState, useRef, useEffect } from "react";
-import GoogleSearch from "./GoogleSearch";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { Map, useMap } from '@vis.gl/react-google-maps';
+import MyGoogleMarkers from './MyGoogleMarkers';
+import { useState, useRef, useEffect } from 'react';
+import GoogleSearch from './GoogleSearch';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 export default function MyGoogleMap(props) {
   const [place, setPlace] = useState();
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
-  const [coords, setCoords] = useState("");
+  const [coords, setCoords] = useState('');
   const mapRef = useMap();
 
   async function textSearch() {
-    const { Place } = await window.google.maps.importLibrary("places");
+    const { Place } = await window.google.maps.importLibrary('places');
 
     const txtRequest = {
       textQuery: `${place} ${props.keyword} `,
-      fields: ["displayName", "location", "businessStatus", "rating"],
-      includedType: "restaurant",
+      fields: ['displayName', 'location', 'businessStatus', 'rating', 'photos'],
+      includedType: 'restaurant',
       isOpenNow: true,
-      language: "kr",
+      language: 'kr',
       maxResultCount: 7,
-      region: "kr",
+      region: 'kr',
       useStrictTypeFiltering: false,
     };
 
@@ -42,7 +42,7 @@ export default function MyGoogleMap(props) {
 
   async function nearbySearch() {
     const { Place, SearchNearbyRankPreference } =
-      await window.google.maps.importLibrary("places");
+      await window.google.maps.importLibrary('places');
 
     // Restrict within the map viewport.
     let lat = location.lat;
@@ -50,20 +50,21 @@ export default function MyGoogleMap(props) {
 
     const nearbyRequest = {
       // required parameters
-      fields: ["displayName", "location", "businessStatus", "rating"],
+      fields: ['displayName', 'location', 'businessStatus', 'rating'],
       locationRestriction: {
         center: { lat: lat, lng: lng },
         radius: 500,
       },
       // optional parameters
-      includedPrimaryTypes: ["restaurant"],
+      includedPrimaryTypes: ['restaurant'],
       maxResultCount: 10,
       rankPreference: SearchNearbyRankPreference.POPULARITY,
-      language: "kr",
-      region: "kr",
+      language: 'kr',
+      region: 'kr',
     };
 
     const { places } = await Place.searchNearby(nearbyRequest);
+    console.log(places);
     if (places.length) {
       const filteredPlaces = places.map((place) => {
         return { displayName: place.Eg.displayName, rating: place.Eg.rating };
@@ -73,7 +74,6 @@ export default function MyGoogleMap(props) {
           location: { lat: place.Eg.location.lat, lng: place.Eg.location.lng },
         };
       });
-
       props.setPlaces(filteredPlaces);
       setCoords(filteredCoords);
     }
@@ -88,7 +88,7 @@ export default function MyGoogleMap(props) {
         .then((latLng) => {
           setLocation({ lat: latLng.lat, lng: latLng.lng });
         })
-        .catch((error) => console.error("Error during geocoding:", error));
+        .catch((error) => console.error('Error during geocoding:', error));
     }
   }, [props.location]);
 
@@ -109,10 +109,10 @@ export default function MyGoogleMap(props) {
     <>
       <div
         style={{
-          width: "100%",
-          height: "500px",
-          borderRadius: "30px 0 0 30px",
-          overflow: "hidden",
+          width: '100%',
+          height: '500px',
+          borderRadius: '30px 0 0 30px',
+          overflow: 'hidden',
         }}
       >
         <Map
