@@ -30,6 +30,7 @@ export default function GoogleSearch(props) {
 	// 검색 선택 처리
 	const handleSelect = (selectedAddress) => {
 		props.setPlace(selectedAddress);
+		props.propsSetLocation(selectedAddress);
 
 		setAddress(selectedAddress); // 검색창 값 설정
 		geocodeByAddress(selectedAddress)
