@@ -1,3 +1,4 @@
+//Roulette.js
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import styles from "../Css/Roulette.module.css";
@@ -69,6 +70,10 @@ function Roulette() {
     }, 7000);
   };
 
+  const handleGoToMap = () => {
+    navigate("/Map", { state: { selectedItem: selectedItem } });
+  };
+
   const handleItemChange = (index, newName) => {
     const updatedItems = [...customItems];
     updatedItems[index] = { name: newName };
@@ -114,7 +119,11 @@ function Roulette() {
           <div className={styles.roulette_outer}>
             <div className={styles.roulette_pin}></div>
             <div className={styles.roulette_outerbtn}>
-              <button className={styles.roulette_btn} onClick={handleSpin}>
+              <button
+                className={styles.roulette_btn}
+                onClick={handleSpin}
+                disabled={isSpinning}
+              >
                 Spin!
               </button>
             </div>
@@ -164,6 +173,7 @@ function Roulette() {
               className={styles.toggleCheckbox}
               checked={isCustomMode}
               onChange={toggleCustomMode}
+              disabled={isSpinning}
             />
             <span className={styles.toggleSlider}></span>
           </label>
@@ -171,46 +181,20 @@ function Roulette() {
         <section className={styles.selectView}>
           {!isCustomMode && (
             <div className={styles.category_btn}>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "모두" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("모두")}
-              >
-                모두
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "한식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("한식")}
-              >
-                한식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "양식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("양식")}
-              >
-                양식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "중식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("중식")}
-              >
-                중식
-              </button>
-              <button
-                className={`btn btn-primary ${
-                  selectedCategory === "일식" ? "active" : "btn-light"
-                }`}
-                onClick={() => handleCategoryClick("일식")}
-              >
-                일식
-              </button>
+              {["모두", "한식", "양식", "중식", "일식"].map((category) => (
+                <button
+                  key={category}
+                  className={`${styles.categoryButton} ${
+                    selectedCategory === category
+                      ? styles.active
+                      : styles.inactive
+                  }`}
+                  onClick={() => handleCategoryClick(category)}
+                  disabled={isSpinning}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           )}
 
@@ -222,9 +206,12 @@ function Roulette() {
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  disabled={isSpinning}
                   placeholder="메뉴를 입력하세요"
                 />
-                <button onClick={addCustomItem}>추가</button>
+                <button onClick={addCustomItem} disabled={isSpinning}>
+                  추가
+                </button>
               </div>
               <div className={styles.customItems_list}>
                 <h4>
@@ -236,8 +223,12 @@ function Roulette() {
                       type="text"
                       value={item.name}
                       onChange={(e) => handleItemChange(index, e.target.value)}
+                      disabled={isSpinning}
                     />
-                    <button onClick={() => handleItemDelete(index)}>
+                    <button
+                      onClick={() => handleItemDelete(index)}
+                      disabled={isSpinning}
+                    >
                       삭제
                     </button>
                   </li>
@@ -252,9 +243,7 @@ function Roulette() {
             }
           >
             <div className={styles.menu}>
-              <h3>
-                <b>점심 메뉴는?</b>
-              </h3>
+              <h3>점심 메뉴는?</h3>
               <div>
                 {selectedItem && (
                   <div className={styles.selectedItem}>{selectedItem.name}</div>
@@ -267,7 +256,8 @@ function Roulette() {
               className={
                 isCustomMode ? styles.goToReview_custom : styles.goToReview
               }
-              onClick={() => navigate("/map")}
+              onClick={handleGoToMap}
+              disabled={isSpinning}
             >
               음식점 찾기
             </button>
