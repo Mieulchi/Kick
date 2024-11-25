@@ -21,6 +21,11 @@ function Review() {
     setKeyword(state.selectedItem);
   }, []);
 
+  // HTML 태그를 제거하는 함수
+  function stripHtmlTags(str) {
+    return str.replace(/<[^>]*>/g, "");
+  }
+
   return (
     <section className={styles.body}>
       <nav className={styles.upBar} id={styles.hd}>
@@ -59,14 +64,14 @@ function Review() {
         </div>
         <div className={styles.review_container}>
           <div className={styles.mapdiv}>
-            {map == "google" ? (
+            {map === "google" ? (
               <MyGoogleMap
                 location={location}
                 keyword={keyword}
                 places={places}
                 setPlaces={setPlaces}
               ></MyGoogleMap>
-            ) : map == "naver" ? (
+            ) : map === "naver" ? (
               <MyNaverMap
                 location={location}
                 keyword={keyword}
@@ -83,10 +88,14 @@ function Review() {
           <div className={styles.reviewdiv}>
             {places ? (
               places.map((place) => {
-                if (place.displayName != "Undefined") {
+                if (place.displayName !== "Undefined") {
+                  // HTML 태그를 제거한 후 displayName을 표시
+                  const displayNameWithoutTags = stripHtmlTags(
+                    place.displayName
+                  );
                   return (
-                    <div>
-                      {place.displayName}{" "}
+                    <div key={displayNameWithoutTags}>
+                      {displayNameWithoutTags}{" "}
                       {place.rating ? `: ${place.rating}` : ""}
                     </div>
                   );
