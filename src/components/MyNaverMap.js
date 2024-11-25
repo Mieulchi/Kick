@@ -60,7 +60,12 @@ export default function MyNaverMap(props) {
         const formattedY = `${String(item.mapy).slice(0, 2)}.${String(
           item.mapy
         ).slice(2)}`;
-        return { lat: formattedY, lng: formattedX };
+        return {
+          lat: formattedY,
+          lng: formattedX,
+          title: item.title,
+          address: item.address,
+        };
       });
 
       setCoords(convertedLocations);
@@ -85,10 +90,27 @@ export default function MyNaverMap(props) {
         position: window.naver.maps.Position.TOP_RIGHT,
       },
     });
-    coords.map((each) => {
-      new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(each),
+
+    // 마커 추가: 검색된 위치 좌표에 마커를 표시
+    coords.forEach((each) => {
+      const marker = new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(each.lat, each.lng),
         map: map,
+        title: each.title, // 마커의 타이틀을 설정
+      });
+
+      // 정보창을 표시할 내용 설정
+      const infoWindow = new window.naver.maps.InfoWindow({
+        content: `<div style="padding:10px; width: 200px; font-size: 14px;">
+                    <strong>${each.title}</strong><br />
+                    ${each.address}
+                  </div>`,
+        maxWidth: 200, // 정보창의 최대 너비
+      });
+
+      // 마커 클릭 시 해당 마커 위에 정보창을 표시
+      window.naver.maps.Event.addListener(marker, "click", () => {
+        infoWindow.open(map, marker); // 마커 위치에 정보창 열기
       });
     });
   }
@@ -97,7 +119,7 @@ export default function MyNaverMap(props) {
     if (center) {
       initMap();
     }
-  }, [center]);
+  }, [center, coords]); // coords 배열이 변경되면 지도 다시 초기화
 
   useEffect(() => {
     setLocation(props.location);
