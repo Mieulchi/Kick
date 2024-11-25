@@ -14,7 +14,8 @@ const AiConsult = () => {
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   };
 
@@ -91,16 +92,19 @@ const AiConsult = () => {
         <button
           onClick={handleSend}
           style={{
-            padding: "10px 20px",
-            backgroundColor: "#007BFF",
-            color: "#fff",
+            padding: "5px 10px 2px 10px",
+            backgroundColor: "white",
+            color: "#165527",
             border: "none",
-            borderRadius: "5px",
+            borderRadius: "10px",
             cursor: "pointer",
             boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
           }}
         >
-          Send
+          <i
+            className="bi bi-send"
+            style={{ fontSize: "24px", fontWeight: "bold" }}
+          ></i>
         </button>
       </div>
     </div>
