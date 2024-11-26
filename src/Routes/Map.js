@@ -9,9 +9,9 @@ function Map() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(null);
-  const [locationSearch, setLocationSearch] = useState("");
+  const [locationSearch, setLocationSearch] = useState(null);
   const [tmp, setTmp] = useState("");
-
+  const [locationInfo,setLocation] = useState(null);
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
@@ -55,7 +55,7 @@ function Map() {
             </button>
           </div>
           <div id="map" className={styles.map}>
-            <KakaoMap location={locationSearch} />
+            <KakaoMap locationSearch = {setLocation} location={locationSearch} />
           </div>
         </div>
 
@@ -75,6 +75,18 @@ function Map() {
                 위치가 설정되지 않았습니다.
               </div>
             )}
+
+
+          <button
+            className={styles.goToReview}
+            onClick={() => {
+              navigate("/review", {
+                state: { location: locationSearch, selectedItem: selectedItem , locationInfo: locationInfo},
+              });
+            }}
+          >
+            검색하기
+          </button>
 
             {selectedItem ? (
               <div className={styles.selectedItem}>
@@ -99,6 +111,7 @@ function Map() {
               검색하기
             </button>
           </div>
+
         </div>
       </div>
     </div>
