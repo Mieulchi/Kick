@@ -16,7 +16,7 @@ import Ai from "../Logo/aiLOGO.png";
 function Home() {
   const navigate = useNavigate(); // Initialize navigate using useNavigate
   const images = [chicken, noodle, pizza, soup, meet]; // 이미지 배열
-  const [currentImage, setCurrentImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAiViewOpen, setIsAiViewOpen] = useState(false); // 상태 관리
   
@@ -25,19 +25,22 @@ function Home() {
   };
   // 'About Us' 섹션을 위한 ref
   const aboutUsRef = useRef(null);
-
-  // 모든 이미지를 미리 로드하여 캐시
   useEffect(() => {
-    // 이미지 미리 로드
     images.forEach((image) => {
       const img = new Image();
       img.src = image;
     });
+  }, [images]);
 
-    // 랜덤 이미지 선택
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    setCurrentImage(randomImage);
-  }, []); // 빈 배열을 두 번째 인자로 넣어 한 번만 실행되게 설정
+  // 모든 이미지를 미리 로드하여 캐시
+  useEffect(() => {
+    // 5초마다 이미지 변경
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 타이머 정리
+  }, [images.length]);
 
   // 'About Us' 클릭 시 해당 섹션으로 스크롤
   const scrollToAboutUs = () => {
@@ -60,13 +63,20 @@ function Home() {
         <h3 onClick={scrollToAboutUs}>about us</h3>
       </nav>
 
-      <section
-        className={styles.body}
-        id={styles.bg}
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),url(${currentImage})`,
-        }} // 랜덤 이미지 적용
-      >
+      <section className={styles.sliderContainer}>
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`${styles.slide} ${
+              currentImageIndex === index ? styles.active : ""
+            }`}
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url(${image})`,
+            }}
+          ></div>
+        ))}
+      </section>
+      <section className={styles.body}>
         <div className={styles.search}>
           <h1 className={styles.cp}>
             다양한 음식을
