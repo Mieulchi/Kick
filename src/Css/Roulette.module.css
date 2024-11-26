@@ -147,13 +147,6 @@
   color: white;
 }
 
-.selectView {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-}
-
 .category_btn {
   display: flex;
   gap: 10px;
@@ -174,7 +167,7 @@
 }
 
 .active {
-  background-color: green; /* Primary color */
+  background-color: #50c785; /* Primary color */
   color: white;
 }
 
@@ -320,12 +313,15 @@
   border: none;
   border-radius: 40px;
   background-color: white;
-  color: green;
+  color: #389561;
   font-size: 20px;
   font-weight: bold;
+  transition: 0.3s ease-in-out;
 }
 .goToReview,
 .goToReview_custom:hover {
+  background-color: #389561;
+  color: white;
 }
 .goToReview {
   top: 76%;
@@ -373,7 +369,7 @@
 }
 
 .toggleCheckbox:checked + .toggleSlider {
-  background-color: green;
+  background-color: #6ac793;
 }
 
 .toggleCheckbox:checked + .toggleSlider:before {
