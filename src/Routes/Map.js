@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import KakaoMap from "../components/KakaoMap";
-import logo from "../Logo/Logo.png";
+import logo from "../Logo/darkLogo.png";
 import styles from "../Css/Map.module.css";
 
 function Map() {
@@ -22,11 +22,11 @@ function Map() {
   const handleSearchLocation = () => {
     setLocationSearch(tmp);
   };
-  const handleKeyDown = (e) =>{
-    if(e.key === "Enter"){
-      handleSearchLocation()
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearchLocation();
     }
-  }
+  };
 
   return (
     <div className={styles.body}>
@@ -65,13 +65,17 @@ function Map() {
             <br />
             위치를 설정해주세요.
           </div>
-          <div className={styles.locationLook}>현재 위치: {locationSearch}</div>
+          <div className={styles.selectAll}>
+            {locationSearch ? (
+              <div className={styles.locationLook}>
+                현재 위치: {locationSearch}
+              </div>
+            ) : (
+              <div className={styles.locationLook}>
+                위치가 설정되지 않았습니다.
+              </div>
+            )}
 
-          {selectedItem ? (
-            <div className={styles.selectedItem}>선정 메뉴: {selectedItem}</div>
-          ) : (
-            <div className={styles.selectedItem}>선정된 메뉴가 없습니다.</div>
-          )}
 
           <button
             className={styles.goToReview}
@@ -83,6 +87,31 @@ function Map() {
           >
             검색하기
           </button>
+
+            {selectedItem ? (
+              <div className={styles.selectedItem}>
+                선정 메뉴: {selectedItem}
+              </div>
+            ) : (
+              <div className={styles.selectedItem}>선정된 메뉴가 없습니다.</div>
+            )}
+          </div>
+          <div>
+            <button
+              className={styles.goToReview}
+              onClick={() => {
+                navigate("/review", {
+                  state: {
+                    location: locationSearch,
+                    selectedItem: selectedItem,
+                  },
+                });
+              }}
+            >
+              검색하기
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
