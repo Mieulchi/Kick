@@ -7,6 +7,7 @@ import Review from './Routes/Review';
 import AiConsult from './Routes/AiConsult';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import Detail from './Routes/Detail';
+import Direction from './Routes/Direction';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/review" element={<Review></Review>}></Route>
         <Route path="/AiConsult" element={<AiConsult></AiConsult>}></Route>
         <Route path="/detail" element={<Detail></Detail>}></Route>
+        <Route path="/direction" element={<Direction></Direction>}></Route>
+        
       </Routes>
     </APIProvider>
   );

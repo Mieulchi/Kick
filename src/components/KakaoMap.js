@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function KakaoMap({ location }) {
+function KakaoMap({locationSearch = (f) =>f,location }) {
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
 
@@ -50,6 +50,7 @@ function KakaoMap({ location }) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         updateMarker(coords);
+        
       } else {
         handleKeyWordSearch();
       }
@@ -64,6 +65,7 @@ function KakaoMap({ location }) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(data[0].y, data[0].x);
         updateMarker(coords);
+      
       } else {
         alert('해당 위치를 찾을 수 없습니다.');
       }
@@ -80,6 +82,7 @@ function KakaoMap({ location }) {
       position: coords,
     });
     setMarker(newMarker);
+    locationSearch(coords);
     map.setCenter(coords);
   };
 

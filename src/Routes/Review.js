@@ -16,12 +16,14 @@ function Review() {
   const [keyword, setKeyword] = useState();
   //식당 이름들
   const [places, setPlaces] = useState();
-  const [map, setMap] = useState("google");
+  const [map, setMap] = useState('google');
+  const locationInfo = state.locationInfo;
 
   useEffect(() => {
     setLocation(state.location);
     setKeyword(state.selectedItem);
   }, []);
+
 
   // HTML 태그를 제거하는 함수
   function stripHtmlTags(str) {
@@ -71,6 +73,13 @@ function Review() {
             }}
           >
             진짜 리뷰 페이지로
+          </button>
+          <button onClick = {() =>{
+             navigate("/direction", {
+              state: { location: locationInfo},
+            });
+          }}>
+            일단 길 찾기
           </button>
         </div>
         <div className={styles.review_container}>
