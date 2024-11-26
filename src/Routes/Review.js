@@ -1,12 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import KakaoMap from '../components/KakaoMap';
-import { useEffect, useState } from 'react';
-import styles from '../Css/Review.module.css';
-import MyGoogleMap from '../components/MyGoogleMap';
-import MyNaverMap from '../components/MyNaverMap';
-import MyKakaoMap from '../components/MyKakaoMap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import darkLogo from '../Logo/darkLogo.png';
+import { useLocation, useNavigate } from "react-router-dom";
+import KakaoMap from "../components/KakaoMap";
+import { useEffect, useState } from "react";
+import styles from "../Css/Review.module.css";
+import MyGoogleMap from "../components/MyGoogleMap";
+import MyNaverMap from "../components/MyNaverMap";
+import MyKakaoMap from "../components/MyKakaoMap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import darkLogo from "../Logo/darkLogo.png";
 
 function Review() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function Review() {
   const [keyword, setKeyword] = useState();
   //식당 이름들
   const [places, setPlaces] = useState();
-  const [map, setMap] = useState('google');
+  const [map, setMap] = useState("google");
 
   useEffect(() => {
     setLocation(state.location);
@@ -25,7 +25,7 @@ function Review() {
 
   // HTML 태그를 제거하는 함수
   function stripHtmlTags(str) {
-    return str.replace(/<[^>]*>/g, '');
+    return str.replace(/<[^>]*>/g, "");
   }
 
   return (
@@ -33,7 +33,7 @@ function Review() {
       <nav className={styles.upBar} id={styles.hd}>
         <img
           onClick={() => {
-            navigate('/');
+            navigate("/");
           }}
           src={darkLogo}
         />
@@ -41,31 +41,31 @@ function Review() {
       <div className={styles.review}>
         <div className={styles.selectMap}>
           <button
-            style={{ color: 'blue', backgroundColor: 'white' }}
+            style={{ color: "blue", backgroundColor: "white" }}
             onClick={() => {
-              setMap('google');
+              setMap("google");
             }}
           >
             Google
           </button>
           <button
             onClick={() => {
-              setMap('naver');
+              setMap("naver");
             }}
           >
             Naver
           </button>
           <button
-            style={{ color: 'blue', backgroundColor: 'yellow' }}
+            style={{ color: "blue", backgroundColor: "yellow" }}
             onClick={() => {
-              setMap('kakao');
+              setMap("kakao");
             }}
           >
             Kakao
           </button>
           <button
             onClick={() => {
-              navigate('/detail', {
+              navigate("/detail", {
                 state: { location: location, keyword: keyword },
               });
             }}
@@ -75,7 +75,7 @@ function Review() {
         </div>
         <div className={styles.review_container}>
           <div className={styles.mapdiv}>
-            {map === 'google' ? (
+            {map === "google" ? (
               <MyGoogleMap
                 location={location}
                 keyword={keyword}
@@ -83,7 +83,7 @@ function Review() {
                 setPlaces={setPlaces}
                 setLocation={setLocation}
               ></MyGoogleMap>
-            ) : map === 'naver' ? (
+            ) : map === "naver" ? (
               <MyNaverMap
                 location={location}
                 keyword={keyword}
@@ -102,15 +102,19 @@ function Review() {
           <div className={styles.reviewdiv}>
             {places ? (
               places.map((place) => {
-                if (place.displayName !== 'Undefined') {
+                if (place.displayName !== "Undefined") {
                   // HTML 태그를 제거한 후 displayName을 표시
                   const displayNameWithoutTags = stripHtmlTags(
                     place.displayName
                   );
                   return (
                     <div key={displayNameWithoutTags}>
-                      {displayNameWithoutTags}{' '}
-                      {place.rating ? `: ${place.rating}` : ''}
+                      {displayNameWithoutTags}{" "}
+                      {place.rating ? `: ${place.rating}` : ""}
+                      <div className={styles.divBT}>
+                        <button>상세페이지</button>
+                        <button>길찾기</button>
+                      </div>
                     </div>
                   );
                 }
