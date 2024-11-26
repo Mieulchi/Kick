@@ -114,8 +114,21 @@ function Roulette() {
           src={darkLogo}
         />
       </nav>
-      <div className={`container ${styles.container}`}>
+      <div className={styles.container}>
         <section className={styles.rouletteView}>
+          <div className={styles.customSwitch}>
+            <p>Custom</p>
+            <label className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                className={styles.toggleCheckbox}
+                checked={isCustomMode}
+                onChange={toggleCustomMode}
+                disabled={isSpinning}
+              />
+              <span className={styles.toggleSlider}></span>
+            </label>
+          </div>
           <div className={styles.roulette_outer}>
             <div className={styles.roulette_pin}></div>
             <div className={styles.roulette_outerbtn}>
@@ -165,19 +178,7 @@ function Roulette() {
             </div>
           </div>
         </section>
-        <div className={styles.customSwitch}>
-          <p>Custom</p>
-          <label className={styles.toggleSwitch}>
-            <input
-              type="checkbox"
-              className={styles.toggleCheckbox}
-              checked={isCustomMode}
-              onChange={toggleCustomMode}
-              disabled={isSpinning}
-            />
-            <span className={styles.toggleSlider}></span>
-          </label>
-        </div>
+
         <section className={styles.selectView}>
           {!isCustomMode && (
             <div className={styles.category_btn}>

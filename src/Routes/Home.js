@@ -67,45 +67,40 @@ function Home() {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),url(${currentImage})`,
         }} // 랜덤 이미지 적용
       >
-        <h1 className={styles.cp}>
-          다양한 음식을
-          <br />
-          비교하여 선정하세요.
-        </h1>
-        <div className={styles.searchBar}>
-        <input
-          type="text"
-          placeholder="메뉴 이름을 입력해주세요"
-          className={styles.searchInput}
-          value={selectedItem}
-          onChange={(e) => setSelectedItem(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && selectedItem && selectedItem.trim() !== "") {
-              navigate("/Map", {
-                state: { selectedItem: { name: selectedItem } },
-              });
-            }
-          }}
-        />
+        <div className={styles.search}>
+          <h1 className={styles.cp}>
+            다양한 음식을
+            <br />
+            비교하여 선정하세요.
+          </h1>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="메뉴 이름을 입력해주세요"
+              className={styles.searchInput}
+              value={selectedItem}
+              onChange={(e) => setSelectedItem(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                navigate("/Map", {
+                  state: { selectedItem: { name: selectedItem } },
+                });
+              }}
+              disabled={!selectedItem || selectedItem.trim() === ""} // 입력값이 없으면 버튼 비활성화
+            >
+              <BsSearch className={styles.searchIcon} />
+            </button>
+          </div>
           <button
+            className={styles.goRoullete}
             onClick={() => {
-              navigate("/Map", {
-                state: { selectedItem: { name: selectedItem } },
-              });
+              navigate("/Roulette"); // Use navigate here to go to '/Roulette'
             }}
-            disabled={!selectedItem || selectedItem.trim() === ""} // 입력값이 없으면 버튼 비활성화
           >
-            <BsSearch className={styles.searchIcon} />
+            룰렛 돌리기
           </button>
         </div>
-        <button
-          className={styles.goRoullete}
-          onClick={() => {
-            navigate("/Roulette"); // Use navigate here to go to '/Roulette'
-          }}
-        >
-          룰렛 돌리기
-        </button>
         <div
           className={styles.aiView}
           style={{
