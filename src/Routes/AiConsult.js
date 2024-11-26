@@ -29,17 +29,21 @@ const AiConsult = () => {
     }
   };
 
-  const handleSend = async () => {
-    if (input.trim() === "") return;
+  const [isTyping, setIsTyping] = useState(false); // 로딩 상태 관리
 
-    const userMessage = {
-      sender: "user",
-      text: input,
-      avatar: userAvatar,
-    };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput(""); // 입력 필드 초기화
+const handleSend = async () => {
+  if (input.trim() === "") return;
 
+  const userMessage = {
+    sender: "user",
+    text: input,
+    avatar: userAvatar,
+  };
+  setMessages((prev) => [...prev, userMessage]);
+  setInput(""); // 입력 필드 초기화
+  setIsTyping(true); // 로딩 상태 활성화
+
+  try {
     // ChatGPT API 호출
     const botResponse = await fetchChatResponse(input);
 
@@ -49,7 +53,18 @@ const AiConsult = () => {
       avatar: botAvatar,
     };
     setMessages((prev) => [...prev, botMessage]);
-  };
+  } catch (error) {
+    const errorMessage = {
+      sender: "bot",
+      text: "죄송합니다. 답변을 가져오는 중 오류가 발생했습니다.",
+      avatar: botAvatar,
+    };
+    setMessages((prev) => [...prev, errorMessage]);
+  } finally {
+    setIsTyping(false); // 로딩 상태 비활성화
+  }
+};
+
 
   return (
     <div className={styles.chatBot}>
@@ -65,14 +80,16 @@ const AiConsult = () => {
           backgroundColor: "#f5f5f5",
         }}
       >
+      <div>
         {messages.map((msg, index) => (
-          <Message
-            key={index}
-            sender={msg.sender}
-            text={msg.text}
-            avatar={msg.avatar}
-          />
+          <Message key={index} sender={msg.sender} text={msg.text} avatar={msg.avatar} />
         ))}
+        {isTyping && (
+          <div style={{ fontStyle: "italic", color: "gray", marginTop: "10px" }}>
+            Typing...
+          </div>
+        )}
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <input

@@ -73,13 +73,20 @@ function Home() {
           비교하여 선정하세요.
         </h1>
         <div className={styles.searchBar}>
-          <input
-            type="text"
-            placeholder="메뉴 이름을 입력해주세요"
-            className={styles.searchInput}
-            value={selectedItem}
-            onChange={(e) => setSelectedItem(e.target.value)}
-          />
+        <input
+          type="text"
+          placeholder="메뉴 이름을 입력해주세요"
+          className={styles.searchInput}
+          value={selectedItem}
+          onChange={(e) => setSelectedItem(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && selectedItem && selectedItem.trim() !== "") {
+              navigate("/Map", {
+                state: { selectedItem: { name: selectedItem } },
+              });
+            }
+          }}
+        />
           <button
             onClick={() => {
               navigate("/Map", {
