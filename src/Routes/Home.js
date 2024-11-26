@@ -19,7 +19,7 @@ function Home() {
   const [currentImage, setCurrentImage] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAiViewOpen, setIsAiViewOpen] = useState(false); // 상태 관리
-
+  
   const toggleAiView = () => {
     setIsAiViewOpen((prev) => !prev); // 열림/닫힘 상태 토글
   };
@@ -80,6 +80,13 @@ function Home() {
               className={styles.searchInput}
               value={selectedItem}
               onChange={(e) => setSelectedItem(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && selectedItem && selectedItem.trim() !== "") {
+                  navigate("/Map", {
+                    state: { selectedItem: { name: selectedItem } },
+                  });
+                }
+              }}
             />
             <button
               onClick={() => {
