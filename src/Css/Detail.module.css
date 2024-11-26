@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.body {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+    url("../Images/foodBG.jpg");
+  background-size: cover;
+  overflow: hidden;
+}
+.upBar img {
+  margin-left: 5.9rem;
+  padding-top: 1.2rem;
+  width: 10rem;
+  cursor: pointer;
+}
+.container {
+  width: 80%;
+  height: 100vh;
+  margin: 0 auto;
+  overflow-y: auto; /* 전체 컨테이너 스크롤 가능 (필요 시) */
+}
+
+.detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* 요소 간 간격 */
+  margin-bottom: 20px; /* 각 식당 구분 간 간격 */
+}
+
+.detailImage {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0; /* 이미지 크기 고정 */
+}
+
+.detailText {
+  flex: 1;
+  min-width: 150px;
+}
+
+.detailText p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.reviewSection {
+  flex: 2; /* 리뷰 영역이 더 넓게 설정 */
+  max-height: 200px; /* 높이 제한 */
+  overflow-y: auto; /* 스크롤 가능 */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.review {
+  margin-bottom: 10px; /* 리뷰 간 간격 */
+}
+
+.review p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.review strong {
+  font-weight: bold;
+}
