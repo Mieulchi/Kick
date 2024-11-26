@@ -112,9 +112,10 @@ export default function MyKakaoMap(props) {
         style={{
           display: "flex",
           position: "absolute",
-          top: "25%",
-          left: "55%",
+          top: "15%",
+          left: "10%",
           gap: "10px",
+          color: "white",
         }}
       >
         <div>현재 검색 위치: </div>
