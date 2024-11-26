@@ -9,9 +9,9 @@ function Map() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(null);
-  const [locationSearch, setLocationSearch] = useState("");
+  const [locationSearch, setLocationSearch] = useState(null);
   const [tmp, setTmp] = useState("");
-
+  const [locationInfo,setLocation] = useState(null);
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
@@ -55,7 +55,7 @@ function Map() {
             </button>
           </div>
           <div id="map" className={styles.map}>
-            <KakaoMap location={locationSearch} />
+            <KakaoMap locationSearch = {setLocation} location={locationSearch} />
           </div>
         </div>
 
@@ -77,7 +77,7 @@ function Map() {
             className={styles.goToReview}
             onClick={() => {
               navigate("/review", {
-                state: { location: locationSearch, selectedItem: selectedItem },
+                state: { location: locationSearch, selectedItem: selectedItem , locationInfo: locationInfo},
               });
             }}
           >
