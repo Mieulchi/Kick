@@ -3,15 +3,16 @@ import Message from "./Message";
 import { fetchChatResponse } from "../api";
 import styles from "../Css/Home.module.css";
 
-// 이미지 파일 import
 import userAvatar from "../Images/user-avatar.png";
 import botAvatar from "../Images/bot-avatar.png";
 
 const AiConsult = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const chatContainerRef = useRef(null); // 채팅 컨테이너를 참조하는 useRef
+  const chatContainerRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false); // 로딩 상태 관리
 
+  // 스크롤 하단 이동
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -19,16 +20,24 @@ const AiConsult = () => {
     }
   };
 
+  // 채팅창 열릴 때 AI 초기 메시지 추가
+  useEffect(() => {
+    if (messages.length === 0) {
+      const botMessage = {
+        sender: "bot",
+        text: "안녕하세요! 😊 오늘 어떤 맛있는 메뉴를 찾고 계신가요? 여러분의 입맛을 행복하게 해드리기 위해 준비했어요! 따뜻한 마음으로 추천 드릴게요. 🍽️✨",
+        avatar: botAvatar,
+      };
+      setMessages([botMessage]); // 초기 메시지 설정
+    }
+  }, []); // 컴포넌트가 처음 렌더링될 때만 실행
+
+  // 메시지 추가 시 스크롤 하단 이동
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
-  };
-
+  // 메시지 전송 처리
   const handleSend = async () => {
     if (input.trim() === "") return;
 
@@ -38,23 +47,34 @@ const AiConsult = () => {
       avatar: userAvatar,
     };
     setMessages((prev) => [...prev, userMessage]);
-    setInput(""); // 입력 필드 초기화
+    setInput("");
+    setIsTyping(true); // 로딩 상태 활성화
 
-    // ChatGPT API 호출
-    const botResponse = await fetchChatResponse(input);
+    try {
+      const botResponse = await fetchChatResponse(input);
 
-    const botMessage = {
-      sender: "bot",
-      text: botResponse,
-      avatar: botAvatar,
-    };
-    setMessages((prev) => [...prev, botMessage]);
+      const botMessage = {
+        sender: "bot",
+        text: botResponse,
+        avatar: botAvatar,
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      const errorMessage = {
+        sender: "bot",
+        text: "죄송합니다. 답변을 가져오는 중 오류가 발생했습니다.",
+        avatar: botAvatar,
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false); // 로딩 상태 비활성화
+    }
   };
 
   return (
     <div className={styles.chatBot}>
       <div
-        ref={chatContainerRef} // 채팅 컨테이너에 ref 연결
+        ref={chatContainerRef}
         style={{
           height: "400px",
           overflowY: "scroll",
@@ -65,21 +85,32 @@ const AiConsult = () => {
           backgroundColor: "#f5f5f5",
         }}
       >
-        {messages.map((msg, index) => (
-          <Message
-            key={index}
-            sender={msg.sender}
-            text={msg.text}
-            avatar={msg.avatar}
-          />
-        ))}
+        <div>
+          {messages.map((msg, index) => (
+            <Message
+              key={index}
+              sender={msg.sender}
+              text={msg.text}
+              avatar={msg.avatar}
+            />
+          ))}
+          {isTyping && (
+            <div
+              style={{ fontStyle: "italic", color: "gray", marginTop: "10px" }}
+            >
+              Typing...
+            </div>
+          )}
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSend();
+          }}
           style={{
             flex: 1,
             padding: "10px",
