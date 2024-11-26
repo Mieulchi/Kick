@@ -12,6 +12,7 @@ import soup from "../Images/soup.jpg";
 import darkLogo from "../Logo/darkLogo.png";
 import AiConsult from "./AiConsult";
 import Ai from "../Logo/aiLOGO.png";
+import aiBubble from "../Images/aiBubble.png";
 
 function Home() {
   const navigate = useNavigate(); // Initialize navigate using useNavigate
@@ -19,9 +20,11 @@ function Home() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAiViewOpen, setIsAiViewOpen] = useState(false); // 상태 관리
+  const [isBubbleVisible, setIsBubbleVisible] = useState(true);
   
   const toggleAiView = () => {
-    setIsAiViewOpen((prev) => !prev); // 열림/닫힘 상태 토글
+    setIsAiViewOpen((prev) => !prev); // AI 채팅창 열림/닫힘 상태 토글
+    setIsBubbleVisible((prev) => !prev); // 이미지 숨기기/보이기 상태 토글
   };
   // 'About Us' 섹션을 위한 ref
   const aboutUsRef = useRef(null);
@@ -118,6 +121,19 @@ function Home() {
             룰렛 돌리기
           </button>
         </div>
+
+        {isBubbleVisible && (
+        <img
+          className={styles.aiBubble}
+          src={aiBubble}
+          style={{
+            position: "absolute",
+            bottom: "36%",
+            left: "82%",
+            width: "200px", // 원하는 크기로 설정
+          }}
+        />
+        )}
         <div
           className={styles.aiView}
           style={{
@@ -130,12 +146,13 @@ function Home() {
             src={Ai}
             onClick={toggleAiView}
             style={{
-              left: isAiViewOpen ? "-40px" : "-90px", // 상태에 따라 위치 변경
+              left: isAiViewOpen ? "-80px" : "-100px", // 상태에 따라 위치 변경
               transition: "0.3s ease", // 부드러운 애니메이션
             }}
           />
           <AiConsult />
         </div>
+        
       </section>
 
       <section ref={aboutUsRef} className={styles.aboutUs}>
