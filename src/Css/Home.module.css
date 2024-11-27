@@ -161,19 +161,19 @@ h3 :hover {
   color: white;
 }
 .aiView {
-  position: fixed;
+  position: absolute;
   top: 50%; /* 화면의 세로 중앙에 배치 */
-  transform: translateY(-44%); /* 세로 중앙 정렬 */
+  transform: translateY(-30%); /* 세로 중앙 정렬 */
   width: 400px;
   height: 100vh;
 }
 .chatBot {
-  background: rgb(6, 37, 3);
-  background: linear-gradient(
-    171deg,
-    rgba(6, 37, 3, 1) 0%,
-    rgba(22, 85, 39, 1) 43%,
-    rgba(38, 185, 119, 1) 100%
+  background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.6559873949579832) 0%,
+    rgba(110, 110, 110, 1) 63%,
+    rgba(220, 220, 220, 1) 100%
   );
   padding: 20px;
   border-radius: 20px;
@@ -181,13 +181,13 @@ h3 :hover {
 .aiConsultBtn {
   background-image: url("../Logo/aiLOGO.png");
   background-size: cover;
-  height: 80px;
+  height: 70px;
   border: none;
   border-radius: 40px;
   cursor: pointer;
-  position: relative;
-  top: 53%;
-  left: -90px;
+  position: fixed; /* position을 fixed로 설정 */
+  top: 25%; /* 뷰포트 기준으로 35% 위치 */
+  left: -90px; /* 뷰포트 기준으로 -90px 위치 */
 }
 .aiConsultBtn:hover {
   transform: scale(1.05);

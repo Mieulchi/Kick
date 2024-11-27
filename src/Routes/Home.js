@@ -21,11 +21,21 @@ function Home() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAiViewOpen, setIsAiViewOpen] = useState(false); // 상태 관리
   const [isBubbleVisible, setIsBubbleVisible] = useState(true);
-  
+
   const toggleAiView = () => {
-    setIsAiViewOpen((prev) => !prev); // AI 채팅창 열림/닫힘 상태 토글
-    setIsBubbleVisible((prev) => !prev); // 이미지 숨기기/보이기 상태 토글
+    if (isAiViewOpen) {
+      // AI View를 닫는 경우
+      setIsAiViewOpen(false);
+      setTimeout(() => {
+        setIsBubbleVisible(true); // 2초 뒤에 Bubble 표시
+      }, 2000);
+    } else {
+      // AI View를 여는 경우
+      setIsBubbleVisible(false); // Bubble 즉시 숨김
+      setIsAiViewOpen(true);
+    }
   };
+
   // 'About Us' 섹션을 위한 ref
   const aboutUsRef = useRef(null);
   useEffect(() => {
@@ -94,7 +104,11 @@ function Home() {
               value={selectedItem}
               onChange={(e) => setSelectedItem(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && selectedItem && selectedItem.trim() !== "") {
+                if (
+                  e.key === "Enter" &&
+                  selectedItem &&
+                  selectedItem.trim() !== ""
+                ) {
                   navigate("/Map", {
                     state: { selectedItem: { name: selectedItem } },
                   });
@@ -123,16 +137,15 @@ function Home() {
         </div>
 
         {isBubbleVisible && (
-        <img
-          className={styles.aiBubble}
-          src={aiBubble}
-          style={{
-            position: "absolute",
-            bottom: "36%",
-            left: "82%",
-            width: "200px", // 원하는 크기로 설정
-          }}
-        />
+          <img
+            src={aiBubble}
+            style={{
+              position: "absolute",
+              top: "30%",
+              left: "82%",
+              width: "200px", // 원하는 크기로 설정
+            }}
+          />
         )}
         <div
           className={styles.aiView}
@@ -152,7 +165,6 @@ function Home() {
           />
           <AiConsult />
         </div>
-        
       </section>
 
       <section ref={aboutUsRef} className={styles.aboutUs}>
