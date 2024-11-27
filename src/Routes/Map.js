@@ -11,7 +11,7 @@ function Map() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [locationSearch, setLocationSearch] = useState(null);
   const [tmp, setTmp] = useState("");
-  const [locationInfo,setLocation] = useState(null);
+  const [locationInfo, setLocation] = useState(null);
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
@@ -40,79 +40,74 @@ function Map() {
       </nav>
 
       <div className={styles.contents}>
-        <div className={styles.mapBox}>
-          <div className={styles.searchBar}>
-            <input
-              type="text"
-              value={tmp}
-              onChange={(e) => setTmp(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
-              className={styles.searchLocation}
-            />
-            <button onClick={handleSearchLocation} className={styles.searchBT}>
-              위치 검색
-            </button>
+        <section className={styles.resultUpbar}>
+          <div className={styles.upBarcontent}>
+            <div className={styles.cp}>메뉴를 검색할 위치를 선정해주세요.</div>
+            <div className={styles.searchBar}>
+              <input
+                type="text"
+                value={tmp}
+                onChange={(e) => setTmp(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
+                className={styles.searchLocation}
+              />
+              <button className={styles.locationBT}>현위치</button>
+              <button
+                onClick={handleSearchLocation}
+                className={styles.searchBT}
+              >
+                위치 검색
+              </button>
+            </div>
           </div>
+        </section>
+        <section className={styles.mapBox}>
           <div id="map" className={styles.map}>
-            <KakaoMap locationSearch = {setLocation} location={locationSearch} />
+            <KakaoMap locationSearch={setLocation} location={locationSearch} />
           </div>
-        </div>
+        </section>
 
-        <div className={styles.resultBox}>
-          <div className={styles.menuLook}>
-            메뉴를 검색할
-            <br />
-            위치를 설정해주세요.
+        <section className={styles.resultBottom}>
+          <div className={styles.bottomContent}>
+            <div className={styles.searchInfo}>
+              {locationSearch ? (
+                <div className={styles.locationLook}>
+                  현재 위치: {locationSearch}
+                </div>
+              ) : (
+                <div className={styles.locationLook}>
+                  위치가 설정되지 않았습니다.
+                </div>
+              )}
+
+              {selectedItem ? (
+                <div className={styles.selectedItem}>
+                  선정 메뉴: {selectedItem}
+                </div>
+              ) : (
+                <div className={styles.selectedItem}>
+                  선정된 메뉴가 없습니다.
+                </div>
+              )}
+            </div>
+            <div>
+              <button
+                className={styles.goToReview}
+                onClick={() => {
+                  navigate("/review", {
+                    state: {
+                      location: locationSearch,
+                      selectedItem: selectedItem,
+                    },
+                  });
+                }}
+              >
+                검색하기
+              </button>
+            </div>
           </div>
-          <div className={styles.selectAll}>
-            {locationSearch ? (
-              <div className={styles.locationLook}>
-                현재 위치: {locationSearch}
-              </div>
-            ) : (
-              <div className={styles.locationLook}>
-                위치가 설정되지 않았습니다.
-              </div>
-            )}
-
-
-          <button
-            className={styles.goToReview}
-            onClick={() => {
-              navigate("/review", {
-                state: { location: locationSearch, selectedItem: selectedItem , locationInfo: locationInfo},
-              });
-            }}
-          >
-            검색하기
-          </button>
-
-            {selectedItem ? (
-              <div className={styles.selectedItem}>
-                선정 메뉴: {selectedItem}
-              </div>
-            ) : (
-              <div className={styles.selectedItem}>선정된 메뉴가 없습니다.</div>
-            )}
-          </div>
-          <div>
-            <button
-              className={styles.goToReview}
-              onClick={() => {
-                navigate("/review", {
-                  state: {
-                    location: locationSearch,
-                    selectedItem: selectedItem,
-                  },
-                });
-              }}
-            >
-              검색하기
-            </button>
-          </div>
-
-        </div>
+        </section>
       </div>
     </div>
   );
