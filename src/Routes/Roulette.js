@@ -245,24 +245,32 @@ function Roulette() {
           >
             <div className={styles.menu}>
               <h3>점심 메뉴는?</h3>
-              <div>
+              <div style={{ height: "40px" }}>
                 {selectedItem && (
                   <div className={styles.selectedItem}>{selectedItem.name}</div>
                 )}
               </div>
             </div>
           </div>
-          {selectedItem && (
-            <button
-              className={
-                isCustomMode ? styles.goToReview_custom : styles.goToReview
-              }
-              onClick={handleGoToMap}
-              disabled={isSpinning}
-            >
-              음식점 찾기
-            </button>
-          )}
+          <div
+            style={{
+              width: "330px",
+              height: "60px",
+              marginTop: "10px",
+            }}
+          >
+            {selectedItem && (
+              <button
+                className={
+                  isCustomMode ? styles.goToReview_custom : styles.goToReview
+                }
+                onClick={handleGoToMap}
+                disabled={isSpinning}
+              >
+                음식점 찾기
+              </button>
+            )}
+          </div>
         </section>
       </div>
     </div>

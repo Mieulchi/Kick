@@ -43,15 +43,13 @@
 .cp {
   font-size: 48px;
   font-family: "Do Hyeon", sans-serif;
-
-  margin-bottom: 1rem;
 }
 /* Search Bar Styling */
 .searchBar {
   display: flex;
   align-items: center;
   width: 40%;
-  margin-bottom: -2rem;
+  margin-bottom: -1rem;
   float: bottom;
 }
 
@@ -60,6 +58,9 @@
   border-radius: 10px 0 0 10px;
   padding: 0.55rem 0.75rem 0.55rem 1.05rem;
   margin: 0;
+}
+.searchBar input::placeholder {
+  font-size: 15px;
 }
 .locationBT {
   padding: 0.55rem 0.75rem 0.55rem 0.55rem;
@@ -99,7 +100,7 @@ button:disabled {
   height: 60vh;
   width: 80%;
   margin-left: 0.09rem;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px 10px 0 0;
 }
 
 .resultBottom {
@@ -108,35 +109,56 @@ button:disabled {
   justify-content: center;
 }
 .bottomContent {
-  padding: 1rem;
+  padding: 0.8rem 1rem;
   color: black;
   width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: #497649;
   border-radius: 0 0 20px 20px;
 }
 .searchInfo {
   display: flex;
-  font-size: 24px;
-  gap: 10px;
+  font-size: 36px;
+  gap: 5rem;
+  padding-left: 2rem;
+}
+.selectedItem,
+.locationLook {
+  display: flex;
+  color: white;
+  gap: 20px;
+  align-items: center;
+  font-family: "Do Hyeon", sans-serif;
+}
+
+.itemBorder {
+  color: white;
+  font-size: 36px;
+  font-family: "Do Hyeon", sans-serif;
 }
 .goToReview {
-  background-color: #55a872;
-  color: white;
-  font-size: 20px;
+  background-color: #e6ffe6;
+  color: #497649;
+  font-size: 24px;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: bold;
-  padding: 11px 18px;
+  padding: 13px 13px;
   border: none;
   border-radius: 40px;
   cursor: pointer;
   transition: 0.3s;
   word-spacing: -0.15rem;
+  display: flex;
+  align-items: center;
 }
 .goToReview:hover {
   transform: scale(1.05);
+}
+.searchIcon {
+  width: 30px;
+  height: 30px;
 }
 
 /* Responsive Padding Adjustments */
