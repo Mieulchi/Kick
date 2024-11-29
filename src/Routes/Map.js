@@ -1,6 +1,7 @@
 // Map.js
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 import KakaoMap from "../components/KakaoMap";
 import logo from "../Logo/darkLogo.png";
 import styles from "../Css/Map.module.css";
@@ -99,24 +100,23 @@ function Map() {
         <section className={styles.resultBottom}>
           <div className={styles.bottomContent}>
             <div className={styles.searchInfo}>
-              {locationSearch ? (
-                <div className={styles.locationLook}>
-                  현재 위치: {locationSearch}
-                </div>
-              ) : (
-                <div className={styles.locationLook}>
-                  위치가 설정되지 않았습니다.
-                </div>
-              )}
-
               {selectedItem ? (
                 <div className={styles.selectedItem}>
-                  선정 메뉴: {selectedItem}
+                  선정 메뉴 :
+                  <div className={styles.itemBorder}>{selectedItem}</div>
                 </div>
               ) : (
                 <div className={styles.selectedItem}>
                   선정된 메뉴가 없습니다.
                 </div>
+              )}
+              {locationSearch ? (
+                <div className={styles.locationLook}>
+                  현재 위치 :
+                  <div className={styles.itemBorder}>{locationSearch}</div>
+                </div>
+              ) : (
+                <div className={styles.locationLook}>현재 위치 : 미설정</div>
               )}
             </div>
             <div>
@@ -131,7 +131,7 @@ function Map() {
                   });
                 }}
               >
-                검색하기
+                <BsSearch className={styles.searchIcon} />
               </button>
             </div>
           </div>
