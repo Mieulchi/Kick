@@ -1,0 +1,61 @@
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .inputField,
+  .textareaField,
+  .fileInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .inputField:focus,
+  .textareaField:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .textareaField {
+    height: 150px;
+    resize: none;
+  }
+  
+  .fileInput {
+    padding: 5px;
+  }
+  
+  .submitButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submitButton:hover {
+    background-color: #0056b3;
+  }
+  

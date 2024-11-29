@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function KakaoMap({locationSearch = (f) =>f,location }) {
+function KakaoMap({locationSearch = (f) =>f,location , currentLocation}) {
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
 
@@ -37,10 +37,17 @@ function KakaoMap({locationSearch = (f) =>f,location }) {
   }, []);
 
   useEffect(() => {
-    if (map && location) {
-      searchLocation();
+    if (map) {
+      if (typeof currentLocation === "string" && currentLocation.includes(",")) {
+        // currentLocation이 문자열이고 좌표 형식일 때
+        searchCurrentLocation();
+      } else if (location) {
+        // location 값이 있을 때
+        searchLocation();
+      }
     }
-  }, [location, map]);
+  }, [location, map, currentLocation]);
+  
 
   const searchLocation = () => {
     const { kakao } = window;
@@ -56,6 +63,17 @@ function KakaoMap({locationSearch = (f) =>f,location }) {
       }
     });
   };
+  const searchCurrentLocation = () => {
+    const [latitude, longitude] = currentLocation.split(",").map(Number);
+    const moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+    const newMarkers = new window.kakao.maps.Marker({
+      map: map,
+      position: moveLatLon,
+    });
+    setMarker(newMarkers);
+    map.setCenter(moveLatLon);
+
+  }
 
   const handleKeyWordSearch = () => {
     const { kakao } = window;

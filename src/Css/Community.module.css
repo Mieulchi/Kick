@@ -1,0 +1,65 @@
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .postList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .postCard {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .postCard > h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .postCard:hover > h3 {
+    text-decoration: underline;
+  }
+  
+  .postDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .actionButton {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: flex-end;
+    transition: background-color 0.2s;
+  }
+  
+  .actionButton:hover {
+    background-color: #0056b3;
+  }
+  

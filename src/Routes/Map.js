@@ -9,9 +9,10 @@ function Map() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(null);
-  const [locationSearch, setLocationSearch] = useState(null);
-  const [tmp, setTmp] = useState("");
+  const [locationSearch, setLocationSearch] = useState(null); // 밑에 현재위치 뜨는것.
+  const [tmp, setTmp] = useState(""); // 검색어에 위치한거
   const [locationInfo, setLocation] = useState(null);
+  const [currentLocation, setcurrentLocation] = useState(null);
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
@@ -20,8 +21,33 @@ function Map() {
   }, [location.state]);
 
   const handleSearchLocation = () => {
+    setcurrentLocation(null);
     setLocationSearch(tmp);
   };
+  
+  const handleCurrnetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log("Latitude:", latitude, "Longitude:", longitude);
+          setcurrentLocation(`${latitude},${longitude}`);
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          alert("현재 위치를 가져올 수 없습니다.");
+        },
+        {
+          enableHighAccuracy: true, // 높은 정확도 모드
+          timeout: 10000, // 최대 대기 시간 (밀리초)
+          maximumAge: 0, // 캐시된 위치를 사용하지 않음
+        }
+      );
+    } else {
+      alert("Geolocation을 지원하지 않는 브라우저입니다.");
+    }
+  };
+  
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearchLocation();
@@ -52,7 +78,9 @@ function Map() {
                 placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
                 className={styles.searchLocation}
               />
-              <button className={styles.locationBT}>현위치</button>
+              <button
+                onClick = {handleCurrnetLocation} 
+                className={styles.locationBT}>현위치</button>
               <button
                 onClick={handleSearchLocation}
                 className={styles.searchBT}
@@ -64,7 +92,7 @@ function Map() {
         </section>
         <section className={styles.mapBox}>
           <div id="map" className={styles.map}>
-            <KakaoMap locationSearch={setLocation} location={locationSearch} />
+            <KakaoMap locationSearch={setLocation} location={locationSearch} currentLocation  = {currentLocation} />
           </div>
         </section>
 
