@@ -244,7 +244,7 @@ function Roulette() {
             }
           >
             <div className={styles.menu}>
-              <h3>점심 메뉴는?</h3>
+              <h3>오늘의 메뉴는?</h3>
               <div style={{ height: "40px" }}>
                 {selectedItem && (
                   <div className={styles.selectedItem}>{selectedItem.name}</div>

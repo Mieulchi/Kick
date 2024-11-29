@@ -18,7 +18,6 @@ export default function Detail() {
       textQuery: `${location} ${keyword} `,
       fields: ["displayName", "location", "rating", "photos", "reviews"],
       includedType: "restaurant",
-      isOpenNow: true,
       language: "kr",
       maxResultCount: 7,
       region: "kr",
