@@ -134,6 +134,16 @@ function Home() {
           >
             룰렛 돌리기
           </button>
+          <button onClick={()=>{
+            navigate("/login");
+          }}>
+            로그인하기
+          </button>
+          <button onClick={()=>{
+            navigate("/community");
+          }}>
+            게시판
+          </button>
         </div>
 
         {isBubbleVisible && (
