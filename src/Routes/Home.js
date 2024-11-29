@@ -71,9 +71,16 @@ function Home() {
   return (
     <div className={styles.content}>
       <nav className={styles.upBar} id={styles.hd}>
-        <img src={darkLogo} onClick={refreshPage} />
-        {/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
-        <h3 onClick={scrollToAboutUs}>about us</h3>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
+            <img src={darkLogo} onClick={refreshPage} />
+            {/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
+          </div>
+          <h3 onClick={scrollToAboutUs}>about us</h3>
+        </div>
+        <div>
+          <h3>community</h3>
+        </div>
       </nav>
 
       <section className={styles.sliderContainer}>
@@ -134,14 +141,18 @@ function Home() {
           >
             룰렛 돌리기
           </button>
-          <button onClick={()=>{
-            navigate("/login");
-          }}>
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             로그인하기
           </button>
-          <button onClick={()=>{
-            navigate("/community");
-          }}>
+          <button
+            onClick={() => {
+              navigate("/community");
+            }}
+          >
             게시판
           </button>
         </div>
