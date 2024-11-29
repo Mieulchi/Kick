@@ -16,7 +16,7 @@
   width: 80%;
   height: auto;
   padding: 12vh 1vw;
-  margin: 0 auto;
+  margin: 1.5rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,7 @@
 .selectMap {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: start;
 }
 .review > * {
   width: 100%;
@@ -58,16 +58,17 @@
 .reviewdiv {
   width: 40%;
   background-color: lightgrey;
-  border-radius: 0 30px 30px 0;
+  border-radius: 0 10px 10px 0;
   font-size: 18px;
   max-height: 500px;
   overflow-y: auto;
 }
 .reviewdiv div {
-  margin: 2px;
+  margin: 8px 4px 8px 4px;
   border-radius: 10px;
   background: white;
-  padding: 5px 10px;
+  padding: 3px 5px 3px 5px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;

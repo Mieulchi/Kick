@@ -142,11 +142,30 @@ export default function MyNaverMap(props) {
           borderRadius: "30px 0 0 30px",
         }}
       />
-      <div>
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          alignItems: "center",
+          top: "20%",
+          left: "70%",
+          gap: "10px",
+          color: "white",
+        }}
+      >
+        <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+          현재 검색 위치
+        </div>
         <input
           type="text"
           placeholder="Search Places..."
           defaultValue={props.location}
+          style={{
+            borderRadius: "10px",
+            height: "2rem",
+            width: "50%",
+            paddingLeft: "1rem",
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               setLocation(event.target.value);

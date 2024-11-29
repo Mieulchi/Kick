@@ -27,7 +27,7 @@ export default function MyKakaoMap(props) {
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB(data, status) {
       const places = data.map((each) => {
-        return { displayName: each.place_name };
+        return { displayName: each.place_name, id: each.id };
       });
       props.setPlaces(places);
 
@@ -112,17 +112,26 @@ export default function MyKakaoMap(props) {
         style={{
           display: "flex",
           position: "absolute",
-          top: "15%",
-          left: "10%",
+          alignItems: "center",
+          top: "20%",
+          left: "70%",
           gap: "10px",
           color: "white",
         }}
       >
-        <div>현재 검색 위치: </div>
+        <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+          현재 검색 위치
+        </div>
         <input
           type="text"
           placeholder="Search Places..."
           defaultValue={props.location}
+          style={{
+            borderRadius: "10px",
+            height: "2rem",
+            width: "50%",
+            paddingLeft: "1rem",
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               setLocation(event.target.value);
