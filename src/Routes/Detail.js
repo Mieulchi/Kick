@@ -68,6 +68,31 @@ export default function Detail() {
     setKeyword(state.keyword);
   }, [state]);
 
+  // Helper function to render stars
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const emptyStars = 5 - fullStars;
+
+    return (
+      <>
+        {[...Array(fullStars)].map((_, index) => (
+          <i
+            key={`full-${index}`}
+            className="bi bi-star-fill"
+            style={{ color: "#FFD700", marginRight: "5px" }}
+          ></i>
+        ))}
+        {[...Array(emptyStars)].map((_, index) => (
+          <i
+            key={`empty-${index}`}
+            className="bi bi-star"
+            style={{ color: "#FFD700", marginRight: "5px" }}
+          ></i>
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className={styles.body}>
       <nav className={styles.upBar} id={styles.hd}>
@@ -78,37 +103,39 @@ export default function Detail() {
           src={darkLogo}
         />
       </nav>
-      <div className={styles.container}>
-        {detail.length > 0
-          ? detail.map((detail, i) => {
-              return (
-                <div key={i} className={styles.detail}>
-                  <img
-                    src={detail.url}
-                    alt="Restaurant"
-                    className={styles.detailImage}
-                  />
+      <div className={styles.containerBox}>
+        <div className={styles.container}>
+          {detail.length > 0
+            ? detail.map((detail, i) => {
+                return (
+                  <div key={i} className={styles.detail}>
+                    <img
+                      src={detail.url}
+                      alt="Restaurant"
+                      className={styles.detailImage}
+                    />
 
-                  <div className={styles.detailText}>
-                    <p>
-                      {detail.displayName} : {detail.rating}
-                    </p>
-                  </div>
+                    <div className={styles.detailText}>
+                      <p>{detail.displayName}</p>
+                      <div>{renderStars(detail.rating)}</div>
+                      <button>공유하기</button>
+                    </div>
 
-                  <div className={styles.reviewSection}>
-                    {detail.review.map((review, idx) => (
-                      <div key={idx} className={styles.review}>
-                        <p>
-                          <strong>Rating:</strong> {review.rating}
-                        </p>
-                        <p>{review.content}</p>
-                      </div>
-                    ))}
+                    <div className={styles.reviewSection}>
+                      {detail.review.map((review, idx) => (
+                        <div key={idx} className={styles.review}>
+                          <p>
+                            <strong>별점 :</strong> {review.rating}/5
+                          </p>
+                          <p>{review.content}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          : " "}
+                );
+              })
+            : " "}
+        </div>
       </div>
     </div>
   );

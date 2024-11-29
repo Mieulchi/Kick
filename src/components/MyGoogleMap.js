@@ -122,13 +122,27 @@ export default function MyGoogleMap(props) {
           <MyGoogleMarkers coords={coords} />
         </Map>
       </div>
-
-      <GoogleSearch
-        location={props.location}
-        setLocation={setLocation}
-        propsSetLocation={props.setLocation}
-        setPlace={setPlace}
-      />
+      <div
+        style={{
+          display: "flex",
+          position: "absolute",
+          alignItems: "center",
+          top: "20%",
+          left: "70%",
+          gap: "10px",
+          color: "white",
+        }}
+      >
+        <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+          현재 검색 위치
+        </div>
+        <GoogleSearch
+          location={props.location}
+          setLocation={setLocation}
+          propsSetLocation={props.setLocation}
+          setPlace={setPlace}
+        />
+      </div>
     </>
   );
 }
