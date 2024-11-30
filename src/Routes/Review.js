@@ -1,25 +1,28 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import KakaoMap from "../components/KakaoMap";
-import { useEffect, useState } from "react";
-import styles from "../Css/Review.module.css";
-import MyGoogleMap from "../components/MyGoogleMap";
-import MyNaverMap from "../components/MyNaverMap";
-import MyKakaoMap from "../components/MyKakaoMap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import darkLogo from "../Logo/darkLogo.png";
+import { useLocation, useNavigate } from 'react-router-dom';
+import KakaoMap from '../components/KakaoMap';
+import { useEffect, useState } from 'react';
+import styles from '../Css/Review.module.css';
+import MyGoogleMap from '../components/MyGoogleMap';
+import MyNaverMap from '../components/MyNaverMap';
+import MyKakaoMap from '../components/MyKakaoMap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import darkLogo from '../Logo/darkLogo.png';
 
 function Review() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const [location, setLocation] = useState();
-  const [keyword, setKeyword] = useState();
-  const [places, setPlaces] = useState();
-  const [map, setMap] = useState("google");
+	const navigate = useNavigate();
+	const { state } = useLocation();
+	//문자열, 검색 지역
+	const [location, setLocation] = useState();
+	const [keyword, setKeyword] = useState();
+	//식당 이름들
+	const [places, setPlaces] = useState();
+	const [map, setMap] = useState('google');
+	const locationInfo = state.locationInfo;
 
-  useEffect(() => {
-    setLocation(state.location);
-    setKeyword(state.selectedItem);
-  }, []);
+	useEffect(() => {
+		setLocation(state.location);
+		setKeyword(state.selectedItem);
+	}, []);
 
   // HTML 태그를 제거하는 함수
   function stripHtmlTags(str) {
