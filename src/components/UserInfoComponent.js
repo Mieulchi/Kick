@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import styles from '../Css/Community.module.css';
+import darkLogo from '../Logo/darkLogo.png';
+
 export default function UserInfoComponent() {
 	const [user, setUser] = useState();
 	const navigate = useNavigate();
@@ -17,53 +20,47 @@ export default function UserInfoComponent() {
 			})
 			.then((response) => {
 				setUser(response.data.user);
-
-				// 로그인된 상태일 때의 로직 처리 (필요한 경우 추가)
 			})
 			.catch((e) => {
 				if (e.response && e.response.status === 401) {
-					console.log('오류:', e);
 				}
 			});
-	});
-	return (
-		<div style={{ border: '1px solid red' }}>
-			<button
-				onClick={() => {
-					navigate('/');
-				}}
-			>
-				{' '}
-				임시 홈버튼
-			</button>
-			<br />
-			UserInfoComponent 입니다 UpBar에 써도 되고요
-			<br></br>
-			{user ? (
-				<div style={{ display: 'flex' }}>
-					{' '}
-					<div>{user.username}</div>{' '}
-					<button
-						onClick={() => {
-							localStorage.removeItem('token');
+	}, []);
 
-							location.reload(true);
-						}}
-					>
-						logout
-					</button>{' '}
+	return (
+		<div>
+			<nav className={styles.upBar} id={styles.hd}>
+				<img
+					onClick={() => {
+						navigate('/');
+					}}
+					src={darkLogo}
+				/>
+
+				<div className={styles.user}>
+					{user ? (
+						<>
+							<h3>Welcome, {user.username}</h3>
+							<h3
+								onClick={() => {
+									localStorage.removeItem('token');
+									location.reload();
+								}}
+							>
+								로그아웃
+							</h3>
+						</>
+					) : (
+						<h3
+							onClick={() => {
+								navigate('/login');
+							}}
+						>
+							로그인/회원가입
+						</h3>
+					)}
 				</div>
-			) : (
-				<div>
-					<button
-						onClick={() => {
-							navigate('/login');
-						}}
-					>
-						login
-					</button>
-				</div>
-			)}
+			</nav>
 		</div>
 	);
 }
