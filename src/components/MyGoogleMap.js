@@ -13,19 +13,21 @@ export default function MyGoogleMap(props) {
 
 	async function textSearch() {
 		const { Place } = await window.google.maps.importLibrary('places');
+		console.log(`${place} ${props.keyword}`);
 
 		const txtRequest = {
 			textQuery: `${place} ${props.keyword} `,
 			fields: ['displayName', 'location', 'businessStatus', 'rating', 'photos'],
 			includedType: 'restaurant',
-			isOpenNow: true,
 			language: 'kr',
 			maxResultCount: 7,
+			minRating: 3.2,
 			region: 'kr',
 			useStrictTypeFiltering: false,
 		};
 
 		const { places } = await Place.searchByText(txtRequest);
+		console.log(places);
 
 		if (places.length) {
 			const filteredPlaces = places.map((place) => {

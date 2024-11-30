@@ -1,62 +1,76 @@
 .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .metaInfo {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 20px;
-  }
-  
-  .content {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .image {
-    max-width: 100%;
-    margin-bottom: 20px;
-    border-radius: 8px;
-  }
-  
-  .actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .likeButton,
-  .dislikeButton {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .likeButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .dislikeButton:hover {
-    background-color: #ff4d4d;
-  }
-  
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.metaInfo {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.image {
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.likeButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dislikeButton {
+  background-color: #ff4d4d;
+  ;
+  color: white;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.likeButton:hover {
+  background-color: darkblue;
+}
+
+.dislikeButton:hover {
+  background-color: darkred;
+}
+
+.selected {
+  border: 5px solid orange;
+}
