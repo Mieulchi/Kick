@@ -18,8 +18,9 @@ export default function Detail() {
 			textQuery: `${location} ${keyword} `,
 			fields: ['displayName', 'location', 'rating', 'photos', 'reviews'],
 			includedType: 'restaurant',
-			language: 'kr',
+			language: 'ko',
 			maxResultCount: 7,
+			minRating: 1,
 			region: 'kr',
 			useStrictTypeFiltering: false,
 		};
@@ -118,7 +119,13 @@ export default function Detail() {
 										<div className={styles.detailText}>
 											<p>{detail.displayName}</p>
 											<div>{renderStars(detail.rating)}</div>
-											<button>공유하기</button>
+											<button
+												onClick={() => {
+													navigate('/community');
+												}}
+											>
+												공유하기
+											</button>
 										</div>
 
 										<div className={styles.reviewSection}>
