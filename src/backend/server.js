@@ -377,6 +377,22 @@ app.delete('/posts/:id', (req, res) => {
 	}
 });
 
+// 로그인 상태 확인 API
+app.get('/check-login', (req, res) => {
+	const token = req.headers.authorization?.split(' ')[1]; // Authorization 헤더에서 토큰 추출
+
+	if (!token) {
+		return res.status(401).json({ message: '로그인이 필요합니다.' });
+	}
+
+	try {
+		const decoded = jwt.verify(token, SECRET_KEY); // 토큰을 검증하여 유효한지 확인
+		res.status(200).json({ message: '로그인된 상태입니다.', user: decoded });
+	} catch (error) {
+		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+	}
+});
+
 // 서버 실행
 app.listen(PORT, () => {
 	console.log(`Server running on http://localhost:${PORT}`);
