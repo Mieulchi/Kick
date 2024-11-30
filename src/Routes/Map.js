@@ -124,6 +124,7 @@ function Map() {
             <div>
               <button
                 className={styles.goToReview}
+                disabled={!locationSearch || locationSearch.trim() === ""} // 입력값이 없으면 버튼 비활성화
                 onClick={() => {
                   navigate("/review", {
                     state: {
