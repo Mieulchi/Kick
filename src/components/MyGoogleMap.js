@@ -18,7 +18,7 @@ export default function MyGoogleMap(props) {
 			textQuery: `${place} ${props.keyword} `,
 			fields: ['displayName', 'location', 'businessStatus', 'rating', 'photos'],
 			includedType: 'restaurant',
-			language: 'kr',
+			language: 'ko',
 			maxResultCount: 7,
 			minRating: 1,
 			region: 'kr',
