@@ -68,86 +68,83 @@ function Home() {
 		window.location.reload(); // 페이지 새로고침
 	};
 
-	return (
-		<div className={styles.content}>
-			<nav className={styles.upBar} id={styles.hd}>
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					<div>
-						<img src={darkLogo} onClick={refreshPage} />
-						{/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
-					</div>
-					<h3 onClick={scrollToAboutUs}>about us</h3>
-				</div>
-				<div>
-					<h3
-						onClick={() => {
-							navigate('/community');
-						}}
-					>
-						community
-					</h3>
-				</div>
-			</nav>
+  return (
+    <div className={styles.content}>
+      <nav className={styles.upBar} id={styles.hd}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
+            <img src={darkLogo} onClick={refreshPage} />
+            {/* 'About Us' 클릭 시 scrollToAboutUs 호출 */}
+          </div>
+          <h3 onClick={scrollToAboutUs}>about us</h3>
+        </div>
+        <div>
+        <div>
+          <h3 onClick={() => {navigate("/community");}}>community</h3>
+        </div>
+        </div>
+      </nav>
 
-			<section className={styles.sliderContainer}>
-				{images.map((image, index) => (
-					<div
-						key={index}
-						className={`${styles.slide} ${
-							currentImageIndex === index ? styles.active : ''
-						}`}
-						style={{
-							backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url(${image})`,
-						}}
-					></div>
-				))}
-			</section>
-			<section className={styles.body}>
-				<div className={styles.search}>
-					<h1 className={styles.cp}>
-						다양한 음식을
-						<br />
-						비교하여 선정하세요.
-					</h1>
-					<div className={styles.searchBar}>
-						<input
-							type="text"
-							placeholder="메뉴 이름을 입력해주세요"
-							className={styles.searchInput}
-							value={selectedItem}
-							onChange={(e) => setSelectedItem(e.target.value)}
-							onKeyDown={(e) => {
-								if (
-									e.key === 'Enter' &&
-									selectedItem &&
-									selectedItem.trim() !== ''
-								) {
-									navigate('/Map', {
-										state: { selectedItem: { name: selectedItem } },
-									});
-								}
-							}}
-						/>
-						<button
-							onClick={() => {
-								navigate('/Map', {
-									state: { selectedItem: { name: selectedItem } },
-								});
-							}}
-							disabled={!selectedItem || selectedItem.trim() === ''} // 입력값이 없으면 버튼 비활성화
-						>
-							<BsSearch className={styles.searchIcon} />
-						</button>
-					</div>
-					<button
-						className={styles.goRoullete}
-						onClick={() => {
-							navigate('/Roulette'); // Use navigate here to go to '/Roulette'
-						}}
-					>
-						룰렛 돌리기
-					</button>
-				</div>
+      <section className={styles.sliderContainer}>
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`${styles.slide} ${
+              currentImageIndex === index ? styles.active : ""
+            }`}
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url(${image})`,
+            }}
+          ></div>
+        ))}
+      </section>
+      <section className={styles.body}>
+        <div className={styles.search}>
+          <h1 className={styles.cp}>
+            다양한 음식을
+            <br />
+            비교하여 선정하세요.
+          </h1>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="메뉴 이름을 입력해주세요"
+              className={styles.searchInput}
+              value={selectedItem}
+              onChange={(e) => setSelectedItem(e.target.value)}
+              onKeyDown={(e) => {
+                if (
+                  e.key === "Enter" &&
+                  selectedItem &&
+                  selectedItem.trim() !== ""
+                ) {
+                  navigate("/Map", {
+                    state: { selectedItem: { name: selectedItem } },
+                  });
+                }
+              }}
+            />
+            <button
+              onClick={() => {
+                navigate("/Map", {
+                  state: { selectedItem: { name: selectedItem } },
+                });
+              }}
+              disabled={!selectedItem || selectedItem.trim() === ""} // 입력값이 없으면 버튼 비활성화
+            >
+              <BsSearch className={styles.searchIcon} />
+            </button>
+          </div>
+          <button
+            className={styles.goRoullete}
+            onClick={() => {
+              navigate("/Roulette"); // Use navigate here to go to '/Roulette'
+            }}
+          >
+            룰렛 돌리기
+          </button>
+        </div>
+
 
 				{isBubbleVisible && (
 					<img

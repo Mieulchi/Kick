@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styles from '../Css/Post.module.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styles from "../Css/Post.module.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import darkLogo from "../Logo/darkLogo.png";
+
 
 function Post() {
 	const [title, setTitle] = useState('');
@@ -34,34 +37,46 @@ function Post() {
 			});
 	};
 
-	return (
-		<div className={styles.container}>
-			<h2 className={styles.title}>게시글 작성</h2>
-			<div className={styles.formGroup}>
-				<input
-					type="text"
-					placeholder="제목"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-					className={styles.inputField}
-				/>
-				<textarea
-					placeholder="내용"
-					value={content}
-					onChange={(e) => setContent(e.target.value)}
-					className={styles.textareaField}
-				/>
-				<input
-					type="file"
-					onChange={(e) => setImage(e.target.files[0])}
-					className={styles.fileInput}
-				/>
-				<button onClick={handlePost} className={styles.submitButton}>
-					작성
-				</button>
-			</div>
-		</div>
-	);
+  return (
+    <div className={styles.body}>
+      <nav className={styles.upBar} id={styles.hd}>
+        <img
+          onClick={() => {
+            navigate("/");
+          }}
+          src={darkLogo}
+        />
+      </nav>
+      <div className={styles.board}>
+        <div className={styles.container}>
+          <h2 className={styles.title}>NOMADGRAM</h2>
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              placeholder="제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={styles.inputField}
+            />
+            <textarea
+              placeholder="내용"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className={styles.textareaField}
+            />
+            <input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+              className={styles.fileInput}
+            />
+            <button onClick={handlePost} className={styles.submitButton}>
+              업로드
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Post;
