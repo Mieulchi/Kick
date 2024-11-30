@@ -79,7 +79,9 @@ function Home() {
           <h3 onClick={scrollToAboutUs}>about us</h3>
         </div>
         <div>
-          <h3>community</h3>
+        <div>
+          <h3 onClick={() => {navigate("/community");}}>community</h3>
+        </div>
         </div>
       </nav>
 
@@ -140,20 +142,6 @@ function Home() {
             }}
           >
             룰렛 돌리기
-          </button>
-          <button
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            로그인하기
-          </button>
-          <button
-            onClick={() => {
-              navigate("/community");
-            }}
-          >
-            게시판
           </button>
         </div>
 

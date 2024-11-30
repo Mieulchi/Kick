@@ -1,76 +1,145 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&family=Noto+Sans+KR:wght@100..900&display=swap");
+@font-face {
+  font-family: "HakgyoansimBunpilR";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBunpilR.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.body {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
+    url("../Images/foodBG.jpg");
+  background-size: cover;
+}
+
+.upBar {
+  display: flex;
+  align-items: center;
+  height: 3.2rem;
+  padding-left: 15px;
+  padding-right: 15px;
+  justify-content: space-between;
+}
+.upBar img {
+  margin-left: 5.9rem;
+  padding-top: 1.2rem;
+  width: 10rem;
+  cursor: pointer;
+}
+.upBar h3 {
+  font-size: 15px;
+  margin-right: 2.5rem;
+}
+
+.board {
+  background-image: url("../Images/board.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 800px;
+  width: 1500px;
+  margin-left: 110px;
+  padding: 50px 0;
+  overflow: hidden;
+}
+
 .container {
   width: 90%;
   max-width: 800px;
+  height: 100%;
   margin: 20px auto;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+  
+.title {
+  text-align: center;
+  font-family: "HakgyoansimBunpilR";
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  height: 100%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  text-align: center;
+  font-family: "HakgyoansimBunpilR";
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
 }
 
 .title {
-  font-size: 24px;
+  font-family: "HakgyoansimBunpilR";
+  font-size: 40px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 10px;
+  margin-top: 45px;  
+  text-align: left;
 }
-
+  
 .metaInfo {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
+  font-size: 11px;
+  color: #777
 }
 
 .content {
-  font-size: 16px;
+  font-family: "HakgyoansimBunpilR";
+  font-size: 20px;
   line-height: 1.6;
   margin-bottom: 20px;
   color: #333;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #000 #f9f9f9;
 }
-
+  
 .image {
   max-width: 100%;
   margin-bottom: 20px;
   border-radius: 8px;
 }
-
+  
 .actions {
   display: flex;
   gap: 10px;
 }
-
+  
 .likeButton {
-  background-color: #007bff;
+  background-color: #000;
   color: white;
   padding: 10px 15px;
   font-size: 14px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.5s;
 }
-
-.dislikeButton {
-  background-color: #ff4d4d;
-  ;
-  color: white;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
 .likeButton:hover {
-  background-color: darkblue;
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
 }
-
-.dislikeButton:hover {
-  background-color: darkred;
+.heart {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
-
-.selected {
-  border: 5px solid orange;
+.animate {
+  transform: scale(2);
+  transition: transform 0.1s ease;
 }
