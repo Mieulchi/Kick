@@ -13,31 +13,58 @@ function PostDetail() {
 	const navigate = useNavigate();
 
 	const baseURL = `http://localhost:4000`;
-	useEffect(() => {
-		axios
-			.get(`${baseURL}/posts/${id}`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
-				},
-			})
-			.then((response) => {
-				setPost(response.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error(error);
-				setLoading(false);
-			});
 
-		axios
-			.get(`${baseURL}/posts/${id}/like-status`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
-				},
-			})
-			.then((response) => {
+	useEffect(() => {
+		console.log(post);
+	}, [post]);
+
+	async function getPost() {
+		let token = localStorage.getItem('token');
+		if (token) {
+			axios
+				.get(`${baseURL}/posts/${id}`, {
+					headers: {
+						Authorization: `Bearer ${token}`, // 토큰 필요시 추가
+					},
+				})
+				.then((response) => {
+					console.log(response);
+					setPost(response.data);
+					setLoading(false);
+				})
+				.catch((error) => {
+					console.error(error);
+					setLoading(false);
+				});
+
+			axios
+				.get(`${baseURL}/posts/${id}/like-status`, {
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
+					},
+				})
+				.then((response) => {
+					setLikeStatus(response.data.likeStatus);
+				});
+		} else {
+			axios
+				.get(`${baseURL}/posts/${id}`)
+				.then((response) => {
+					setPost(response.data);
+					setLoading(false);
+				})
+				.catch((error) => {
+					setLoading(false);
+				});
+
+			axios.get(`${baseURL}/posts/${id}/like-status`).then((response) => {
 				setLikeStatus(response.data.likeStatus);
 			});
+		}
+	}
+
+	useEffect(() => {
+		getPost();
 	}, [, likeStatus]);
 
 	const handleLike = () => {
@@ -56,8 +83,6 @@ function PostDetail() {
 				setLikeStatus(response.data.message);
 				setPost((prevPost) => ({
 					...prevPost,
-					likes: prevPost.likes + 1,
-					isAnimating: false, // 애니메이션 종료
 				}));
 			})
 			.catch((error) => {

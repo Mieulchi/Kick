@@ -171,42 +171,54 @@ app.get('/posts', (req, res) => {
 	});
 });
 
-//게시글 상세 보기
 app.get('/posts/:id', (req, res) => {
 	const postId = req.params.id;
 	const token = req.headers.authorization?.split(' ')[1];
 
-	if (!token) {
-		return res.status(401).json({ message: '로그인이 필요합니다.' });
+	let isAuthor = false; // 작성자 여부를 기본값으로 설정
+	let userId = null; // 기본 사용자 ID는 null
+
+	// 로그인된 사용자가 있을 경우, 사용자 정보를 가져옴
+	console.log(token);
+	if (token) {
+		try {
+			const decoded = jwt.verify(token, SECRET_KEY);
+			userId = decoded.id;
+			isAuthor = true; // 토큰이 유효하면 작성자 여부를 true로 설정
+		} catch (error) {
+			return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+		}
 	}
 
-	try {
-		const decoded = jwt.verify(token, SECRET_KEY);
-		const userId = decoded.id;
+	// 게시글 정보 조회
+	const query = `
+      SELECT 
+          p.id, p.title, p.content, p.image_url, p.created_at, p.likes, p.user_id
+      FROM posts p
+      WHERE p.id = ?
+  `;
 
-		// 게시글 정보 조회 및 작성 여부 확인
-		const query = `
-          SELECT 
-              p.id, p.title, p.content, p.image_url, p.created_at, p.likes,
-              (p.user_id = ?) AS isAuthor -- 작성 여부 확인
-          FROM posts p
-          WHERE p.id = ?
-      `;
-		db.get(query, [userId, postId], (err, post) => {
-			if (err) {
-				return res
-					.status(500)
-					.json({ message: '데이터베이스 오류', error: err.message });
-			}
-			if (!post) {
-				return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
-			}
+	db.get(query, [postId], (err, post) => {
+		if (err) {
+			return res
+				.status(500)
+				.json({ message: '데이터베이스 오류', error: err.message });
+		}
+		if (!post) {
+			return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+		}
 
-			res.status(200).json(post);
-		});
-	} catch (error) {
-		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
-	}
+		// 작성자 여부를 추가하여 응답
+		console.log(`post :${post.user_id}`);
+		console.log(`userId : ${userId}`);
+		if (userId && post.user_id === userId) {
+			post.isAuthor = true; // 로그인한 사용자라면 작성자 여부 추가
+		} else {
+			post.isAuthor = false; // 작성자가 아니라면 false
+		}
+
+		res.status(200).json(post);
+	});
 });
 
 //좋아요
@@ -294,31 +306,34 @@ app.get('/posts/:id/like-status', (req, res) => {
 	const postId = req.params.id;
 	const token = req.headers.authorization?.split(' ')[1];
 
-	if (!token) {
-		return res.status(401).json({ message: '로그인이 필요합니다.' });
-	}
+	let likeStatus = 0; // 기본적으로 좋아요 상태는 0
 
-	try {
-		const decoded = jwt.verify(token, SECRET_KEY);
-		const userId = decoded.id;
+	// 로그인된 사용자가 있을 경우, 사용자 정보 가져옴
+	if (token) {
+		try {
+			const decoded = jwt.verify(token, SECRET_KEY);
+			const userId = decoded.id;
 
-		const checkQuery =
-			'SELECT value FROM user_likes WHERE user_id = ? AND post_id = ?';
-		db.get(checkQuery, [userId, postId], (err, row) => {
-			if (err) {
-				return res
-					.status(500)
-					.json({ message: '데이터베이스 오류', error: err.message });
-			}
+			const checkQuery =
+				'SELECT value FROM user_likes WHERE user_id = ? AND post_id = ?';
+			db.get(checkQuery, [userId, postId], (err, row) => {
+				if (err) {
+					return res
+						.status(500)
+						.json({ message: '데이터베이스 오류', error: err.message });
+				}
 
-			const likeStatus = row ? row.value : 0; // 좋아요 안 누른 상태는 0
-			res.status(200).json({ likeStatus });
-		});
-	} catch (error) {
-		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+				likeStatus = row ? row.value : 0; // 좋아요 상태 가져오기, 없으면 0
+				res.status(200).json({ likeStatus });
+			});
+		} catch (error) {
+			return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+		}
+	} else {
+		// 비로그인 사용자일 경우, 기본적으로 좋아요 상태는 0으로 처리
+		res.status(200).json({ likeStatus });
 	}
 });
-
 //글 삭제
 app.delete('/posts/:id', (req, res) => {
 	const postId = req.params.id; // 삭제할 게시글 ID

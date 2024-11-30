@@ -39,14 +39,17 @@ export default function UserInfoComponent() {
 
 				<div className={styles.user}>
 					{user ? (
-						<h3
-							onClick={() => {
-								localStorage.removeItem('token');
-								location.reload();
-							}}
-						>
-							로그아웃
-						</h3>
+						<>
+							<h3>Welcome, {user.username}</h3>
+							<h3
+								onClick={() => {
+									localStorage.removeItem('token');
+									location.reload();
+								}}
+							>
+								로그아웃
+							</h3>
+						</>
 					) : (
 						<h3
 							onClick={() => {
