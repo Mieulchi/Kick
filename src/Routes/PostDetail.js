@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../Css/PostDetail.module.css';
 
@@ -7,14 +7,18 @@ function PostDetail() {
 	const { id } = useParams(); // URL 파라미터에서 게시글 ID 가져오기
 	const [post, setPost] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [selected, setSelected] = useState(-1);
-	const [deletable, setDeletable] = useState(false);
+	const [likeStatus, setLikeStatus] = useState(0);
+	const navigate = useNavigate();
 
+	const baseURL = `http://localhost:4000`;
 	useEffect(() => {
 		axios
-			.get(`http://localhost:4000/posts/${id}`)
+			.get(`${baseURL}/posts/${id}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
+				},
+			})
 			.then((response) => {
-				console.log(response.data);
 				setPost(response.data);
 				setLoading(false);
 			})
@@ -22,42 +26,53 @@ function PostDetail() {
 				console.error('게시글 가져오기 실패:', error);
 				setLoading(false);
 			});
-	}, [, selected]);
 
-	const handleVote = (value) => {
+		axios
+			.get(`${baseURL}/posts/${id}/like-status`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
+				},
+			})
+			.then((response) => {
+				setLikeStatus(response.data.likeStatus);
+			});
+	}, [, likeStatus]);
+
+	const handleVote = () => {
 		axios
 			.post(
-				`http://localhost:4000/posts/${id}/vote`,
-				{ value },
+				`${baseURL}/posts/${id}/like`,
+				{}, // 요청 바디에 데이터가 없는 경우 빈 객체
 				{
 					headers: {
-						Authorization: `Bearer ${localStorage.getItem('token')}`, // 토큰 필요시 추가
+						Authorization: `Bearer ${localStorage.getItem('token')}`,
 					},
 				}
 			)
 			.then((response) => {
-				console.log(response.data.message);
-				response.data.message == 1 ? setSelected(1) : setSelected(0);
-				console.log(
-					value === 1 ? '좋아요 반영되었습니다!' : '싫어요 반영되었습니다!'
-				);
+				setLikeStatus(response.data.message);
 				setPost({
 					...post,
 				});
 			})
 			.catch((error) => {
-				alert('처리에 실패했습니다.');
+				console.log(error);
 			});
 	};
 
-	// 좋아요
-	const handleLike = () => {
-		handleVote(1); // value = 1 전달
-	};
-
-	// 싫어요
-	const handleDislike = () => {
-		handleVote(0); // value = 0 전달
+	const deletePost = () => {
+		axios
+			.delete(`${baseURL}/posts/${id}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			})
+			.then(() => {
+				navigate('/community');
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	};
 
 	if (loading) return <p>로딩 중...</p>;
@@ -73,28 +88,27 @@ function PostDetail() {
 			<p className={styles.content}>{post.content}</p>
 			{post.image_url && (
 				<img
-					src={`http://localhost:4000${post.image_url}`}
+					src={`${baseURL}${post.image_url}`}
 					alt={post.title}
 					className={styles.image}
 				/>
 			)}
 			<div className={styles.actions}>
 				<button
-					onClick={handleLike}
+					onClick={handleVote}
 					className={`${styles.likeButton} ${
-						selected == 1 ? styles.selected : ''
+						likeStatus == 1 ? styles.selected : ''
 					}`}
 				>
 					좋아요 👍 {post.likes}
 				</button>
-				<button
-					onClick={handleDislike}
-					className={`${styles.dislikeButton} ${
-						selected == 0 ? styles.selected : ''
-					}`}
-				>
-					싫어요 👎 {post.dislikes}
-				</button>
+				{post.isAuthor ? (
+					<button className={styles.dislikeButton} onClick={deletePost}>
+						삭재
+					</button>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	);

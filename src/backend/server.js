@@ -33,11 +33,8 @@ db.serialize(() => {
       title TEXT NOT NULL,
       content TEXT NOT NULL,
       image_url TEXT,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-
-      
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       likes INTEGER DEFAULT 0,
-      dislikes INTEGER DEFAULT 0,
       FOREIGN KEY (user_id) REFERENCES users (id)
     )
   `);
@@ -46,7 +43,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER NOT NULL,
       post_id INTEGER NOT NULL,
-      value INTEGER NOT NULL CHECK (value IN (0, 1)), -- 1: 좋아요, 0: 싫어요
+      value INTEGER NOT NULL CHECK (value IN (0, 1)), -- 1: 좋아요, 0: 안 좋아요
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(user_id, post_id), -- 한 사용자가 하나의 게시글에 대해 한 번만 행동 가능
       FOREIGN KEY(user_id) REFERENCES users(id),
@@ -158,7 +155,7 @@ app.post('/login', (req, res) => {
 
 app.get('/posts', (req, res) => {
 	const query = `
-    SELECT posts.id, posts.title, posts.likes, posts.dislikes, users.username
+    SELECT posts.id, posts.title, posts.likes, users.username
     FROM posts
     JOIN users ON posts.user_id = users.id
     ORDER BY posts.created_at DESC
@@ -177,40 +174,48 @@ app.get('/posts', (req, res) => {
 //게시글 상세 보기
 app.get('/posts/:id', (req, res) => {
 	const postId = req.params.id;
-
-	const query = `
-    SELECT posts.id, posts.title, posts.content, posts.image_url, posts.likes, posts.dislikes, users.username, posts.created_at
-    FROM posts
-    JOIN users ON posts.user_id = users.id
-    WHERE posts.id = ?
-  `;
-	db.get(query, [postId], (err, row) => {
-		if (err) {
-			return res.status(500).json({
-				message: '게시글을 가져오는 데 실패했습니다.',
-				error: err.message,
-			});
-		}
-		if (!row) {
-			return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
-		}
-		res.json(row);
-	});
-});
-
-app.post('/posts/:id/vote', (req, res) => {
-	const postId = req.params.id;
 	const token = req.headers.authorization?.split(' ')[1];
-	const { value } = req.body; // value 값 (1: 좋아요, 0: 싫어요)
 
 	if (!token) {
 		return res.status(401).json({ message: '로그인이 필요합니다.' });
 	}
 
-	if (value !== 0 && value !== 1) {
-		return res
-			.status(400)
-			.json({ message: 'value는 0(싫어요) 또는 1(좋아요)만 가능합니다.' });
+	try {
+		const decoded = jwt.verify(token, SECRET_KEY);
+		const userId = decoded.id;
+
+		// 게시글 정보 조회 및 작성 여부 확인
+		const query = `
+          SELECT 
+              p.id, p.title, p.content, p.image_url, p.created_at, p.likes,
+              (p.user_id = ?) AS isAuthor -- 작성 여부 확인
+          FROM posts p
+          WHERE p.id = ?
+      `;
+		db.get(query, [userId, postId], (err, post) => {
+			if (err) {
+				return res
+					.status(500)
+					.json({ message: '데이터베이스 오류', error: err.message });
+			}
+			if (!post) {
+				return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+			}
+
+			res.status(200).json(post);
+		});
+	} catch (error) {
+		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+	}
+});
+
+//좋아요
+app.post('/posts/:id/like', (req, res) => {
+	const postId = req.params.id;
+	const token = req.headers.authorization?.split(' ')[1];
+
+	if (!token) {
+		return res.status(401).json({ message: '로그인이 필요합니다.' });
 	}
 
 	try {
@@ -228,71 +233,142 @@ app.post('/posts/:id/vote', (req, res) => {
 			}
 
 			if (row) {
-				if (row.value === value) {
-					// 이미 같은 행동을 했을 경우
-					return res.status(400).json({
-						message:
-							value === 1
-								? '이미 좋아요를 눌렀습니다.'
-								: '이미 싫어요를 눌렀습니다.',
-					});
-				} else {
-					// 다른 행동을 눌렀을 경우 업데이트
-					const updateQuery =
-						'UPDATE user_likes SET value = ? WHERE user_id = ? AND post_id = ?';
-					db.run(updateQuery, [value, userId, postId], (err) => {
-						if (err) {
-							return res
-								.status(500)
-								.json({ message: '상태 업데이트 실패', error: err.message });
-						}
-
-						// 게시글 카운트 수정
-						const adjustCountsQuery =
-							value === 1
-								? 'UPDATE posts SET likes = likes + 1, dislikes = dislikes - 1 WHERE id = ?'
-								: 'UPDATE posts SET likes = likes - 1, dislikes = dislikes + 1 WHERE id = ?';
-						db.run(adjustCountsQuery, [postId], (err) => {
-							if (err) {
-								return res.status(500).json({
-									message: '좋아요/싫어요 카운트 수정 실패',
-									error: err.message,
-								});
-							}
-							res.status(200).json({
-								message: value === 1 ? 1 : 0,
-							});
-						});
-					});
-				}
-				return;
-			}
-
-			// 처음 누르는 경우
-			const insertQuery =
-				'INSERT INTO user_likes (user_id, post_id, value) VALUES (?, ?, ?)';
-			db.run(insertQuery, [userId, postId, value], function (err) {
-				if (err) {
-					return res
-						.status(500)
-						.json({ message: '투표 등록 실패', error: err.message });
-				}
-
-				// 게시글 카운트 수정
-				const adjustCountsQuery =
-					value === 1
-						? 'UPDATE posts SET likes = likes + 1 WHERE id = ?'
-						: 'UPDATE posts SET dislikes = dislikes + 1 WHERE id = ?';
-				db.run(adjustCountsQuery, [postId], (err) => {
+				// 이미 좋아요를 눌렀으면 좋아요 취소
+				const deleteQuery =
+					'DELETE FROM user_likes WHERE user_id = ? AND post_id = ?';
+				db.run(deleteQuery, [userId, postId], (err) => {
 					if (err) {
 						return res.status(500).json({
-							message: '좋아요/싫어요 카운트 업데이트 실패',
+							message: '좋아요 취소 실패',
 							error: err.message,
 						});
 					}
-					res
-						.status(200)
-						.json({ message: value === 1 ? '좋아요 성공' : '싫어요 성공' });
+
+					// 게시글 좋아요 카운트 감소
+					const decrementQuery =
+						'UPDATE posts SET likes = likes - 1 WHERE id = ?';
+					db.run(decrementQuery, [postId], (err) => {
+						if (err) {
+							return res.status(500).json({
+								message: '좋아요 카운트 업데이트 실패',
+								error: err.message,
+							});
+						}
+						res.status(200).json({ message: 0 });
+					});
+				});
+				return;
+			}
+
+			// 처음 좋아요를 누르는 경우
+			const insertQuery =
+				'INSERT INTO user_likes (user_id, post_id, value) VALUES (?, ?, 1)';
+			db.run(insertQuery, [userId, postId], function (err) {
+				if (err) {
+					return res
+						.status(500)
+						.json({ message: '좋아요 등록 실패', error: err.message });
+				}
+
+				// 게시글 좋아요 카운트 증가
+				const incrementQuery =
+					'UPDATE posts SET likes = likes + 1 WHERE id = ?';
+				db.run(incrementQuery, [postId], (err) => {
+					if (err) {
+						return res.status(500).json({
+							message: '좋아요 카운트 업데이트 실패',
+							error: err.message,
+						});
+					}
+					res.status(200).json({ message: 1 });
+				});
+			});
+		});
+	} catch (error) {
+		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+	}
+});
+
+//좋아요 체크
+app.get('/posts/:id/like-status', (req, res) => {
+	const postId = req.params.id;
+	const token = req.headers.authorization?.split(' ')[1];
+
+	if (!token) {
+		return res.status(401).json({ message: '로그인이 필요합니다.' });
+	}
+
+	try {
+		const decoded = jwt.verify(token, SECRET_KEY);
+		const userId = decoded.id;
+
+		const checkQuery =
+			'SELECT value FROM user_likes WHERE user_id = ? AND post_id = ?';
+		db.get(checkQuery, [userId, postId], (err, row) => {
+			if (err) {
+				return res
+					.status(500)
+					.json({ message: '데이터베이스 오류', error: err.message });
+			}
+
+			const likeStatus = row ? row.value : 0; // 좋아요 안 누른 상태는 0
+			res.status(200).json({ likeStatus });
+		});
+	} catch (error) {
+		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+	}
+});
+
+//글 삭제
+app.delete('/posts/:id', (req, res) => {
+	const postId = req.params.id; // 삭제할 게시글 ID
+	const token = req.headers.authorization?.split(' ')[1]; // 사용자 인증 토큰
+
+	if (!token) {
+		return res.status(401).json({ message: '로그인이 필요합니다.' });
+	}
+
+	try {
+		const decoded = jwt.verify(token, SECRET_KEY);
+		const userId = decoded.id; // 토큰에서 사용자 ID 추출
+
+		// 게시글 작성자 확인
+		const authorCheckQuery = 'SELECT user_id FROM posts WHERE id = ?';
+		db.get(authorCheckQuery, [postId], (err, post) => {
+			if (err) {
+				return res
+					.status(500)
+					.json({ message: '데이터베이스 오류', error: err.message });
+			}
+			if (!post) {
+				return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+			}
+			if (post.user_id !== userId) {
+				return res
+					.status(403)
+					.json({ message: '작성자만 게시글을 삭제할 수 있습니다.' });
+			}
+
+			// 게시글 삭제
+			const deletePostQuery = 'DELETE FROM posts WHERE id = ?';
+			db.run(deletePostQuery, [postId], (err) => {
+				if (err) {
+					return res
+						.status(500)
+						.json({ message: '게시글 삭제 실패', error: err.message });
+				}
+
+				// 게시글과 연관된 데이터 삭제 (예: 좋아요 정보)
+				const deleteLikesQuery = 'DELETE FROM user_likes WHERE post_id = ?';
+				db.run(deleteLikesQuery, [postId], (err) => {
+					if (err) {
+						return res.status(500).json({
+							message: '관련 데이터 삭제 실패',
+							error: err.message,
+						});
+					}
+
+					res.status(200).json({ message: '게시글 삭제 성공' });
 				});
 			});
 		});

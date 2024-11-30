@@ -25,7 +25,7 @@ function Map() {
     setcurrentLocation(null);
     setLocationSearch(tmp);
   };
-  
+
   const handleCurrnetLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -48,7 +48,7 @@ function Map() {
       alert("Geolocation을 지원하지 않는 브라우저입니다.");
     }
   };
-  
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearchLocation();
@@ -79,9 +79,7 @@ function Map() {
                 placeholder="예: 서울시 강남구 논현동 또는 한성대학교"
                 className={styles.searchLocation}
               />
-              <button
-                onClick = {handleCurrnetLocation} 
-                className={styles.locationBT}>현위치</button>
+
               <button
                 onClick={handleSearchLocation}
                 className={styles.searchBT}
@@ -93,7 +91,11 @@ function Map() {
         </section>
         <section className={styles.mapBox}>
           <div id="map" className={styles.map}>
-            <KakaoMap locationSearch={setLocation} location={locationSearch} currentLocation  = {currentLocation} />
+            <KakaoMap
+              locationSearch={setLocation}
+              location={locationSearch}
+              currentLocation={currentLocation}
+            />
           </div>
         </section>
 

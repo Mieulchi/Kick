@@ -57,7 +57,8 @@ html {
 
 .upBar {
   width: 100%;
-  padding-left: 30px;
+  padding: 0 50px 0 30px;
+  justify-content: space-between;
   height: 4.5rem;
   color: white;
   display: flex;
