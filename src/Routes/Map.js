@@ -1,5 +1,5 @@
 // Map.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import KakaoMap from "../components/KakaoMap";
@@ -14,6 +14,13 @@ function Map() {
   const [tmp, setTmp] = useState(""); // 검색어에 위치한거
   const [locationInfo, setLocation] = useState(null);
   const [currentLocation, setcurrentLocation] = useState(null);
+
+  //페이지 입장 시 포커스 주기 위함
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   useEffect(() => {
     if (location.state && location.state.selectedItem) {
       const item = location.state.selectedItem;
@@ -72,6 +79,8 @@ function Map() {
             <div className={styles.cp}>메뉴를 검색할 위치를 선정해주세요.</div>
             <div className={styles.searchBar}>
               <input
+                //페이지 입장시 포커스 주기 위함
+                ref={inputRef}
                 type="text"
                 value={tmp}
                 onChange={(e) => setTmp(e.target.value)}

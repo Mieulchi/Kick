@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../Css/Post.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,6 +10,39 @@ function Post() {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+
+  const { state } = useLocation();
+
+  async function urlToFile(url, filename) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+  }
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
+
+  useEffect(() => {
+    if (state) {
+      console.log(state);
+      if (state.displayName) {
+        setContent(`${state.displayName} : ${state.keyword} 맛집!`);
+      }
+      if (state.url) {
+        urlToFile(state.url, "tmp").then((response) => {
+          setImage(response);
+        });
+      }
+    }
+  }, [state]);
+
+  useEffect(() => {
+    console.log(state);
+    if (!localStorage.getItem("token")) {
+      navigate("/login", { state: { state, toPost: true } });
+    }
+  }, []);
 
   const handlePost = () => {
     const formData = new FormData();

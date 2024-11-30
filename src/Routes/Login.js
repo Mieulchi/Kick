@@ -9,19 +9,42 @@ function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMsg, setErrorMsg] = useState();
+	const [toPost, setToPost] = useState(false);
 	const navigate = useNavigate();
+
+	const { state } = useLocation();
 
 	const handleLogin = () => {
 		axios
 			.post('http://localhost:4000/login', { username, password })
 			.then((response) => {
 				localStorage.setItem('token', response.data.token); // JWT 토큰 저장
-				navigate('/community');
+			})
+			.then(() => {
+				if (toPost) {
+					if (state.state) {
+						console.log(state.state);
+						navigate('/post', { state: state.state });
+					} else {
+						navigate('/post');
+					}
+				} else {
+					navigate('/community');
+				}
 			})
 			.catch((error) => {
 				setErrorMsg(error.response.data.message);
 			});
 	};
+
+	useEffect(() => {
+		console.log(state);
+		if (state) {
+			if (state.toPost) {
+				setToPost(true);
+			}
+		}
+	}, [state]);
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
