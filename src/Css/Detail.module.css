@@ -84,9 +84,9 @@
   max-height: 200px; /* 높이 제한 */
   overflow-y: auto; /* 스크롤 가능 */
   padding: 5px;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: rgba(0, 54, 75, 0.6);
 }
 
 .review {
@@ -97,7 +97,7 @@
 }
 
 .review p {
-  margin: 0;
+  margin: 0 5px;
   font-size: 16px;
 }
 

@@ -13,6 +13,7 @@
   background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)),
     url("../Images/foodBG.jpg");
   background-size: cover;
+  overflow: hidden;
 }
 
 .upBar {
@@ -41,9 +42,7 @@
   background-repeat: no-repeat;
   height: 800px;
   width: 1500px;
-  margin-left: 110px;
   padding: 50px 0;
-  overflow: hidden;
 }
 
 .container {
@@ -55,7 +54,7 @@
   display: flex;
   flex-direction: column;
 }
-  
+
 .title {
   text-align: center;
   font-family: "HakgyoansimBunpilR";
@@ -64,19 +63,25 @@
   margin-bottom: 20px;
   color: #000;
 }
-  
+
 .formGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
-    margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  margin-top: 70px;
+  max-height: 60vh;
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #000 #f9f9f9;
 }
-  
+
 .inputField,
 .textareaField,
 .fileInput {
   width: 100%;
   padding: 10px;
+
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -86,16 +91,16 @@
   border-color: #007bff;
   outline: none;
 }
-  
+
 .textareaField {
   height: 250px;
   resize: none;
 }
-  
+
 .fileInput {
   padding: 5px;
 }
-  
+
 .submitButton {
   background-color: #000;
   color: white;
