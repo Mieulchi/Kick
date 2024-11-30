@@ -11,12 +11,13 @@ function PostDetail() {
   const [loading, setLoading] = useState(true);
   const [likeStatus, setLikeStatus] = useState(0);
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
 
   const baseURL = `http://localhost:4000`;
 
-  useEffect(() => {
-    console.log(post);
-  }, [post]);
+  const toggleMenu = () => {
+    setShowMenu((prev) => !prev);
+  };
 
   async function getPost() {
     let token = localStorage.getItem("token");
@@ -24,23 +25,21 @@ function PostDetail() {
       axios
         .get(`${baseURL}/posts/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // 토큰 필요시 추가
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          console.log(response);
           setPost(response.data);
           setLoading(false);
         })
         .catch((error) => {
-          console.error(error);
           setLoading(false);
         });
 
       axios
         .get(`${baseURL}/posts/${id}/like-status`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // 토큰 필요시 추가
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
         .then((response) => {
@@ -65,14 +64,14 @@ function PostDetail() {
 
   useEffect(() => {
     getPost();
-  }, [, likeStatus]);
+  }, [likeStatus]);
 
   const handleLike = () => {
     setPost({ ...post, isAnimating: true });
     axios
       .post(
         `${baseURL}/posts/${id}/like`,
-        {}, // 요청 바디에 데이터가 없는 경우 빈 객체
+        {},
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -86,7 +85,6 @@ function PostDetail() {
         }));
       })
       .catch((error) => {
-        console.error("좋아요 처리 실패:", error);
         setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
       });
     setTimeout(() => {
@@ -126,7 +124,81 @@ function PostDetail() {
         <div className={styles.board}>
           <div className={styles.container}>
             <h2 className={styles.logo}>NOMADGRAM</h2>
-            <h2 className={styles.title}>{post.title} </h2>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h2 className={styles.title}>{post.title} </h2>
+              {post.isAuthor && (
+                <div style={{ position: "relative" }}>
+                  <button
+                    onClick={toggleMenu}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      fontSize: "36px",
+                    }}
+                  >
+                    <i className="bi bi-three-dots"></i>
+                  </button>
+                  {showMenu && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: 1,
+                        top: "80%",
+                        background: "#fff",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                        zIndex: 1000,
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "70px",
+                      }}
+                    >
+                      <button
+                        style={{
+                          writingMode: "horizontal-tb",
+                          padding: "8px 12px",
+                          border: "none",
+                          background: "none",
+                          textAlign: "center",
+                          cursor: "pointer",
+                          display: "flex",
+
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div>수</div>
+                        <div>정</div>
+                      </button>
+                      <button
+                        style={{
+                          writingMode: "horizontal-tb",
+                          padding: "10px 12px",
+                          border: "none",
+                          background: "none",
+                          textAlign: "center",
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                        onClick={deletePost}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
             <p className={styles.metaInfo}>
               아이디: {post.username} | 작성일:{" "}
               {new Date(post.created_at).toLocaleString()}
@@ -154,14 +226,6 @@ function PostDetail() {
                 </span>{" "}
                 {post.likes}
               </button>
-
-              {post.isAuthor ? (
-                <button className={styles.dislikeButton} onClick={deletePost}>
-                  삭재
-                </button>
-              ) : (
-                ""
-              )}
             </div>
           </div>
         </div>
