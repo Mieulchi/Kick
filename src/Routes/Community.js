@@ -7,19 +7,52 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import UserInfoComponent from "../components/UserInfoComponent";
 
 function Community() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]); // 게시글 목록
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const baseURL = "http://localhost:4000";
 
-  useEffect(() => {
+  const fetchPosts = (page = 1) => {
     axios
-      .get(`${baseURL}/posts`)
+      .get(`${baseURL}/posts`, { params: { page, limit: 5 } })
       .then((response) => {
-        setPosts(response.data);
+        setPosts(response.data.posts);
+        setTotalPages(Math.ceil(response.data.total / 5)); // 전체 페이지 계산
       })
-
       .catch((err) => console.error(err));
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchPosts(currentPage);
+  }, [currentPage]);
+
+  const handleSearch = () => {
+    if (searchQuery.trim() === "") {
+      fetchPosts();
+    } else {
+      axios
+        .get(`${baseURL}/posts/search`, {
+          params: { query: searchQuery },
+        })
+        .then((response) => {
+          setPosts(response.data);
+          setTotalPages(1); // 검색 결과에서는 페이지네이션 필요 없음
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className={styles.body}>
@@ -36,6 +69,17 @@ function Community() {
                 >
                   게시글 작성
                 </button>
+                <input
+                  type="text"
+                  placeholder="제목 또는 내용 검색"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className={styles.searchInput}
+                />
+                <button onClick={handleSearch} className={styles.searchBtn}>
+                  찾기
+                </button>
               </div>
               <div className={styles.postList}>
                 {posts.map((post) => (
@@ -48,6 +92,17 @@ function Community() {
                       <span>❤️ {post.likes}</span>
                     </div>
                   </div>
+                ))}
+              </div>
+              <div className={styles.pagination}>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => changePage(index + 1)}
+                    className={currentPage === index + 1 ? styles.activePage : ""}
+                  >
+                    {index + 1}
+                  </button>
                 ))}
               </div>
             </div>
