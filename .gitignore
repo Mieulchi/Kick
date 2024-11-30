@@ -26,5 +26,5 @@ yarn-error.log*
 #env
 .env
 
-src/backend/database.db
 src/backend/uploads
+src/backend/database.db
