@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../Css/Community.module.css';
+import UserInfoComponent from '../components/UserInfoComponent';
 
 function Community() {
 	const [posts, setPosts] = useState([]);
 	const navigate = useNavigate();
+	const baseURL = 'http://localhost:4000';
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:4000/posts')
+			.get(`${baseURL}/posts`)
 			.then((response) => {
 				setPosts(response.data);
 			})
@@ -20,6 +22,7 @@ function Community() {
 	return (
 		<div className={styles.container}>
 			<h2 className={styles.title}>게시글 목록</h2>
+			<UserInfoComponent></UserInfoComponent>
 			<div className={styles.postList}>
 				{posts.map((post) => (
 					<div key={post.id} className={styles.postCard}>

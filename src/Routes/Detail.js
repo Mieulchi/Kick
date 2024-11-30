@@ -20,6 +20,7 @@ export default function Detail() {
 			includedType: 'restaurant',
 			language: 'kr',
 			maxResultCount: 7,
+			minRating: 1,
 			region: 'kr',
 			useStrictTypeFiltering: false,
 		};
@@ -118,7 +119,13 @@ export default function Detail() {
 										<div className={styles.detailText}>
 											<p>{detail.displayName}</p>
 											<div>{renderStars(detail.rating)}</div>
-											<button>공유하기</button>
+											<button
+												onClick={() => {
+													navigate('/community');
+												}}
+											>
+												공유하기
+											</button>
 										</div>
 
 										<div className={styles.reviewSection}>
