@@ -108,6 +108,7 @@ export default function Detail() {
 				<div className={styles.container}>
 					{detail.length > 0
 						? detail.map((detail, i) => {
+								console.log(detail);
 								return (
 									<div key={i} className={styles.detail}>
 										<img
@@ -121,7 +122,9 @@ export default function Detail() {
 											<div>{renderStars(detail.rating)}</div>
 											<button
 												onClick={() => {
-													navigate('/community');
+													navigate('/community', {
+														state: { url: detail.url },
+													});
 												}}
 											>
 												공유하기
