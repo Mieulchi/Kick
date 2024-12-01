@@ -213,7 +213,7 @@ app.get("/posts", (req, res) => {
 	  params.push(`%${query}%`, `%${query}%`);
 	}
   
-	if (userId) {
+	if (userId && sort === "myPosts") {
 		console.log(userId);
 	  sql += query ? ` AND posts.username = ? ` : ` WHERE posts.username = ? `;
 	  params.push(userId);
