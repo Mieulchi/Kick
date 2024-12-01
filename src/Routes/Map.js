@@ -33,28 +33,27 @@ function Map() {
     setLocationSearch(tmp);
   };
 
-  const handleCurrnetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log("Latitude:", latitude, "Longitude:", longitude);
-          setcurrentLocation(`${latitude},${longitude}`);
-        },
-        (error) => {
-          console.error("Error getting location", error);
-          alert("현재 위치를 가져올 수 없습니다.");
-        },
-        {
-          enableHighAccuracy: true, // 높은 정확도 모드
-          timeout: 10000, // 최대 대기 시간 (밀리초)
-          maximumAge: 0, // 캐시된 위치를 사용하지 않음
-        }
-      );
-    } else {
-      alert("Geolocation을 지원하지 않는 브라우저입니다.");
-    }
-  };
+	const handleCurrnetLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { latitude, longitude } = position.coords;
+					setcurrentLocation(`${latitude},${longitude}`);
+				},
+				(error) => {
+					console.error('Error getting location', error);
+					alert('현재 위치를 가져올 수 없습니다.');
+				},
+				{
+					enableHighAccuracy: true, // 높은 정확도 모드
+					timeout: 10000, // 최대 대기 시간 (밀리초)
+					maximumAge: 0, // 캐시된 위치를 사용하지 않음
+				}
+			);
+		} else {
+			alert('Geolocation을 지원하지 않는 브라우저입니다.');
+		}
+	};
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

@@ -66,31 +66,33 @@ function PostDetail() {
     getPost();
   }, [likeStatus]);
 
-  const handleLike = () => {
-    setPost({ ...post, isAnimating: true });
-    axios
-      .post(
-        `${baseURL}/posts/${id}/like`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((response) => {
-        setLikeStatus(response.data.message);
-        setPost((prevPost) => ({
-          ...prevPost,
-        }));
-      })
-      .catch((error) => {
-        setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
-      });
-    setTimeout(() => {
-      setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
-    }, 300);
-  };
+	const handleLike = () => {
+		setPost({ ...post, isAnimating: true });
+		axios
+			.post(
+				`${baseURL}/posts/${id}/like`,
+				{}, // 요청 바디에 데이터가 없는 경우 빈 객체
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('token')}`,
+					},
+				}
+			)
+			.then((response) => {
+				setLikeStatus(response.data.message);
+				setPost((prevPost) => ({
+					...prevPost,
+				}));
+			})
+			.catch((error) => {
+				console.error('좋아요 처리 실패:', error);
+				setErrorMsg(error.response.data.message);
+				setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
+			});
+		setTimeout(() => {
+			setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
+		}, 300);
+	};
 
   const deletePost = () => {
     axios

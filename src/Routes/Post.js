@@ -13,61 +13,50 @@ function Post() {
 
   const { state } = useLocation();
 
-  async function urlToFile(url, filename) {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new File([blob], filename, { type: blob.type });
-  }
+	async function urlToFile(url, filename) {
+		const response = await fetch(url);
+		const blob = await response.blob();
+		return new File([blob], filename, { type: blob.type });
+	}
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
+	useEffect(() => {
+		if (state) {
+			if (state.displayName) {
+				setContent(`${state.displayName} : ${state.keyword} 맛집!`);
+			}
+			if (state.url) {
+				urlToFile(state.url, 'tmp').then((response) => {
+					setImage(response);
+				});
+			}
+		}
+	}, [state]);
 
-  useEffect(() => {
-    if (state) {
-      console.log(state);
-      if (state.displayName) {
-        setContent(`${state.displayName} : ${state.keyword} 맛집!`);
-      }
-      if (state.url) {
-        urlToFile(state.url, "tmp").then((response) => {
-          setImage(response);
-        });
-      }
-    }
-  }, [state]);
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/login', { state: { state, toPost: true } });
+		}
+	}, []);
 
-  useEffect(() => {
-    console.log(state);
-    if (!localStorage.getItem("token")) {
-      navigate("/login", { state: { state, toPost: true } });
-    }
-  }, []);
-
-  const handlePost = () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    if (image) formData.append("image", image);
-    console.log(formData.title);
-    axios
-      .post("http://localhost:4000/posts", formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => {
-        alert("게시글이 작성되었습니다.");
-        setTitle("");
-        setContent("");
-        setImage(null);
-        navigate("/community");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+	const handlePost = () => {
+		const formData = new FormData();
+		formData.append('title', title);
+		formData.append('content', content);
+		if (image) formData.append('image', image);
+		axios
+			.post('http://localhost:4000/posts', formData, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			})
+			.then(() => {
+				navigate('/community');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
   return (
     <div className={styles.body}>

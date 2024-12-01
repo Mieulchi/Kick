@@ -14,7 +14,17 @@ function Login() {
 
 	const { state } = useLocation();
 
-	const handleLogin = () => {
+	useEffect(() => {
+		console.log(errorMsg);
+	}, [errorMsg]);
+
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			handleLogin();
+		}
+	};
+
+	const handleLogin = (e) => {
 		axios
 			.post('http://localhost:4000/login', { username, password })
 			.then((response) => {
@@ -23,7 +33,6 @@ function Login() {
 			.then(() => {
 				if (toPost) {
 					if (state.state) {
-						console.log(state.state);
 						navigate('/post', { state: state.state });
 					} else {
 						navigate('/post');
@@ -33,12 +42,12 @@ function Login() {
 				}
 			})
 			.catch((error) => {
+				console.log(error);
 				setErrorMsg(error.response.data.message);
 			});
 	};
 
 	useEffect(() => {
-		console.log(state);
 		if (state) {
 			if (state.toPost) {
 				setToPost(true);
@@ -61,11 +70,17 @@ function Login() {
 					}}
 					src={darkLogo}
 				/>
+				{errorMsg ? (
+					<div style={{ color: 'white', margin: '0 auto' }}>{errorMsg}</div>
+				) : (
+					''
+				)}
 				<input
 					type="text"
 					placeholder="아이디"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
+					onKeyDown={handleKeyDown}
 				/>
 				<br />
 				<input
@@ -73,6 +88,7 @@ function Login() {
 					placeholder="비밀번호"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
+					onKeyDown={handleKeyDown}
 				/>
 				<br />
 				<button onClick={handleLogin}>로그인</button>
