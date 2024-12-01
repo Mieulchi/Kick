@@ -140,3 +140,33 @@
   font-size: 14px;
   color: #555;
 }
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination .activePage {
+  background-color: #007bff;
+  color: white;
+}
+.pagination {
+  position: fixed; /* 화면에 고정 */
+  bottom: 440px; /* 화면 아래에서 10px 간격 */
+  left: 50%; /* 화면 가운데 정렬 */
+  transform: translateX(-50%); /* 정중앙으로 조정 */
+  display: flex;
+  justify-content: center;
+  background-color: white; /* 배경색 추가 */
+  padding: 10px 15px; /* 여백 추가 */
+  border: 1px solid #ccc; /* 경계선 추가 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+  z-index: 1000; /* 다른 콘텐츠 위에 표시 */
+}

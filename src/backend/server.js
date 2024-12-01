@@ -9,8 +9,10 @@ const SECRET_KEY = 'your_secret_key'; // JWT 토큰 서명 키
 const multer = require('multer'); // 파일 업로드를 위한 라이브러리
 const path = require('path');
 
-app.use(cors()); // 모든 도메인 허용
-
+app.use(cors({
+  origin: 'http://localhost:3000', // 클라이언트 도메인
+  methods: ['GET', 'POST','DELETE'],
+}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // SQLite 데이터베이스 연결
@@ -152,24 +154,72 @@ app.post('/login', (req, res) => {
 		res.status(200).json({ message: '로그인 성공!', token });
 	});
 });
+//검색 기능
+app.get('/posts/search', (req, res) => {
+	const query = req.query.query;
+	if (!query) {
+	  return res.status(400).json({ message: '검색어가 없습니다.' });
+	}
+	
+	const searchQuery = `%${query}%`;
+	const sql = `
+	  SELECT posts.id, posts.title, posts.likes, users.username
+	  FROM posts
+	  JOIN users ON posts.user_id = users.id
+	  WHERE posts.title LIKE ? OR posts.content LIKE ?
+	  ORDER BY posts.created_at DESC
+	`;
+	db.all(sql, [searchQuery, searchQuery], (err, rows) => {
+	  if (err) {
+		return res.status(500).json({ message: '게시글 검색 실패', error: err.message });
+	  }
+	  res.json(rows);
+	});
+  });
+  
+  
 
 app.get('/posts', (req, res) => {
+	const page = parseInt(req.query.page) || 1; // 현재 페이지 번호 (기본값 1)
+	const limit = parseInt(req.query.limit) || 5; // 페이지당 데이터 수 (기본값 5)
+	const offset = (page - 1) * limit; // SQL OFFSET 계산
+  
 	const query = `
-    SELECT posts.id, posts.title, posts.likes, users.username
-    FROM posts
-    JOIN users ON posts.user_id = users.id
-    ORDER BY posts.created_at DESC
-  `;
-	db.all(query, [], (err, rows) => {
+	  SELECT posts.id, posts.title, posts.likes, users.username
+	  FROM posts
+	  JOIN users ON posts.user_id = users.id
+	  ORDER BY posts.created_at DESC
+	  LIMIT ? OFFSET ?
+	`;
+  
+	db.all(query, [limit, offset], (err, rows) => {
+	  if (err) {
+		return res.status(500).json({
+		  message: '게시글을 가져오는 데 실패했습니다.',
+		  error: err.message,
+		});
+	  }
+  
+	  // 전체 게시글 수 가져오기 (페이지네이션 정보를 제공하기 위해)
+	  const countQuery = `SELECT COUNT(*) as total FROM posts`;
+	  db.get(countQuery, (err, countRow) => {
 		if (err) {
-			return res.status(500).json({
-				message: '게시글을 가져오는 데 실패했습니다.',
-				error: err.message,
-			});
+		  return res.status(500).json({
+			message: '게시글 수를 가져오는 데 실패했습니다.',
+			error: err.message,
+		  });
 		}
-		res.json(rows);
+		res.json({
+		  posts: rows,
+		  total: countRow.total, // 전체 게시글 수
+		  page, // 현재 페이지 번호
+		  limit, // 한 페이지에 표시되는 데이터 수
+		});
+	  });
 	});
-});
+  });
+  
+
 
 app.get('/posts/:id', (req, res) => {
 	const postId = req.params.id;
@@ -221,6 +271,7 @@ app.get('/posts/:id', (req, res) => {
 	});
 });
 
+  
 //좋아요
 app.post('/posts/:id/like', (req, res) => {
 	const postId = req.params.id;
