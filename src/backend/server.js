@@ -197,45 +197,52 @@ app.get('/posts/search', (req, res) => {
 	});
 });
 
-app.get('/posts', (req, res) => {
-	const page = parseInt(req.query.page) || 1; // 현재 페이지 번호 (기본값 1)
-	const limit = parseInt(req.query.limit) || 5; // 페이지당 데이터 수 (기본값 5)
-	const offset = (page - 1) * limit; // SQL OFFSET 계산
-
-	const query = `
-	  SELECT posts.id, posts.title, posts.likes, users.username
+app.get("/posts", (req, res) => {
+	const { page = 1, limit = 5, sort = "latest", query = "", userId} = req.query;
+	const offset = (page - 1) * limit;
+	console.log({ page, sort, query, userId });
+	let sql = `
+	  SELECT posts.id, posts.title, posts.likes, posts.created_at, users.username
 	  FROM posts
 	  JOIN users ON posts.user_id = users.id
-	  ORDER BY posts.created_at DESC
-	  LIMIT ? OFFSET ?
 	`;
-
-	db.all(query, [limit, offset], (err, rows) => {
+  
+	const params = [];
+	if (query) {
+	  sql += ` WHERE (posts.title LIKE ? OR posts.content LIKE ?) `;
+	  params.push(`%${query}%`, `%${query}%`);
+	}
+  
+	if (userId) {
+		console.log(userId);
+	  sql += query ? ` AND posts.username = ? ` : ` WHERE posts.username = ? `;
+	  params.push(userId);
+	}
+  
+	if (sort === "latest" || sort === "myPosts") {
+	  sql += ` ORDER BY posts.created_at DESC `;
+	} else if (sort === "likes") {
+	  sql += ` ORDER BY posts.likes DESC `;
+	}
+	
+  
+	sql += ` LIMIT ? OFFSET ? `;
+	params.push(Number(limit), Number(offset));
+  
+	db.all(sql, params, (err, rows) => {
+	  if (err) {
+		return res.status(500).json({ message: "게시글 가져오기 실패", error: err.message });
+	  }
+  
+	  db.get("SELECT COUNT(*) as total FROM posts", (err, totalResult) => {
 		if (err) {
-			return res.status(500).json({
-				message: '게시글을 가져오는 데 실패했습니다.',
-				error: err.message,
-			});
+		  return res.status(500).json({ message: "전체 게시글 수 가져오기 실패", error: err.message });
 		}
-
-		// 전체 게시글 수 가져오기 (페이지네이션 정보를 제공하기 위해)
-		const countQuery = `SELECT COUNT(*) as total FROM posts`;
-		db.get(countQuery, (err, countRow) => {
-			if (err) {
-				return res.status(500).json({
-					message: '게시글 수를 가져오는 데 실패했습니다.',
-					error: err.message,
-				});
-			}
-			res.json({
-				posts: rows,
-				total: countRow.total, // 전체 게시글 수
-				page, // 현재 페이지 번호
-				limit, // 한 페이지에 표시되는 데이터 수
-			});
-		});
+		res.json({ posts: rows, total: totalResult.total });
+	  });
 	});
-});
+  });
+  
 
 app.get('/posts/:id', (req, res) => {
 	const postId = req.params.id;
