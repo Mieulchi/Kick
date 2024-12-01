@@ -63,22 +63,24 @@ function Community() {
             <div className={styles.content}>
               <h2 className={styles.title}>NOMADGRAM</h2>
               <div className={styles.buttondiv}>
+                <div className={styles.searchPost}>
+                  <input
+                    type="text"
+                    placeholder="제목 또는 내용 검색"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className={styles.searchInput}
+                  />
+                  <button onClick={handleSearch} className={styles.searchBtn}>
+                    찾기
+                  </button>
+                </div>
                 <button
                   className={styles.uploadBtn}
                   onClick={() => navigate("/post")}
                 >
                   게시글 작성
-                </button>
-                <input
-                  type="text"
-                  placeholder="제목 또는 내용 검색"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className={styles.searchInput}
-                />
-                <button onClick={handleSearch} className={styles.searchBtn}>
-                  찾기
                 </button>
               </div>
               <div className={styles.postList}>
@@ -93,17 +95,19 @@ function Community() {
                     </div>
                   </div>
                 ))}
-              </div>
-              <div className={styles.pagination}>
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => changePage(index + 1)}
-                    className={currentPage === index + 1 ? styles.activePage : ""}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
+                <div className={styles.pagination}>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => changePage(index + 1)}
+                      className={
+                        currentPage === index + 1 ? styles.activePage : ""
+                      }
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
