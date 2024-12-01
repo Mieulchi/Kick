@@ -100,6 +100,14 @@ export default function Update() {
 							<button onClick={handlePatch} className={styles.submitButton}>
 								업데이트
 							</button>
+							<button
+                				className={styles.cancelBtn}
+                				onClick={() => {
+                  				navigate(`/posts/${id}`);
+                				}}
+              				>
+                  				취소
+              				</button>
 						</div>
 					</div>
 				</div>
