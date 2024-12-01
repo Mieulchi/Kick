@@ -74,34 +74,36 @@ export default function Update() {
 					src={darkLogo}
 				/>
 			</nav>
-			<div className={styles.board}>
-				<div className={styles.container}>
-					<h2 className={styles.title}>NOMADGRAM</h2>
-					<div className={styles.formGroup}>
-						<input
-							type="text"
-							placeholder="제목"
-							value={title}
-							onChange={(e) => setTitle(e.target.value)}
-							className={styles.inputField}
-						/>
-						<textarea
-							placeholder="내용"
-							value={content}
-							onChange={(e) => setContent(e.target.value)}
-							className={styles.textareaField}
-						/>
-						<input
-							type="file"
-							onChange={(e) => setImage(e.target.files[0])}
-							className={styles.fileInput}
-						/>
-						<button onClick={handlePatch} className={styles.submitButton}>
-							업데이트
-						</button>
+			<section style={{ display: "flex", justifyContent: "center" }}>
+				<div className={styles.board}>
+					<div className={styles.container}>
+						<h2 className={styles.title}>NOMADGRAM</h2>
+						<div className={styles.formGroup}>
+							<input
+								type="text"
+								placeholder="제목"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+								className={styles.inputField}
+							/>
+							<textarea
+								placeholder="내용"
+								value={content}
+								onChange={(e) => setContent(e.target.value)}
+								className={styles.textareaField}
+							/>
+							<input
+								type="file"
+								onChange={(e) => setImage(e.target.files[0])}
+								className={styles.fileInput}
+							/>
+							<button onClick={handlePatch} className={styles.submitButton}>
+								업데이트
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</div>
 	);
 }
