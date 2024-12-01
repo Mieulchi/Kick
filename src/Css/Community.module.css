@@ -77,15 +77,38 @@
   font-family: "HakgyoansimBunpilR";
   font-size: 40px;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin-bottom: 58px;
   color: #000;
 }
 .buttondiv {
   height: 50px;
   display: flex;
   align-content: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding: 3px;
+}
+.searchPost {
+  display: flex;
+  align-items: center;
+}
+.searchPost input {
+  height: 40px;
+  padding-left: 15px;
+  border-radius: 15px 0 0 15px;
+}
+.searchPost button {
+  height: 40px;
+  font-family: "HakgyoansimBunpilR";
+  background-color: black;
+  color: white;
+  border-radius: 0 15px 15px 0;
+  font-size: 18px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .uploadBtn {
@@ -157,16 +180,14 @@
   color: white;
 }
 .pagination {
-  position: fixed; /* 화면에 고정 */
-  bottom: 440px; /* 화면 아래에서 10px 간격 */
   left: 50%; /* 화면 가운데 정렬 */
-  transform: translateX(-50%); /* 정중앙으로 조정 */
   display: flex;
   justify-content: center;
-  background-color: white; /* 배경색 추가 */
-  padding: 10px 15px; /* 여백 추가 */
-  border: 1px solid #ccc; /* 경계선 추가 */
-  border-radius: 5px; /* 모서리 둥글게 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+  background-color: transparent; /* 배경색 추가 */
+  border: none;
   z-index: 1000; /* 다른 콘텐츠 위에 표시 */
+}
+.pagination button {
+  border: none;
+  border-radius: 5px;
 }
