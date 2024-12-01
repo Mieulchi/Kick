@@ -38,7 +38,6 @@ function Map() {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
 					const { latitude, longitude } = position.coords;
-					console.log('Latitude:', latitude, 'Longitude:', longitude);
 					setcurrentLocation(`${latitude},${longitude}`);
 				},
 				(error) => {

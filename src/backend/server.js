@@ -297,7 +297,7 @@ app.post('/posts/:id/like', (req, res) => {
 			});
 		});
 	} catch (error) {
-		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+		res.status(401).json({ message: '좋아요를 누르려면 로그인해야 합니다.' });
 	}
 });
 
@@ -403,6 +403,83 @@ app.get('/check-login', (req, res) => {
 	try {
 		const decoded = jwt.verify(token, SECRET_KEY); // 토큰을 검증하여 유효한지 확인
 		res.status(200).json({ message: '로그인된 상태입니다.', user: decoded });
+	} catch (error) {
+		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+	}
+});
+
+// 글 수정 API (PATCH)
+app.patch('/posts/:id', upload.single('image'), (req, res) => {
+	const postId = req.params.id; // 수정할 게시글 ID
+	const token = req.headers.authorization?.split(' ')[1]; // 사용자 인증 토큰
+
+	if (!token) {
+		return res.status(401).json({ message: '로그인이 필요합니다.' });
+	}
+
+	try {
+		const decoded = jwt.verify(token, SECRET_KEY);
+		const userId = decoded.id; // 토큰에서 사용자 ID 추출
+
+		const { title, content } = req.body;
+
+		// 입력값이 비어있으면 오류 처리
+		console.log(`${title} ${content}`);
+		if (!title && !content) {
+			return res.status(400).json({
+				message: '수정할 제목 또는 내용을 입력해주세요.',
+			});
+		}
+
+		// 게시글 작성자 확인
+		const authorCheckQuery = 'SELECT user_id FROM posts WHERE id = ?';
+		db.get(authorCheckQuery, [postId], (err, post) => {
+			if (err) {
+				return res.status(500).json({
+					message: '데이터베이스 오류',
+					error: err.message,
+				});
+			}
+			if (!post) {
+				return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+			}
+			if (post.user_id !== userId) {
+				return res
+					.status(403)
+					.json({ message: '작성자만 게시글을 수정할 수 있습니다.' });
+			}
+
+			// 업데이트 쿼리 생성 (동적으로 수정)
+			const updates = [];
+			const values = [];
+			if (title) {
+				updates.push('title = ?');
+				values.push(title);
+			}
+			if (content) {
+				updates.push('content = ?');
+				values.push(content);
+			}
+			if (req.file) {
+				const imageUrl = `/uploads/${req.file.filename}`; // 이미지 경로 생성
+				updates.push('image_url = ?');
+				values.push(imageUrl);
+			}
+			values.push(postId); // WHERE 조건에 사용할 postId 추가
+
+			const updateQuery = `UPDATE posts SET ${updates.join(', ')} WHERE id = ?`;
+
+			db.run(updateQuery, values, (err) => {
+				if (err) {
+					return res.status(500).json({
+						message: '게시글 수정에 실패했습니다.',
+						error: err.message,
+					});
+				}
+
+				res.status(200).json({ message: '게시글이 수정되었습니다.' });
+			});
+		});
 	} catch (error) {
 		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
 	}

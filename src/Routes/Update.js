@@ -1,59 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../Css/Post.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import darkLogo from '../Logo/darkLogo.png';
 
-function Post() {
+export default function Update() {
+	const { id } = useParams();
+
+	const [post, setPost] = useState();
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [image, setImage] = useState(null);
 	const navigate = useNavigate();
-
-	const { state } = useLocation();
-
-	async function urlToFile(url, filename) {
-		const response = await fetch(url);
-		const blob = await response.blob();
-		return new File([blob], filename, { type: blob.type });
-	}
+	const baseURL = `http://localhost:4000`;
 
 	useEffect(() => {
-		if (state) {
-			if (state.displayName) {
-				setContent(`${state.displayName} : ${state.keyword} 맛집!`);
-			}
-			if (state.url) {
-				urlToFile(state.url, 'tmp').then((response) => {
-					setImage(response);
-				});
-			}
-		}
-	}, [state]);
-
-	useEffect(() => {
-		if (!localStorage.getItem('token')) {
-			navigate('/login', { state: { state, toPost: true } });
-		}
+		const token = localStorage.getItem('token');
+		axios
+			.get(`${baseURL}/posts/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`, // 토큰 필요시 추가
+				},
+			})
+			.then((response) => {
+				setPost(response.data);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}, []);
 
-	const handlePost = () => {
+	useEffect(() => {
+		if (post) {
+			console.log(post);
+			setContent(post.content);
+			setTitle(post.title);
+			setImage(post.image_url);
+		}
+	}, [post]);
+
+	const handlePatch = () => {
 		const formData = new FormData();
+		console.log(title);
+		console.log(content);
 		formData.append('title', title);
 		formData.append('content', content);
 		if (image) formData.append('image', image);
 
 		console.log(formData);
 		axios
-			.post('http://localhost:4000/posts', formData, {
+			.patch(`${baseURL}/posts/${id}`, formData, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 					'Content-Type': 'multipart/form-data',
 				},
 			})
 			.then(() => {
-				navigate('/community');
+				navigate(`/posts/${id}`);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -92,8 +96,8 @@ function Post() {
 							onChange={(e) => setImage(e.target.files[0])}
 							className={styles.fileInput}
 						/>
-						<button onClick={handlePost} className={styles.submitButton}>
-							업로드
+						<button onClick={handlePatch} className={styles.submitButton}>
+							업데이트
 						</button>
 					</div>
 				</div>
@@ -101,5 +105,3 @@ function Post() {
 		</div>
 	);
 }
-
-export default Post;

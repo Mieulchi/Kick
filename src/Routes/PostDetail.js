@@ -10,13 +10,10 @@ function PostDetail() {
 	const [post, setPost] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [likeStatus, setLikeStatus] = useState(0);
+	const [errorMsg, setErrorMsg] = useState();
 	const navigate = useNavigate();
 
 	const baseURL = `http://localhost:4000`;
-
-	useEffect(() => {
-		console.log(post);
-	}, [post]);
 
 	async function getPost() {
 		let token = localStorage.getItem('token');
@@ -28,7 +25,6 @@ function PostDetail() {
 					},
 				})
 				.then((response) => {
-					console.log(response);
 					setPost(response.data);
 					setLoading(false);
 				})
@@ -87,6 +83,7 @@ function PostDetail() {
 			})
 			.catch((error) => {
 				console.error('좋아요 처리 실패:', error);
+				setErrorMsg(error.response.data.message);
 				setPost((prevPost) => ({ ...prevPost, isAnimating: false }));
 			});
 		setTimeout(() => {
@@ -153,11 +150,22 @@ function PostDetail() {
 							</span>{' '}
 							{post.likes}
 						</button>
+						{errorMsg ? <div>{errorMsg}</div> : ''}
 
 						{post.isAuthor ? (
-							<button className={styles.dislikeButton} onClick={deletePost}>
-								삭재
-							</button>
+							<>
+								<button className={styles.dislikeButton} onClick={deletePost}>
+									삭재
+								</button>
+								<button
+									className={styles.likeButton}
+									onClick={() => {
+										navigate(`/update/${id}`);
+									}}
+								>
+									수정
+								</button>
+							</>
 						) : (
 							''
 						)}
