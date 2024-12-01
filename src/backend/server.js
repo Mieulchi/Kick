@@ -32,16 +32,17 @@ db.serialize(() => {
   `);
 	db.run(`
     CREATE TABLE IF NOT EXISTS posts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-      content TEXT NOT NULL,
-      image_url TEXT,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      likes INTEGER DEFAULT 0,
-      FOREIGN KEY (user_id) REFERENCES users (id)
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL, -- username 추가
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        image_url TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        likes INTEGER DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users (id)
     )
-  `);
+`);
 	db.run(`
     CREATE TABLE IF NOT EXISTS user_likes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,10 +68,6 @@ const upload = multer({ storage });
 
 //게시글 작성
 app.post('/posts', upload.single('image'), (req, res) => {
-	console.log('POST /posts 요청 도달');
-	console.log('req.file:', req.file); // 파일 정보
-	console.log('req.body:', req.body); // 본문 데이터
-
 	const token = req.headers.authorization?.split(' ')[1];
 	if (!token) {
 		return res.status(401).json({ message: '로그인이 필요합니다.' });
@@ -87,18 +84,37 @@ app.post('/posts', upload.single('image'), (req, res) => {
 			return res.status(400).json({ message: '제목과 내용을 입력해주세요.' });
 		}
 
-		const query =
-			'INSERT INTO posts (user_id, title, content, image_url) VALUES (?, ?, ?, ?)';
-		db.run(query, [decoded.id, title, content, imageUrl], function (err) {
-			if (err) {
-				console.error('데이터베이스 오류:', err.message);
-				return res
-					.status(500)
-					.json({ message: '게시글 작성에 실패했습니다.', error: err.message });
+		const usernameQuery = `SELECT username FROM users WHERE id = ?`;
+		db.get(usernameQuery, [decoded.id], (err, user) => {
+			if (err || !user) {
+				return res.status(500).json({
+					message: '사용자 정보를 가져오는 데 실패했습니다.',
+					error: err?.message || '사용자 없음',
+				});
 			}
-			res
-				.status(201)
-				.json({ message: '게시글 작성 성공!', postId: this.lastID });
+
+			const query = `
+        INSERT INTO posts (user_id, username, title, content, image_url) 
+        VALUES (?, ?, ?, ?, ?)
+      `;
+			db.run(
+				query,
+				[decoded.id, user.username, title, content, imageUrl],
+				function (err) {
+					console.log([decoded.id, user.username, title, content, imageUrl]);
+					if (err) {
+						console.error('데이터베이스 오류:', err.message);
+						return res.status(500).json({
+							message: '게시글 작성에 실패했습니다.',
+							error: err.message,
+						});
+					}
+					res.status(201).json({
+						message: '게시글 작성 성공!',
+						postId: this.lastID,
+					});
+				}
+			);
 		});
 	} catch (error) {
 		res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
@@ -242,11 +258,11 @@ app.get('/posts/:id', (req, res) => {
 
 	// 게시글 정보 조회
 	const query = `
-      SELECT 
-          p.id, p.title, p.content, p.image_url, p.created_at, p.likes, p.user_id
-      FROM posts p
-      WHERE p.id = ?
-  `;
+  SELECT 
+      p.id, p.title, p.content, p.image_url, p.created_at, p.likes, p.username, p.user_id
+  FROM posts p
+  WHERE p.id = ?
+`;
 
 	db.get(query, [postId], (err, post) => {
 		if (err) {
