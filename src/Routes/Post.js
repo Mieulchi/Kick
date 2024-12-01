@@ -94,6 +94,14 @@ function Post() {
               <button onClick={handlePost} className={styles.submitButton}>
                 업로드
               </button>
+              <button
+                className={styles.cancelBtn}
+                onClick={() => {
+                  navigate('/community');
+                }}
+              >
+                  취소
+              </button>
             </div>
           </div>
         </div>
