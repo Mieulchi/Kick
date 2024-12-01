@@ -133,84 +133,103 @@ function PostDetail() {
 				<div className={styles.board}>
 					<div className={styles.container}>
 						<h2 className={styles.logo}>NOMADGRAM</h2>
-
 						<div
-							style={{
-								display: 'flex',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-						>
-							<h2 className={styles.title}>{post.title} </h2>
-							{post.isAuthor && (
-								<div style={{ position: 'relative' }}>
-									<button
-										onClick={toggleMenu}
-										style={{
-											background: 'none',
-											border: 'none',
-											cursor: 'pointer',
-											padding: 0,
-											fontSize: '36px',
-										}}
-									>
-										<i className="bi bi-three-dots"></i>
-									</button>
-									{showMenu && (
-										<div
-											style={{
-												position: 'absolute',
-												right: 1,
-												top: '80%',
-												background: '#fff',
-												border: '1px solid #ddd',
-												borderRadius: '4px',
-												boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-												zIndex: 1000,
-												display: 'flex',
-												flexDirection: 'column',
-												width: '70px',
-											}}
-										>
-											<button
-												style={{
-													writingMode: 'horizontal-tb',
-													padding: '8px 12px',
-													border: 'none',
-													background: 'none',
-													textAlign: 'center',
-													cursor: 'pointer',
-													display: 'flex',
-
-													justifyContent: 'center',
-												}}
-												onClick={() => {
-													navigate(`/update/${id}`);
-												}}
-											>
-												<div>수</div>
-												<div>정</div>
-											</button>
-											<button
-												style={{
-													writingMode: 'horizontal-tb',
-													padding: '10px 12px',
-													border: 'none',
-													background: 'none',
-													textAlign: 'center',
-													color: 'red',
-													cursor: 'pointer',
-												}}
-												onClick={deletePost}
-											>
-												삭제
-											</button>
-										</div>
-									)}
-								</div>
-							)}
-						</div>
-
+              style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              }}
+            >
+              <h2 className={styles.title}>{post.title}</h2>
+              {post.isAuthor ? (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button
+                  className={styles.listBtn}
+                  onClick={() => {
+                    navigate('/community');
+                  }}
+                  style={{
+                    marginRight: '35px',
+                  }}
+                >
+                  목록
+                </button>
+                <div style={{ position: 'relative' }}>
+                  <button
+                    onClick={toggleMenu}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      fontSize: '36px',
+                    }}
+                  >
+                    <i className="bi bi-three-dots"></i>
+                  </button>
+                  {showMenu && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: 1,
+                        top: '80%',
+                        background: '#fff',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                        zIndex: 1000,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '70px',
+                      }}
+                    >
+                      <button
+                        style={{
+                          writingMode: 'horizontal-tb',
+                          padding: '8px 12px',
+                          border: 'none',
+                          background: 'none',
+                          textAlign: 'center',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                        onClick={() => {
+                          navigate(`/update/${id}`);
+                        }}
+                      >
+                        <div>수</div>
+                        <div>정</div>
+                      </button>
+                      <button
+                        style={{
+                          writingMode: 'horizontal-tb',
+                          padding: '10px 12px',
+                          border: 'none',
+                          background: 'none',
+                          textAlign: 'center',
+                          color: 'red',
+                          cursor: 'pointer',
+                        }}
+                        onClick={deletePost}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <button
+                className={styles.listBtn}
+                onClick={() => {
+                  navigate('/community');
+                }}
+              >
+                목록
+              </button>
+            )}
+          </div>
 						<p className={styles.metaInfo}>
 							아이디: {post.username} | 작성일:{' '}
 							{new Date(post.created_at).toLocaleString()}
