@@ -88,9 +88,11 @@
   align-items: center;
   padding: 3px;
 }
+
 .searchPost {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .searchPost input {
   height: 40px;
@@ -117,8 +119,8 @@
   background-color: black;
   color: white;
   border-radius: 15px;
-  font-size: 15px;
-  padding: 10px;
+  font-size: 18px;
+  padding: 8px 12px;
 }
 
 .postList {
@@ -190,4 +192,76 @@
 .pagination button {
   border: none;
   border-radius: 5px;
+}
+
+.dropdownContainer {
+  position: relative;
+  width: 100px;
+  margin-left: 8px;
+  height: 40px;
+  font-family: "HakgyoansimBunpilR";
+  background-color: black;
+  color: white;
+  border-radius: 15px;
+  font-size: 18px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.dropdownHeader {
+  background-color: #343a40;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdownHeader:hover {
+  background-color: #495057;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.dropdownMenu.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: black;
+}
+
+.dropdownItem:hover {
+  background-color: #f1f1f1;
+}
+
+/* 드롭다운 열림 상태 */
+.open .dropdownMenu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
