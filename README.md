@@ -18,13 +18,13 @@
 
 ### GoogleMap APIs
     "@react-google-maps/api": "^2.20.3", 
-    "@vis.gl/react-google-maps": "^1.4.0", //이 두 개는 구글맵 관련 api
-    "react-places-autocomplete": "^7.3.0", //장소 검색 api
+    "@vis.gl/react-google-maps": "^1.4.0", //위 두 개는 구글맵 관련 api
+    "react-places-autocomplete": "^7.3.0", //장소 검색 시 자동완성 관련 api
 
 ### 각종 API 사용 위한 Axios
     "axios": "^1.7.8",
 
-### React 자체 라이브러리 + Css
+### React 자체 라이브러리 + CSS
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-icons": "^5.3.0",
