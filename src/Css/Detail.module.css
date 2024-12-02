@@ -104,3 +104,15 @@
 .review strong {
   font-weight: bold;
 }
+.NoImage {
+  width: 200px; /* 이미지 크기와 동일하게 설정 */
+  height: 200px; /* 이미지 높이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #888;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

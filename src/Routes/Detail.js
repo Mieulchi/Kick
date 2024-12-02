@@ -110,11 +110,17 @@ export default function Detail() {
             ? detail.map((detail, i) => {
                 return (
                   <div key={i} className={styles.detail}>
-                    <img
-                      src={detail.url}
-                      alt="Restaurant"
-                      className={styles.detailImage}
-                    />
+                    {detail.url ? (
+                      <img
+                        src={detail.url}
+                        alt="Restaurant"
+                        className={styles.detailImage}
+                      />
+                    ) : (
+                      <div className={styles.NoImage}>
+                        <p>이미지 준비중</p>
+                      </div>
+                    )}
 
                     <div className={styles.detailText}>
                       <p>{detail.displayName}</p>
