@@ -17,9 +17,9 @@
 # core libraries used in Kick
 
 ### GoogleMap APIs
-"@react-google-maps/api": "^2.20.3", 
-"@vis.gl/react-google-maps": "^1.4.0", //이 두 개는 구글맵 관련 api
-"react-places-autocomplete": "^7.3.0", //장소 검색 api
+    "@react-google-maps/api": "^2.20.3", 
+    "@vis.gl/react-google-maps": "^1.4.0", //이 두 개는 구글맵 관련 api
+    "react-places-autocomplete": "^7.3.0", //장소 검색 api
 
 ### 각종 API 사용 위한 Axios
     "axios": "^1.7.8",
