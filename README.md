@@ -14,35 +14,38 @@
 
 ### 혹시 라이브러리 관련 오류가 뜬다면 npm install ${해당 라이브러리 이름} 부탁드립니다 ...
 
-# libraries used in Kick !
+# core libraries used in Kick
 
-"@react-google-maps/api": "^2.20.3",
-"@vis.gl/react-google-maps": "^1.4.0",
+### GoogleMap APIs
+"@react-google-maps/api": "^2.20.3", 
+"@vis.gl/react-google-maps": "^1.4.0", //이 두 개는 구글맵 관련 api
+"react-places-autocomplete": "^7.3.0", //장소 검색 api
+
+### 각종 API 사용 위한 Axios
 
     "axios": "^1.7.8",
-
-
     "bcrypt": "^5.1.1",
-    "bootstrap": "^5.3.3",
-    "clsx": "^2.1.1",
     "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "jsonwebtoken": "^9.0.2",
 
+###React 자체 라이브러리 + Css
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
-    "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
-    "react-places-autocomplete": "^7.3.0",
+    "bootstrap": "^5.3.3",
+    
+
+###써드파티 라이브러리이지만 중요, Page Routing 관련 기능들
     "react-router-dom": "^6.27.0",
-    "react-scripts": "5.0.1",
+    "react-dom": "^18.3.1",
+
 
 ### 백엔드 기능
-
+    "express": "^4.21.1",
     "multer": "^1.4.5-lts.1",
     "sqlite3": "^5.1.7",
     "upload": "^1.3.2",
-    "web-vitals": "^2.1.4"
+    "jsonwebtoken": "^9.0.2",
 
-},
+
+### 네이버 API 사용 시 CORS 문재 해결
 "proxy": "https://openapi.naver.com",
