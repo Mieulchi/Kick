@@ -249,7 +249,7 @@
 
 .dropdownItem {
   padding: 10px;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
   transition: background-color 0.3s;
   color: black;
