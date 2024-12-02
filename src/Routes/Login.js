@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
-import styles from "../Css/Login.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import darkLogo from "../Logo/darkLogo.png";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styles from '../Css/Login.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import darkLogo from '../Logo/darkLogo.png';
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState();
   const [toPost, setToPost] = useState(false);
   const navigate = useNavigate();
@@ -15,30 +15,34 @@ function Login() {
   const { state } = useLocation();
 
   useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  useEffect(() => {
     console.log(errorMsg);
   }, [errorMsg]);
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleLogin();
     }
   };
 
   const handleLogin = (e) => {
     axios
-      .post("http://localhost:4000/login", { username, password })
+      .post('http://localhost:4000/login', { username, password })
       .then((response) => {
-        localStorage.setItem("token", response.data.token); // JWT 토큰 저장
+        localStorage.setItem('token', response.data.token); // JWT 토큰 저장
       })
       .then(() => {
         if (toPost) {
-          if (state.state) {
-            navigate("/post", { state: state.state });
+          if (state) {
+            navigate('/post', { state });
           } else {
-            navigate("/post");
+            navigate('/post');
           }
         } else {
-          navigate("/community");
+          navigate('/community');
         }
       })
       .catch((error) => {
@@ -56,8 +60,8 @@ function Login() {
   }, [state]);
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/community");
+    if (localStorage.getItem('token')) {
+      navigate('/community');
     }
   }, []);
 
@@ -66,7 +70,7 @@ function Login() {
       <div className={styles.login}>
         <img
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
           src={darkLogo}
         />
@@ -88,14 +92,14 @@ function Login() {
         />
 
         {errorMsg ? (
-          <div style={{ color: "red", margin: "0 auto" }}>{errorMsg}</div>
+          <div style={{ color: 'red', margin: '0 auto' }}>{errorMsg}</div>
         ) : (
-          <div style={{ color: "transparent" }}> ""</div>
+          <div style={{ color: 'transparent' }}> ""</div>
         )}
         <button onClick={handleLogin}>로그인</button>
         <h3
           onClick={() => {
-            navigate("/register");
+            navigate('/register');
           }}
         >
           회원가입

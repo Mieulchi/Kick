@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import styles from "../Css/Detail.module.css";
-import darkLogo from "../Logo/darkLogo.png";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import styles from '../Css/Detail.module.css';
+import darkLogo from '../Logo/darkLogo.png';
 
 export default function Detail() {
   const [location, setLocation] = useState();
@@ -12,16 +12,16 @@ export default function Detail() {
 
   const { state } = useLocation();
   async function textSearch() {
-    const { Place } = await window.google.maps.importLibrary("places");
+    const { Place } = await window.google.maps.importLibrary('places');
 
     const txtRequest = {
       textQuery: `${location} ${keyword} `,
-      fields: ["displayName", "location", "rating", "photos", "reviews"],
-      includedType: "restaurant",
-      language: "ko",
+      fields: ['displayName', 'location', 'rating', 'photos', 'reviews'],
+      includedType: 'restaurant',
+      language: 'ko',
       maxResultCount: 7,
       minRating: 1,
-      region: "kr",
+      region: 'kr',
       useStrictTypeFiltering: false,
     };
 
@@ -35,11 +35,11 @@ export default function Detail() {
       });
       await place.fetchFields({
         fields: [
-          "displayName",
-          "photos",
-          "editorialSummary",
-          "reviews",
-          "rating",
+          'displayName',
+          'photos',
+          'editorialSummary',
+          'reviews',
+          'rating',
         ],
       });
       let rating = place.rating;
@@ -80,14 +80,14 @@ export default function Detail() {
           <i
             key={`full-${index}`}
             className="bi bi-star-fill"
-            style={{ color: "#FFD700", marginRight: "5px" }}
+            style={{ color: '#FFD700', marginRight: '5px' }}
           ></i>
         ))}
         {[...Array(emptyStars)].map((_, index) => (
           <i
             key={`empty-${index}`}
             className="bi bi-star"
-            style={{ color: "#FFD700", marginRight: "5px" }}
+            style={{ color: '#FFD700', marginRight: '5px' }}
           ></i>
         ))}
       </>
@@ -99,7 +99,7 @@ export default function Detail() {
       <nav className={styles.upBar} id={styles.hd}>
         <img
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
           src={darkLogo}
         />
@@ -127,13 +127,24 @@ export default function Detail() {
                       <div>{renderStars(detail.rating)}</div>
                       <button
                         onClick={() => {
-                          navigate("/post", {
-                            state: {
-                              url: detail.url,
-                              displayName: detail.displayName,
-                              keyword,
-                            },
-                          });
+                          if (!localStorage.getItem('token')) {
+                            navigate('/login', {
+                              state: {
+                                url: detail.url,
+                                displayName: detail.displayName,
+                                keyword,
+                                toPost: true,
+                              },
+                            });
+                          } else {
+                            navigate('/post', {
+                              state: {
+                                url: detail.url,
+                                displayName: detail.displayName,
+                                keyword,
+                              },
+                            });
+                          }
                         }}
                       >
                         공유하기
@@ -153,7 +164,7 @@ export default function Detail() {
                   </div>
                 );
               })
-            : " "}
+            : ' '}
         </div>
       </div>
     </div>

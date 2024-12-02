@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# React 관련 라이브러리들 설치
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+### `npm install`
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# backend 서버 구동 : kick/src/backend/server.js,
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### cd 'kick/src/backend' 폴더에서 npm install
 
-### `npm test`
+### then 'node server.js' : 게시글 관련 기능들을 실행하기 위해 필요합니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 자체 개발 환경에서는 npm install, npm start, node server.js 로 모두 실행 가능합니다.
 
-### `npm run build`
+### 혹시 라이브러리 관련 오류가 뜬다면 npm install ${해당 라이브러리 이름} 부탁드립니다 ...
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# core libraries used in Kick
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### GoogleMap APIs
+    "@react-google-maps/api": "^2.20.3", 
+    "@vis.gl/react-google-maps": "^1.4.0", //위 두 개는 구글맵 관련 api
+    "react-places-autocomplete": "^7.3.0", //장소 검색 시 자동완성 관련 api
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 각종 API 사용 위한 Axios
+    "axios": "^1.7.8",
 
-### `npm run eject`
+### React 자체 라이브러리 + CSS
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
+    "react-icons": "^5.3.0",
+    "bootstrap": "^5.3.3",
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 써드파티 라이브러리이지만 중요, Page Routing 관련 기능들
+    "react-router-dom": "^6.27.0",
+    "react-dom": "^18.3.1",
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 백엔드 기능
+    "express": "^4.21.1",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.1.7",
+    "upload": "^1.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 네이버 API 사용 시 CORS 문제 해결
+package.json - "proxy": "https://openapi.naver.com" 추가
