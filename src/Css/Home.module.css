@@ -187,7 +187,7 @@ h3 :hover {
   border-radius: 40px;
   cursor: pointer;
   position: fixed; /* position을 fixed로 설정 */
-  top: 25%; /* 뷰포트 기준으로 35% 위치 */
+  top: 27%; /* 뷰포트 기준으로 35% 위치 */
   left: -90px; /* 뷰포트 기준으로 -90px 위치 */
 }
 .aiConsultBtn:hover {
