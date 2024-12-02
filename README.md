@@ -42,5 +42,5 @@
     "jsonwebtoken": "^9.0.2",
     "cors": "^2.8.5",
 
-### 네이버 API 사용 시 CORS 문재 해결
-"proxy": "https://openapi.naver.com",
+### 네이버 API 사용 시 CORS 문제 해결
+package.json - "proxy": "https://openapi.naver.com" 추가
