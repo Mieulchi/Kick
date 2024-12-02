@@ -129,7 +129,12 @@ export default function Detail() {
                         onClick={() => {
                           if (!localStorage.getItem('token')) {
                             navigate('/login', {
-                              state: { state, toPost: true },
+                              state: {
+                                url: detail.url,
+                                displayName: detail.displayName,
+                                keyword,
+                                toPost: true,
+                              },
                             });
                           } else {
                             navigate('/post', {
