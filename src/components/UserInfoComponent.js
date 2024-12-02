@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../Css/Community.module.css";
 import darkLogo from "../Logo/darkLogo.png";
 
-export default function UserInfoComponent() {
+export default function UserInfoComponent({setUserId = f =>f}) {
   const [user, setUser] = useState();
   const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ export default function UserInfoComponent() {
       })
       .then((response) => {
         setUser(response.data.user);
+        setUserId(response.data.user.username);
       })
       .catch((e) => {
         if (e.response && e.response.status === 401) {
