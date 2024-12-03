@@ -6,13 +6,13 @@
 
 # backend 서버 구동 : kick/src/backend/server.js,
 
-### cd 'kick/src/backend' 폴더에서 npm install
+### cd 'kick/src/backend' 폴더에서 한번 더 npm install
 
 ### then 'node server.js' : 게시글 관련 기능들을 실행하기 위해 필요합니다.
 
-### 자체 개발 환경에서는 npm install, npm start, node server.js 로 모두 실행 가능합니다.
+### 자체 테스트 에서는 npm install, npm start, node server.js 로 모두 실행 가능했습니다.
 
-### 혹시 라이브러리 관련 오류가 뜬다면 npm install ${해당 라이브러리 이름} 부탁드립니다 ...
+### 혹시 라이브러리 관련 오류가 뜬다면 npm install `해당 라이브러리 이름` 부탁드립니다 ...
 
 # core libraries used in Kick
 
